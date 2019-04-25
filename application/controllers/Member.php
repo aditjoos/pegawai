@@ -779,6 +779,10 @@ class Member extends CI_Controller{
 					$info_ajuan = "<span class='label label-warning'>$deskripsi</span>";
 				}else if($id_ajuan == "5"){
 					$info_ajuan = "<span class='label label-danger'>$deskripsi</span>";
+				}else if($id_ajuan == "6"){
+					$info_ajuan = "<span class='label label-info'>$deskripsi</span>";
+				}else if($id_ajuan == "7"){
+					$info_ajuan = "<span class='label label-theme-inverse'>$deskripsi</span>";
 				}else{
 					$info_ajuan = "-";
 				}

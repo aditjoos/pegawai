@@ -462,8 +462,8 @@ class Mmember extends CI_Model {
 				*
 			FROM
 				$tbl a
-			LEFT JOIN v_ajuan b ON a.nip = b.idcard
-			WHERE a.nip = '$idcard'
+			LEFT JOIN v_ajuan b ON a.idcard = b.idcard
+			WHERE a.idcard = '$idcard'
 			ORDER BY a.no DESC
 			";
 
