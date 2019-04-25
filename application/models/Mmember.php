@@ -456,6 +456,21 @@ class Mmember extends CI_Model {
 
 	}
 
+	function riwayat_ajuan($tbl,$idcard){
+		$q = "
+			SELECT
+				*
+			FROM
+				$tbl a
+			LEFT JOIN ajuan b ON a.`no` = b.no_jenis_ajuan
+			LEFT JOIN ref_ajuanstatus c ON c.id_statusajuan = b.id_ajuan_status
+			WHERE a.nip = '$idcard'
+			ORDER BY a.no DESC
+			";
+
+		$sql = strtolower($q);
+		return $this->db->query($sql);
+	}
 
 
 	// -----------------------------------------------------------------------------------------------------------------------

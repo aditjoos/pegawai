@@ -6,6 +6,7 @@
 <script>
 	$(document).ready(function(){
 		list_pendidikan();
+		list_dik_fungsi();
 	})
 
 	function list_pendidikan(){
@@ -20,4 +21,31 @@
 	        }
 	    })
 	}
+
+	function list_dik_fungsi(){
+		$.ajax({
+	        url      : "list_dik_fungsi",
+	        type     : 'POST',
+	        dataType : 'json',
+	        success  : function(data){
+	            console.log(data);
+	            var tbl = data.tbl;
+	            $("#ls_dik_fungsi").html(tbl);
+	        }
+	    })
+	}
+
+	function list_dik_fungsi(){
+		$.ajax({
+	        url      : "list_dik_fungsi",
+	        type     : 'POST',
+	        dataType : 'json',
+	        success  : function(data){
+	            console.log(data);
+	            var tbl = data.tbl;
+	            $("#ls_dik_fungsi").html(tbl);
+	        }
+	    })
+	}
+	
 </script>
