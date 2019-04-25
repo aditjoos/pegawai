@@ -983,6 +983,29 @@ class Member extends CI_Controller{
 
 	// ---------------------------------------------------------------------------------------------------------------- dendra
 
+	//=============================[ /\ Function Lama  /\ ]==============================
+	//                               |                 | 
+	//============================[ \/      adit      \/ ]=====(start)===================
+
+	function riw_edu_add_function(){
+		$data = array(
+			'id_user'			=> $this->session->userdata('id_user'),
+			'tingkat_pend' 		=> $this->input->get_post('edu',true),
+			'nama_sekolah' 		=> $this->input->get_post('sekolah',true),
+			'jurusan' 			=> $this->input->get_post('prodi',true),
+			'thn_masuk' 		=> $this->input->get_post('tahun',true),
+			'thn_lulus' 		=> $this->input->get_post('tanggal',true),
+			'tmp_belajar' 		=> $this->input->get_post('belajar',true),
+			'lokasi' 			=> $this->input->get_post('lokasi',true),
+			'nomor_ijazah' 		=> $this->input->get_post('ijazah',true)
+		);
+		
+		$this->mmember->riw_edu_add_process($data);
+		redirect('/Member/riw_edu_add');
+	}
+
+	//===========================[ /\      adit      /\ ]=====(end)=====================
+
 
 }//end class
 
