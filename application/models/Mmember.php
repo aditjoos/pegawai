@@ -530,7 +530,7 @@ class Mmember extends CI_Model {
 					6,
 					'".$data['id_user']."',
 					'',
-					'0000-00-00',
+					CUDRATE(),
 					''
 				);"
 			;
