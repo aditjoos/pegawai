@@ -698,7 +698,7 @@ class Member extends CI_Controller{
 		$tgl = date("Y-m-d h:i:s");
 
 		$arr1 = array(
-			'jenis_ajuan' => $folder, 
+			'jenis_ajuan' => '1', 
 			'no_jenis_ajuan' => $last_rec, 
 			'tgl_ajuan' => $tgl, 
 			'id_ajuan_status' => '1', // pengajuan pegawai
@@ -733,7 +733,7 @@ class Member extends CI_Controller{
 	            $this->load->library('image_lib', $config);
 	            $this->image_lib->resize();
 
-	            $arr = array('file' => $nm_file, );
+	            $arr = array('nama_berkas' => $nm_file, );
 				$this->Mmember->update($folder,$arr,'no',$last_rec);
 
 	            echo json_decode($result);
@@ -763,8 +763,8 @@ class Member extends CI_Controller{
 				$tmp_belajar = $key->tmp_belajar;
 				$lokasi = $key->lokasi;
 				$no_ijazah = $key->no_ijazah;
-				$file = $key->file;
-				$id_ajuan = $key->id_ajuan_status;
+				$file = $key->nama_berkas;
+				$id_ajuan = $key->id_ajuanstatus;
 				$deskripsi = $key->deskripsi;
 
 				$tanggal = date("d-m-Y", strtotime($thn_lulus));

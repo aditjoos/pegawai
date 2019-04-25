@@ -216,7 +216,7 @@
                                         <div class="col-lg-12">
                                             <div>
                                                 <span style="margin-bottom: 10px;font-size: 26px;"><strong>Riwayat</strong> Pendidikan </span>
-                                                <a class="btn btn-primary pull-right" href="<?php echo base_url();?>Member/riw_edu_add"><i class="fa fa-plus"></i> Tambah Ajuan</a>
+                                                <a class="btn btn-primary pull-right" href="<?php echo $path;?>Member/riw_edu_add"><i class="fa fa-plus"></i> Tambah Ajuan</a>
                                             </div>
                                             <div class="table-responsive">
                                                 <table class="table table-bordered">
