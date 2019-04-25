@@ -701,7 +701,7 @@ class Member extends CI_Controller{
 			'jenis_ajuan' => $folder, 
 			'no_jenis_ajuan' => $last_rec, 
 			'tgl_ajuan' => $tgl, 
-			'id_ajuan_status' => '4', // pengajuan pegawai
+			'id_ajuan_status' => '1', // pengajuan pegawai
 			'idcard' => $id,
 		);
 		$this->Mmember->insert('ajuan',$arr1); 
@@ -744,8 +744,10 @@ class Member extends CI_Controller{
 	function list_pendidikan(){
 		$card = $this->session->userdata('id_user');
 
+		$tbl = "data_pendidikan";
 		$arr = array('nip' => $card, );
-		$q = $this->Mmember->select_all_order('data_pendidikan',$arr,'no','DESC');
+		// $q = $this->Mmember->select_all_order('data_pendidikan',$arr,'no','DESC');
+		$q = $this->Mmember->riwayat_ajuan($tbl,$card);
 		$tot = $q->num_rows();
 		$rsl = $q->result();
 
@@ -762,15 +764,31 @@ class Member extends CI_Controller{
 				$lokasi = $key->lokasi;
 				$no_ijazah = $key->no_ijazah;
 				$file = $key->file;
+				$id_ajuan = $key->id_ajuan_status;
+				$deskripsi = $key->deskripsi;
 
 				$tanggal = date("d-m-Y", strtotime($thn_lulus));
+
+				if($id_ajuan == "1"){
+					$info_ajuan = "<span class='label label-info'>$deskripsi</span>";
+				}else if($id_ajuan == "2"){
+					$info_ajuan = "<span class='label label-primary'>$deskripsi</span>";
+				}else if($id_ajuan == "3"){
+					$info_ajuan = "<span class='label label-success'>$deskripsi</span>";
+				}else if($id_ajuan == "4"){
+					$info_ajuan = "<span class='label label-warning'>$deskripsi</span>";
+				}else if($id_ajuan == "5"){
+					$info_ajuan = "<span class='label label-danger'>$deskripsi</span>";
+				}else{
+					$info_ajuan = "-";
+				}
 
 				$tbl  .= "<tr>
 							<td><span style='color:black;'>$tingkat_pend</span> - <b>$nama_sekolah</b><br>jurusan: $jurusan</td>
 							<td>Tahun Masuk: <span style='color:green;'>$thn_masuk</span><br>Tanggal Lulus: <span style='color:orange'>$tanggal</span></td>
 							<td style='text-align:center;'>$lokasi</td>
 							<td>$no_ijazah</td>
-							<td>-</td>
+							<td style='text-align:center'>$info_ajuan</td>
 							<td>
 								<button class='btn btn-success'><i class='fa fa-file'></i></button>
 								<button class='btn btn-warning'><i class='fa fa-pencil'></i></button>
@@ -802,6 +820,76 @@ class Member extends CI_Controller{
 		$this->load->view('template/body',$data);
 	}
 
+	function list_dik_fungsi(){
+		$card = $this->session->userdata('id_user');
+
+		$tbl = "data_dikfungsi";
+		$arr = array('nip' => $card, );
+		$q = $this->Mmember->riwayat_ajuan($tbl,$card);
+		$tot = $q->num_rows();
+		$rsl = $q->result();
+
+		if($tot>'0'){
+			$tbl = '';
+			foreach ($rsl as $key) {
+				$no = $key->no;
+				$nip = $key->nip;
+				$nama_diklat = $key->nama_diklat;
+				$tmp_belajar = $key->tmp_belajar;
+				$lokasi = $key->lokasi;
+				$tgl_mulai = $key->tgl_mulai;
+				$tgl_selesai = $key->tgl_selesai;
+				$jml_jam = $key->jml_jam;
+				$penyelenggara = $key->penyelenggara;
+				$file = $key->file;
+				$id_ajuan = $key->id_ajuan_status;
+				$deskripsi = $key->deskripsi;
+
+				if($id_ajuan == "1"){
+					$info_ajuan = "<span class='label label-info'>$deskripsi</span>";
+				}else if($id_ajuan == "2"){
+					$info_ajuan = "<span class='label label-primary'>$deskripsi</span>";
+				}else if($id_ajuan == "3"){
+					$info_ajuan = "<span class='label label-success'>$deskripsi</span>";
+				}else if($id_ajuan == "4"){
+					$info_ajuan = "<span class='label label-warning'>$deskripsi</span>";
+				}else if($id_ajuan == "5"){
+					$info_ajuan = "<span class='label label-danger'>$deskripsi</span>";
+				}else{
+					$info_ajuan = "-";
+
+				$tbl = "
+						<tr>
+							<td>$nama_diklat</td>
+							<td>
+								$tmp_belajar<br>
+								$lokasi
+							</td>
+							<td>
+								Tanggal Mulai: $tgl_mulai<br>
+								Tanggal Selesai: $tgl_selesai
+							</td>
+							<td>$jml_jam</td>
+							<td>$penyelenggara</td>
+							<td style='text-align:center'>$info_ajuan</td>
+							<td>
+								<button class='btn btn-success'><i class='fa fa-file'></i></button>
+								<button class='btn btn-warning'><i class='fa fa-pencil'></i></button>
+								<button class='btn btn-danger'><i class='fa fa-trash-o'></i></button>
+							</td>
+
+						</tr>
+						";
+				}
+			}
+		}else{
+			$tbl = "<tr><td colspan='9' style='text-align:center;'>Data tidak ditemukan.</td></tr>";
+		}
+
+		$data = array('tbl' => $tbl, );
+		echo json_encode($data);
+
+	}
 
 	function riw_dik_teknis_add(){
 		$data['head_page'] 	= $this->load->view('template/head','',true);

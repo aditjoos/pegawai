@@ -250,7 +250,7 @@
                                                             <td colspan="3">Waktu</td>
                                                             <td rowspan="2">Penyelenggara</td>
                                                             <td rowspan="2">Status</td>
-                                                            <td rowspan="2">Berkas</td>
+                                                            <td rowspan="2">Aksi</td>
                                                         </tr>
                                                         <tr style="text-align: center;" class="bg-theme-inverse">
                                                             <td>Tempat</td>
@@ -260,6 +260,7 @@
                                                             <td>Total Jam</td>
                                                         </tr>
                                                     </thead>
+                                                    <tbody id="ls_dik_fungsi"></tbody>
                                                 </table>
                                             </div>
                                         </div>
@@ -290,6 +291,7 @@
                                                         </tr>
                                                        
                                                     </thead>
+                                                    <tbody id="ls_dik_teknis"></tbody>
                                                 </table>
                                             </div>
                                         </div>
