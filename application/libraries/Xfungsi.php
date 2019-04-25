@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class xfungsi{
+class Xfungsi{
 			
 	public function hex_encode($string)
 	{

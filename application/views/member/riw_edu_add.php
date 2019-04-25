@@ -18,7 +18,7 @@
                     <div class="row">
                         <div class="col-lg-8">
                             <div class="panel-body">
-                                <form class="form-horizontal" method="POST" id="upload_form" enctype="multipart/form-data" data-collabel="3" data-alignlabel="left">
+                                <form action="<?php echo $path?>Member/riw_edu_add_function" class="form-horizontal" method="POST" id="upload_form" enctype="multipart/form-data" data-collabel="3" data-alignlabel="left">
                                     <div class="form-group">
                                         <label class="control-label">Tingkat Pendidikan</label>
                                         <div>
@@ -63,9 +63,9 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label">No. Ijasah</label>
+                                        <label class="control-label">No. Ijazah</label>
                                         <div>
-                                            <input type="text" class="form-control" id="ijasah" name="ijasah">
+                                            <input type="text" class="form-control" id="ijasah" name="ijazah">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -88,10 +88,10 @@
                                             </div>
                                     </div>
                                     <div class="form-group offset">
-                                            <div>
-                                                <button class="btn btn-theme" type="submit"><i class="fa fa-check"></i> Simpan</button>
-                                                <a class="btn btn-info" href="biodata2">Batal</a>
-                                            </div>
+                                        <div>
+                                            <button class="btn btn-theme" type="submit"><i class="fa fa-check"></i> Simpan</button>
+                                            <a class="btn btn-info" href="biodata2">Batal</a>
+                                        </div>
                                     </div>
                                 </form>
                             </div>
