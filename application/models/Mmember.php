@@ -456,7 +456,72 @@ class Mmember extends CI_Model {
 
 	}
 
+	//===========================[ \/      adit      \/ ]=====(start)===================
 
+	function riw_edu_add_process($data){
+		$sql = "INSERT INTO `sas_tkplb`.`data_pendidikan` (
+					`idcard`, 
+					`nip`, 
+					`tingkat_pend`, 
+					`nama_sekolah`, 
+					`jurusan`, 
+					`thn_masuk`, 
+					`thn_lulus`, 
+					`tmp_belajar`, 
+					`lokasi`, 
+					`no_ijazah`
+				) VALUES (
+					'".$data['id_user']."', 
+					(SELECT nip FROM `sas_tkplb`.`guru` WHERE idcard = '".$data['id_user']."'), 
+					'".$data['tingkat_pend']."',
+					'".$data['nama_sekolah']."',
+					'".$data['jurusan']."',
+					".$data['thn_masuk'].",
+					CURDATE(), 
+					'".$data['tmp_belajar']."',
+					'".$data['lokasi']."',
+					'".$data['nomor_ijazah']."'
+				);
+				
+				INSERT INTO `sas_tkplb`.`ajuan` (
+					`jenis_ajuan`,
+					`no_jenis_ajuan`,
+					`tgl_ajuan`,
+					`id_ajuanstatus`,
+					`idcard`,
+					`update_by`,
+					`tgl_update`,
+					`komentar`,
+				) VALUES (
+					1,
+					(
+						SELECT 
+							no 
+						FROM 
+							sas_tkplb.data_pendidikan 
+						WHERE 
+							idcard = '".$data['id_user']."' AND 
+							thn_lulus = (
+								SELECT 
+									MAX(thn_lulus) 
+								FROM 
+									sas_tkplb.data_pendidikan 
+								WHERE idcard = '".$data['id_user']."'
+							)
+					),
+					CURDATE(),
+					6,
+					'".$data['id_user']."',
+					'',
+					'0000-00-00',
+					''
+				);"
+			;
+		
+		$this->db->query($sql);
+	}
+
+	//===========================[ /\      adit      /\ ]=====(end)=====================
 
 	// -----------------------------------------------------------------------------------------------------------------------
 
