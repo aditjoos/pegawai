@@ -60,26 +60,7 @@
 							<li><span><i class="icon fa fa-sitemap"></i> MENU ADMINISTRATOR</span>
 								<ul>
 									<li><a href="<?php echo $path; ?>member/pivot"><i class="icon fa fa-eye"></i> Pivot profil pegawai</a></li>
-									<li><span><i class="icon  fa fa-eye"></i> Ajuan Data Pegawai</span>
-										<ul>
-											<li><a href="<?php echo $path; ?>member/riw_edu_add"><i class="icon fa fa-eye"></i> Data Pendidikan</a></li>
-											<li><a href="<?php echo $path; ?>member"><i class="icon fa fa-eye"></i> Riwayat Diklat Fungsional</a></li>
-											<li><a href="<?php echo $path; ?>member"><i class="icon fa fa-eye"></i> Riwayat Diklat Teknis</a></li>
-											<li><a href="<?php echo $path; ?>member"><i class="icon fa fa-eye"></i> Riwayat Diklat Penjenjangan</a></li>
-											<li><a href="<?php echo $path; ?>member"><i class="icon fa fa-eye"></i> Riwayat Kepangkatan</a></li>
-											<li><a href="<?php echo $path; ?>member"><i class="icon fa fa-eye"></i> Riwayat Jabatan Struktural</a></li>
-											<li><a href="<?php echo $path; ?>member"><i class="icon fa fa-eye"></i> Riwayat Jabatan Fungsional</a></li>
-											<li><a href="<?php echo $path; ?>member"><i class="icon fa fa-eye"></i> Riwayat Pekerjaan</a></li>
-											<li><a href="<?php echo $path; ?>member"><i class="icon fa fa-eye"></i> Data Keluarga (Suami/Istri)</a></li>
-											<li><a href="<?php echo $path; ?>member"><i class="icon fa fa-eye"></i> Data Keluarga (Anak)</a></li>
-											<li><a href="<?php echo $path; ?>member"><i class="icon fa fa-eye"></i> Data Keluarga (Keluarga)</a></li>
-											<li><a href="<?php echo $path; ?>member"><i class="icon fa fa-eye"></i> Data DP3</a></li>
-											<li><a href="<?php echo $path; ?>member"><i class="icon fa fa-eye"></i> Data Seminar</a></li>
-											<li><a href="<?php echo $path; ?>member"><i class="icon fa fa-eye"></i> Data Tanda Jasa</a></li>
-											<li><a href="<?php echo $path; ?>member"><i class="icon fa fa-eye"></i> Data Anggota Organisasi</a></li>
-											<li><a href="<?php echo $path; ?>member"><i class="icon fa fa-eye"></i> Data Hukuman</a></li>
-										</ul>
-									</li>
+									<li><a href="<?php echo $path; ?>member/admin_ajuan_pegawai"><i class="icon fa fa-eye"></i> Ajuan Data Pegawai</a></li>
 								</ul>
 							</li>
 						<?php

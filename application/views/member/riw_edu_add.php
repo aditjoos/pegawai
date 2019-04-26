@@ -11,7 +11,7 @@
         <div class="col-lg-12">
             <section class="panel">
                 <header class="panel-heading bg-inverse">
-                    <h3><strong>Tambah</strong> Riwayat Pendidian </h3>
+                    <h3><strong>Tambah</strong> Riwayat Pendidikan </h3>
                     <label class="color"><strong><?php echo $this->session->userdata('nama'); ?></strong></label>
                 </header>
                 <div class="panel-body">

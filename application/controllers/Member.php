@@ -1004,6 +1004,167 @@ class Member extends CI_Controller{
 		redirect('/Member/riw_edu_add');
 	}
 
+	function admin_ajuan_pegawai(){
+		$data['head_page'] 	= $this->load->view('template/head','',true);
+		$data['top_menu'] 	= $this->load->view('template/top_menu','',true);
+
+		// $info['biodata']	= $this->get_biodata2();
+		$data['main_page'] 	= $this->load->view('member/admin_ajuan_pegawai','',true);
+
+		$data['modal'] 		= $this->load->view('template/modal','',true);
+		$data['left_menu'] 	= $this->load->view('template/left_menu','',true);
+		$data['foot'] 		= $this->load->view('template/foot','',true);
+		$data['custom_js'] 	= $this->load->view('member/admin_ajuan_pegawai_js','',true);
+
+		$this->load->view('template/body',$data);
+	}
+
+	function list_ajuan_riw_dik_fung(){
+		// $arr = array('nip' => $card, );
+		$tbl = '';
+		// $info_ajuan = "-";
+		$q = $this->Mmember->list_ajuan_dik_fung();
+		$tot = $q->num_rows();
+		$rsl = $q->result();
+
+		if($tot>'0'){
+			foreach ($rsl as $key) {
+				$idcard = $key->idcard;
+				$no_jenis_ajuan = $key->no_jenis_ajuan;
+				$gelar_depan = $key->gelar_depan;
+				$nama = $key->nama;
+				$gelar_belakang = $key->gelar_belakang;
+				$nama_ajuan = $key->nama_ajuan;
+				// $tgl_ajuan = $key->tgl_ajuan;
+				$tgl_ajuan = date("d-m-Y", strtotime($key->tgl_ajuan));
+				$id_ajuan = $key->jenis_ajuan;
+				$deskripsi = $key->deskripsi;
+
+				$controller = '';
+				if($id_ajuan == "1"){
+					$controller = "admin_riw_edu_detail";
+				}else if($id_ajuan == "2"){
+					$controller = "admin_riw_dik_fung_detail";
+				}else if($id_ajuan == "3"){
+					$controller = "admin_riw_dik_teknis_detail";
+				}else if($id_ajuan == "4"){
+					$controller = "no_controller";
+				}else if($id_ajuan == "5"){
+					$controller = "no_controller";
+				}else{
+					$controller = "no_controller";
+				}
+
+				$tbl  .= "<tr>
+							<td><span style='color:black;'>$idcard</span></td>
+							<td>$gelar_depan $nama $gelar_belakang</td>
+							<td>$nama_ajuan</td>
+							<td>$tgl_ajuan</td>
+							<td style='text-align:center'>$deskripsi</td>
+							<td>
+								<a href='".base_url()."member/$controller/$no_jenis_ajuan' class='btn btn-success'>
+									<i class='fa fa-eye'></i> 
+									Lihat
+								</a>
+							</td>
+						</tr>";
+			}
+		}else{
+			$tbl = "<tr><td colspan='6' style='text-align:center;'>Data tidak ditemukan.</td></tr>";
+		}
+
+		$data = array('tbl' => $tbl, );
+		echo json_encode($data);
+
+	}
+
+	function update_ajuan(){
+		$data = array(
+			'jenis_ajuan' 		=> $this->uri->segment(3),
+			'no_jenis_ajuan' 	=> $this->uri->segment(4),
+			'id_ajuanstatus' 	=> $this->input->get_post('status_ajuan',true),
+			'update_by'			=> $this->session->userdata('id_user')
+		);
+
+		// echo $data['no_jenis_ajuan'];
+		
+		$this->Mmember->update_ajuan($data);
+		redirect('/member/admin_riw_dik_fung');
+	}
+
+	function admin_riw_dik_fung_detail($id_record){
+		// $data['id']		= $idcard;
+		// $id = $id_record;
+		// $data = array(
+		// 	'id'		=> $id
+		// );
+
+		$data['head_page'] 	= $this->load->view('template/head','',true);
+		$data['top_menu'] 	= $this->load->view('template/top_menu','',true);
+
+		$info['detail']		= $this->get_riw_dik_fung_detail($id_record);
+		$info['select_option']		= $this->Mmember->list_status_ajuan();
+		$data['main_page'] 	= $this->load->view('member/admin_riw_dik_fung_detail',$info,true);
+
+		$data['modal'] 		= $this->load->view('template/modal','',true);
+		$data['left_menu'] 	= $this->load->view('template/left_menu','',true);
+		$data['foot'] 		= $this->load->view('template/foot','',true);
+		$data['custom_js'] 	= $this->load->view('member/admin_riw_dik_fung_detail_js','',true);
+
+		$this->load->view('template/body',$data);
+	}
+
+	function get_riw_dik_fung_detail($id_record){
+		// $id		= $id_record;
+		// $data = array(
+		// 	'id'			=> $id,
+		// );
+
+		$cb1 = array();
+		$cb2 = array();
+		$result = $this->Mmember->get_riw_dik_fung_detail($id_record)->result();
+		foreach($result as $key => $val){
+			$cb1 = $val;
+		}
+
+		foreach($cb1 as $key2 => $val2){
+			$cb2[strtolower($key2)] = $val2;
+		}
+		return json_encode($cb2);
+
+	}
+
+	function admin_riw_dik_teknis_detail($id_record){
+		$data['head_page'] 	= $this->load->view('template/head','',true);
+		$data['top_menu'] 	= $this->load->view('template/top_menu','',true);
+
+		$info['detail']		= $this->get_riw_dik_fung_detail($id_record);
+		$info['select_option']		= $this->Mmember->list_status_ajuan();
+		$data['main_page'] 	= $this->load->view('member/admin_riw_dik_fung_detail',$info,true);
+
+		$data['modal'] 		= $this->load->view('template/modal','',true);
+		$data['left_menu'] 	= $this->load->view('template/left_menu','',true);
+		$data['foot'] 		= $this->load->view('template/foot','',true);
+		$data['custom_js'] 	= $this->load->view('member/admin_riw_dik_fung_detail_js','',true);
+
+		$this->load->view('template/body',$data);
+	}
+
+	function get_riw_dik_teknis_detail($id_record){
+		$cb1 = array();
+		$cb2 = array();
+		$result = $this->Mmember->get_riw_dik_fung_detail($id_record)->result();
+		foreach($result as $key => $val){
+			$cb1 = $val;
+		}
+
+		foreach($cb1 as $key2 => $val2){
+			$cb2[strtolower($key2)] = $val2;
+		}
+		return json_encode($cb2);
+
+	}
+
 	//===========================[ /\      adit      /\ ]=====(end)=====================
 
 
