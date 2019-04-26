@@ -462,9 +462,10 @@ class Mmember extends CI_Model {
 				*
 			FROM
 				$tbl a
-			LEFT JOIN v_ajuan b ON a.idcard = b.idcard
-			WHERE a.idcard = '$idcard'
-			ORDER BY a.no DESC
+			INNER JOIN ajuan b ON a.idcard = b.idcard
+			INNER JOIN ref_ajuanstatus c ON b.id_ajuanstatus = c.id_statusajuan
+			WHERE
+				a.idcard = '$idcard' AND a.`no` = b.no_jenis_ajuan
 			";
 
 		$sql = strtolower($q);

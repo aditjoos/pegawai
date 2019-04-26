@@ -827,7 +827,7 @@ class Member extends CI_Controller{
 		$card = $this->session->userdata('id_user');
 
 		$tbl = "data_pendidikan";
-		$arr = array('nip' => $card, );
+		$arr = array('idcard' => $card, );
 		// $q = $this->Mmember->select_all_order('data_pendidikan',$arr,'no','DESC');
 		$q = $this->Mmember->riwayat_ajuan($tbl,$card);
 		$tot = $q->num_rows();
@@ -910,7 +910,7 @@ class Member extends CI_Controller{
 		$card = $this->session->userdata('id_user');
 
 		$tbl = "data_dikfungsi";
-		$arr = array('nip' => $card, );
+		$arr = array('idcard' => $card, );
 		$q = $this->Mmember->riwayat_ajuan($tbl,$card);
 		$tot = $q->num_rows();
 		$rsl = $q->result();
@@ -919,6 +919,7 @@ class Member extends CI_Controller{
 			$tbl = '';
 			foreach ($rsl as $key) {
 				$no = $key->no;
+				$idcard = $key->idcard;
 				$nip = $key->nip;
 				$nama_diklat = $key->nama_diklat;
 				$tmp_belajar = $key->tmp_belajar;
@@ -927,8 +928,8 @@ class Member extends CI_Controller{
 				$tgl_selesai = $key->tgl_selesai;
 				$jml_jam = $key->jml_jam;
 				$penyelenggara = $key->penyelenggara;
-				$file = $key->file;
-				$id_ajuan = $key->id_ajuan_status;
+				$file = $key->nama_berkas;
+				$id_ajuan = $key->id_ajuanstatus;
 				$deskripsi = $key->deskripsi;
 
 				if($id_ajuan == "1"){
@@ -941,22 +942,28 @@ class Member extends CI_Controller{
 					$info_ajuan = "<span class='label label-warning'>$deskripsi</span>";
 				}else if($id_ajuan == "5"){
 					$info_ajuan = "<span class='label label-danger'>$deskripsi</span>";
+				}else if($id_ajuan == "6"){
+					$info_ajuan = "<span class='label label-info'>$deskripsi</span>";
+				}else if($id_ajuan == "7"){
+					$info_ajuan = "<span class='label label-success'>$deskripsi</span>";
 				}else{
 					$info_ajuan = "-";
+				}
 
-				$tbl = "
+				$tbl .= "
 						<tr>
-							<td>$nama_diklat</td>
 							<td>
-								$tmp_belajar<br>
+								<span style='color:blue;'>$nama_diklat</span><br>
+								Penyelenggara: $penyelenggara
+							</td>
+							<td>
 								$lokasi
 							</td>
 							<td>
-								Tanggal Mulai: $tgl_mulai<br>
-								Tanggal Selesai: $tgl_selesai
+								Mulai: <span style='color:green;'>$tgl_mulai</span><br>
+								Selesai: <span style='color:red;'>$tgl_selesai</span>
 							</td>
-							<td>$jml_jam</td>
-							<td>$penyelenggara</td>
+							<td style='text-align:center;'>$jml_jam</td>
 							<td style='text-align:center'>$info_ajuan</td>
 							<td>
 								<button class='btn btn-success'><i class='fa fa-file'></i></button>
@@ -966,7 +973,6 @@ class Member extends CI_Controller{
 
 						</tr>
 						";
-				}
 			}
 		}else{
 			$tbl = "<tr><td colspan='9' style='text-align:center;'>Data tidak ditemukan.</td></tr>";
@@ -992,6 +998,164 @@ class Member extends CI_Controller{
 		$this->load->view('template/body',$data);
 	}
 
+	function list_dik_teknis(){
+		$card = $this->session->userdata('id_user');
+
+		$tbl = "data_dikteknis";
+		$arr = array('idcard' => $card, );
+		$q = $this->Mmember->riwayat_ajuan($tbl,$card);
+		$tot = $q->num_rows();
+		$rsl = $q->result();
+
+		if($tot>'0'){
+			$tbl = '';
+			foreach ($rsl as $key) {
+				$no = $key->no;
+				$idcard = $key->idcard;
+				$nip = $key->nip;
+				$nama_diklat = $key->nama_diklat;
+				$tmp_belajar = $key->tmp_belajar;
+				$lokasi = $key->lokasi;
+				$tgl_mulai = $key->tgl_mulai;
+				$tgl_selesai = $key->tgl_selesai;
+				$jml_jam = $key->jml_jam;
+				$penyelenggara = $key->penyelenggara;
+				$file = $key->nama_berkas;
+				$id_ajuan = $key->id_ajuanstatus;
+				$deskripsi = $key->deskripsi;
+
+				if($id_ajuan == "1"){
+					$info_ajuan = "<span class='label label-info'>$deskripsi</span>";
+				}else if($id_ajuan == "2"){
+					$info_ajuan = "<span class='label label-primary'>$deskripsi</span>";
+				}else if($id_ajuan == "3"){
+					$info_ajuan = "<span class='label label-success'>$deskripsi</span>";
+				}else if($id_ajuan == "4"){
+					$info_ajuan = "<span class='label label-warning'>$deskripsi</span>";
+				}else if($id_ajuan == "5"){
+					$info_ajuan = "<span class='label label-danger'>$deskripsi</span>";
+				}else if($id_ajuan == "6"){
+					$info_ajuan = "<span class='label label-info'>$deskripsi</span>";
+				}else if($id_ajuan == "7"){
+					$info_ajuan = "<span class='label label-success'>$deskripsi</span>";
+				}else{
+					$info_ajuan = "-";
+				}
+
+				$tbl .= "
+						<tr>
+							<td>
+								<span style='color:blue;'>$nama_diklat</span><br>
+								Penyelenggara: $penyelenggara
+							</td>
+							<td>
+								$lokasi
+							</td>
+							<td>
+								Mulai: <span style='color:green;'>$tgl_mulai</span><br>
+								Selesai: <span style='color:red;'>$tgl_selesai</span>
+							</td>
+							<td style='text-align:center;'>$jml_jam</td>
+							<td style='text-align:center'>$info_ajuan</td>
+							<td>
+								<button class='btn btn-success'><i class='fa fa-file'></i></button>
+								<button class='btn btn-warning'><i class='fa fa-pencil'></i></button>
+								<button class='btn btn-danger'><i class='fa fa-trash-o'></i></button>
+							</td>
+
+						</tr>
+						";
+			}
+		}else{
+			$tbl = "<tr><td colspan='9' style='text-align:center;'>Data tidak ditemukan.</td></tr>";
+		}
+
+		$data = array('tbl' => $tbl, );
+		echo json_encode($data);
+
+	}
+
+	function do_upload_dik_teknis(){
+		$id		= $this->session->userdata('id_user');
+		$folder = "data_dikteknis";
+
+		$nama = $_POST['nama'];
+		$belajar = $_POST['belajar'];
+		$lokasi = $_POST['lokasi'];
+		$tgl_mulai = $_POST['tgl_mulai'];
+		$tgl_selesai = $_POST['tgl_selesai'];
+		$jml_jam = $_POST['jml_jam'];
+		$created = $_POST['created'];
+
+		$start = date("Y-m-d", strtotime($tgl_mulai));
+		$finish = date("Y-m-d", strtotime($tgl_selesai));
+
+		$arr = array(
+			'idcard' => $id,
+			'nama_diklat' => $nama,
+			'tmp_belajar' => $belajar,
+			'lokasi' => $lokasi,
+			'tgl_mulai' => $start,
+			'tgl_selesai' => $finish,
+			'jml_jam' => $jml_jam,
+			'penyelenggara' => $created,
+		);
+
+		$this->Mmember->insert($folder,$arr); 
+
+		if (!is_dir('assets/uploads/' . $folder)){
+	        mkdir('./assets/uploads/' . $folder, 0777, true);
+	    }
+
+		$sql = $this->Mmember->last_data1($folder,$id)->row();
+		$last_rec = $sql->nomor;
+
+		$tgl = date("Y-m-d h:i:s");
+
+		$arr1 = array(
+			'jenis_ajuan' => '3', 
+			'no_jenis_ajuan' => $last_rec, 
+			'tgl_ajuan' => $tgl, 
+			'id_ajuanstatus' => '1', // pengajuan pegawai
+			'idcard' => $id,
+		);
+		$this->Mmember->insert('ajuan',$arr1); 
+
+	    $nm_file = $id.'_'.$last_rec;
+        $config = array(
+        	'upload_path' => './assets/uploads/' . $folder, 
+        	'allowed_types' =>'jpg|jpeg|png|pdf', 
+        	'file_name' => $nm_file, 
+        );
+
+        $this->load->library('upload',$config);
+        if(is_uploaded_file($_FILES['file_image']['tmp_name'])){
+	        if($this->upload->do_upload("file_image")){
+	            $data = array('upload_data' => $this->upload->data());
+	 			
+	            //Resize and Compress Image
+	            $config['image_library']='gd2';
+	            $config['source_image']='./assets/uploads/'.$folder.'/'.$nm_file; 
+	            $config['create_thumb']= TRUE;
+	            $config['maintain_ratio'] = TRUE;
+	            $config['quality']= '60%';
+	            $config['width']= 600;
+	            $config['max_width']= 1200;
+	            $config['height']= 450;
+	            $config['max_height']= 1200;
+	            $config['max_size']= 3000;
+	            $config['new_image']= './assets/uploads/'.$folder.'/'.$nm_file; 
+	            $this->load->library('image_lib', $config);
+	            $this->image_lib->resize();
+
+	            $arr = array('nama_berkas' => $nm_file, );
+				$this->Mmember->update($folder,$arr,'no',$last_rec);
+
+	            echo json_decode($result);
+	        }
+        }
+	}
+
 	function riw_dik_jenjang_add(){
 		$data['head_page'] 	= $this->load->view('template/head','',true);
 		$data['top_menu'] 	= $this->load->view('template/top_menu','',true);
@@ -1006,6 +1170,91 @@ class Member extends CI_Controller{
 
 		$this->load->view('template/body',$data);
 	}
+
+	function do_upload_dik_jenjang(){
+		$id		= $this->session->userdata('id_user');
+		$folder = "data_dikjenjang";
+
+		$jns_diklat = $_POST["jns_diklat"];
+		$angkatan = $_POST["angkatan"];
+		$created = $_POST["created"];
+		$tgl_mulai = $_POST["tgl_mulai"];
+		$tgl_selesai = $_POST["tgl_selesai"];
+		$predikat = $_POST["predikat"];
+		$lokasi = $_POST["lokasi"];
+		$jml_jam = $_POST["jml_jam"];
+
+		$start = date("Y-m-d", strtotime($tgl_mulai));
+		$finish = date("Y-m-d", strtotime($tgl_selesai));
+
+		$arr = array(
+			'idcard' => $id,
+			'jns_diklat' => $jns_diklat,
+			'angkatan' => $angkatan,
+			'penyelenggara' => $created,
+			'tgl_mulai' => $start,
+			'tgl_selesai' => $finish,
+			'predikat' => $predikat,
+			'lokasi' => $lokasi,
+			'jml_jam' => $jml_jam,
+
+		);
+
+		$this->Mmember->insert($folder,$arr); 
+
+		if (!is_dir('assets/uploads/' . $folder)){
+	        mkdir('./assets/uploads/' . $folder, 0777, true);
+	    }
+
+		$sql = $this->Mmember->last_data1($folder,$id)->row();
+		$last_rec = $sql->nomor;
+
+		$tgl = date("Y-m-d h:i:s");
+
+		$arr1 = array(
+			'jenis_ajuan' => '4', 
+			'no_jenis_ajuan' => $last_rec, 
+			'tgl_ajuan' => $tgl, 
+			'id_ajuanstatus' => '1', // pengajuan pegawai
+			'idcard' => $id,
+		);
+		$this->Mmember->insert('ajuan',$arr1); 
+
+	    $nm_file = $id.'_'.$last_rec;
+        $config = array(
+        	'upload_path' => './assets/uploads/' . $folder, 
+        	'allowed_types' =>'jpg|jpeg|png|pdf', 
+        	'file_name' => $nm_file, 
+        );
+
+        $this->load->library('upload',$config);
+        if(is_uploaded_file($_FILES['file_image']['tmp_name'])){
+	        if($this->upload->do_upload("file_image")){
+	            $data = array('upload_data' => $this->upload->data());
+	 			
+	            //Resize and Compress Image
+	            $config['image_library']='gd2';
+	            $config['source_image']='./assets/uploads/'.$folder.'/'.$nm_file; 
+	            $config['create_thumb']= TRUE;
+	            $config['maintain_ratio'] = TRUE;
+	            $config['quality']= '60%';
+	            $config['width']= 600;
+	            $config['max_width']= 1200;
+	            $config['height']= 450;
+	            $config['max_height']= 1200;
+	            $config['max_size']= 3000;
+	            $config['new_image']= './assets/uploads/'.$folder.'/'.$nm_file; 
+	            $this->load->library('image_lib', $config);
+	            $this->image_lib->resize();
+
+	            $arr = array('nama_berkas' => $nm_file, );
+				$this->Mmember->update($folder,$arr,'no',$last_rec);
+
+	            echo json_decode($result);
+	        }
+        }
+	}
+
 
 	function riw_pangkat_add(){
 		$data['head_page'] 	= $this->load->view('template/head','',true);
