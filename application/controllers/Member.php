@@ -675,7 +675,8 @@ class Member extends CI_Controller{
 		$tanggal = date("Y-m-d", strtotime($tgl));
 
 		$arr = array(
-			'nip' => $id,
+			'idcard' => $id,
+			// 'nip' => $id,
 			'tingkat_pend' => $edu,
 			'nama_sekolah' => $sekolah,
 			'jurusan' => $prodi,
@@ -702,6 +703,87 @@ class Member extends CI_Controller{
 			'no_jenis_ajuan' => $last_rec, 
 			'tgl_ajuan' => $tgl, 
 			'id_ajuan_status' => '1', // pengajuan pegawai
+			'idcard' => $id,
+		);
+		$this->Mmember->insert('ajuan',$arr1); 
+
+	    $nm_file = $id.'_'.$last_rec;
+        $config = array(
+        	'upload_path' => './assets/uploads/' . $folder, 
+        	'allowed_types' =>'jpg|jpeg|png|pdf', 
+        	'file_name' => $nm_file, 
+        );
+
+        $this->load->library('upload',$config);
+        if(is_uploaded_file($_FILES['file_image']['tmp_name'])){
+	        if($this->upload->do_upload("file_image")){
+	            $data = array('upload_data' => $this->upload->data());
+	 			
+	            //Resize and Compress Image
+	            $config['image_library']='gd2';
+	            $config['source_image']='./assets/uploads/'.$folder.'/'.$nm_file; 
+	            $config['create_thumb']= TRUE;
+	            $config['maintain_ratio'] = TRUE;
+	            $config['quality']= '60%';
+	            $config['width']= 600;
+	            $config['max_width']= 1200;
+	            $config['height']= 450;
+	            $config['max_height']= 1200;
+	            $config['max_size']= 3000;
+	            $config['new_image']= './assets/uploads/'.$folder.'/'.$nm_file; 
+	            $this->load->library('image_lib', $config);
+	            $this->image_lib->resize();
+
+	            $arr = array('nama_berkas' => $nm_file, );
+				$this->Mmember->update($folder,$arr,'no',$last_rec);
+
+	            echo json_decode($result);
+	        }
+        }
+	}
+
+	function do_upload_dik_fungsi(){
+		$id		= $this->session->userdata('id_user');
+		$folder = "data_dikfungsi";
+
+		$nama = $_POST['nama'];
+		$belajar = $_POST['belajar'];
+		$lokasi = $_POST['lokasi'];
+		$tgl_mulai = $_POST['tgl_mulai'];
+		$tgl_selesai = $_POST['tgl_selesai'];
+		$jml_jam = $_POST['jml_jam'];
+		$created = $_POST['created'];
+
+		$start = date("Y-m-d", strtotime($tgl_mulai));
+		$finish = date("Y-m-d", strtotime($tgl_selesai));
+
+		$arr = array(
+			'idcard' => $id,
+			'nama_diklat' => $nama,
+			'tmp_belajar' => $belajar,
+			'lokasi' => $lokasi,
+			'tgl_mulai' => $start,
+			'tgl_selesai' => $finish,
+			'jml_jam' => $jml_jam,
+			'penyelenggara' => $created,
+		);
+
+		$this->Mmember->insert($folder,$arr); 
+
+		if (!is_dir('assets/uploads/' . $folder)){
+	        mkdir('./assets/uploads/' . $folder, 0777, true);
+	    }
+
+		$sql = $this->Mmember->last_data1($folder,$id)->row();
+		$last_rec = $sql->nomor;
+
+		$tgl = date("Y-m-d h:i:s");
+
+		$arr1 = array(
+			'jenis_ajuan' => '2', 
+			'no_jenis_ajuan' => $last_rec, 
+			'tgl_ajuan' => $tgl, 
+			'id_ajuanstatus' => '1', // pengajuan pegawai
 			'idcard' => $id,
 		);
 		$this->Mmember->insert('ajuan',$arr1); 

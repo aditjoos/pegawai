@@ -448,7 +448,7 @@ class Mmember extends CI_Model {
 			FROM
 				$tbl
 			WHERE
-				nip = '$record';
+				idcard = '$record';
 			";
 
 		$sql = strtolower($q);

@@ -22,7 +22,7 @@
                                     <div class="form-group">
                                         <label class="control-label">Nama Diklat</label>
                                         <div>
-                                            <input type="text" class="form-control" id="nama" name="nama">
+                                            <input type="text" class="form-control" id="nama" name="nama" >
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -43,11 +43,11 @@
                                     <div class="form-group">
                                         <label class="control-label">Tanggal Mulai</label>
                                         <div class="col-lg-3">
-                                            <input type="text" class="form-control tanggal" id="tgl_mulai" name="tgl_mulai">
+                                            <input type="text" class="form-control tanggal" id="tgl_mulai" name="tgl_mulai" autocomplete="off">
                                         </div>
                                         <label class="col-lg-3" style="text-align: right; margin-top: 7px;">Tanggal Selesai</label>
                                         <div class="col-lg-3">
-                                            <input type="text" class="form-control tanggal" id="tgl_selesai" name="tgl_selesai">
+                                            <input type="text" class="form-control tanggal" id="tgl_selesai" name="tgl_selesai" autocomplete="off">
                                         </div>
                                     </div>
                                     <div class="form-group">
