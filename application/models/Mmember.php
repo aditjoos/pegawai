@@ -556,6 +556,7 @@ class Mmember extends CI_Model {
 
 	function list_ajuan_dik_fung(){
 		$q = 	"SELECT
+					a.id_ajuan,
 					a.idcard,
 					a.no_jenis_ajuan,
 					b.gelar_depan,
@@ -564,13 +565,14 @@ class Mmember extends CI_Model {
 					a.nama_ajuan,
 					a.tgl_ajuan,
 					a.jenis_ajuan,
-					a.deskripsi
+					a.deskripsi,
+					a.id_ajuanstatus
 				FROM
 					v_ajuan AS a
 				INNER JOIN 
 					guru AS b 
 				ON 
-					a.idcard = b.id ORDER BY tgl_ajuan DESC;";
+					a.idcard = b.id ORDER BY id_ajuan DESC;";
 
 		$sql = strtolower($q);
 		return $this->db->query($sql);
@@ -605,7 +607,7 @@ class Mmember extends CI_Model {
 	}
 
 	function list_status_ajuan(){
-		$q = "SELECT id_statusajuan as id, deskripsi FROM ref_ajuanstatus";
+		$q = "SELECT id_statusajuan as id, deskripsi FROM ref_ajuanstatus WHERE id_statusajuan NOT IN(1)";
 
 		$sql = strtolower($q);
 		return $this->db->query($sql)->result();

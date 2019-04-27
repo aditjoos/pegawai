@@ -17,7 +17,7 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-lg-12">
-                            <form action="">
+                            <form>
                                 <table class="table table-striped" id="table-example">
                                     <thead>
                                         <tr>

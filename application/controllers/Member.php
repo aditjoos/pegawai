@@ -1586,6 +1586,7 @@ class Member extends CI_Controller{
 				$tgl_ajuan = date("d-m-Y", strtotime($key->tgl_ajuan));
 				$id_ajuan = $key->jenis_ajuan;
 				$deskripsi = $key->deskripsi;
+				$id_ajuanstatus = $key->id_ajuanstatus;
 
 				$controller = '';
 				if($id_ajuan == "1"){
@@ -1601,13 +1602,32 @@ class Member extends CI_Controller{
 				}else{
 					$controller = "no_controller";
 				}
+				
+				$info_ajuan = "-";
+				if($id_ajuanstatus == "1"){
+					$info_ajuan = "<span class='label label-info'>$deskripsi</span>";
+				}else if($id_ajuanstatus == "2"){
+					$info_ajuan = "<span class='label label-primary'>$deskripsi</span>";
+				}else if($id_ajuanstatus == "3"){
+					$info_ajuan = "<span class='label label-success'>$deskripsi</span>";
+				}else if($id_ajuanstatus == "4"){
+					$info_ajuan = "<span class='label label-warning'>$deskripsi</span>";
+				}else if($id_ajuanstatus == "5"){
+					$info_ajuan = "<span class='label label-danger'>$deskripsi</span>";
+				}else if($id_ajuanstatus == "6"){
+					$info_ajuan = "<span class='label label-info'>$deskripsi</span>";
+				}else if($id_ajuanstatus == "7"){
+					$info_ajuan = "<span class='label label-success'>$deskripsi</span>";
+				}else{
+					$info_ajuan = "-";
+				}
 
 				$tbl  .= "<tr>
 							<td><span style='color:black;'>$idcard</span></td>
 							<td>$gelar_depan $nama $gelar_belakang</td>
 							<td>$nama_ajuan</td>
 							<td>$tgl_ajuan</td>
-							<td style='text-align:center'>$deskripsi</td>
+							<td style='text-align:center'>$info_ajuan</td>
 							<td>
 								<a href='".base_url()."member/$controller/$no_jenis_ajuan/$id_ajuan' class='btn btn-success'>
 									<i class='fa fa-eye'></i> 
