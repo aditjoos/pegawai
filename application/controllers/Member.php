@@ -1383,7 +1383,7 @@ class Member extends CI_Controller{
 				}else if($id_ajuan == "3"){
 					$controller = "admin_riw_dik_teknis_detail";
 				}else if($id_ajuan == "4"){
-					$controller = "no_controller";
+					$controller = "admin_riw_dik_jenjang_detail";
 				}else if($id_ajuan == "5"){
 					$controller = "no_controller";
 				}else{
@@ -1397,7 +1397,7 @@ class Member extends CI_Controller{
 							<td>$tgl_ajuan</td>
 							<td style='text-align:center'>$deskripsi</td>
 							<td>
-								<a href='".base_url()."member/$controller/$no_jenis_ajuan' class='btn btn-success'>
+								<a href='".base_url()."member/$controller/$no_jenis_ajuan/$id_ajuan' class='btn btn-success'>
 									<i class='fa fa-eye'></i> 
 									Lihat
 								</a>
@@ -1418,13 +1418,14 @@ class Member extends CI_Controller{
 			'jenis_ajuan' 		=> $this->uri->segment(3),
 			'no_jenis_ajuan' 	=> $this->uri->segment(4),
 			'id_ajuanstatus' 	=> $this->input->get_post('status_ajuan',true),
+			'jenis_diklat' 		=> $this->input->get_post('jenis_diklat',true),
 			'update_by'			=> $this->session->userdata('id_user')
 		);
 
 		// echo $data['no_jenis_ajuan'];
 		
 		$this->Mmember->update_ajuan($data);
-		redirect('/member/admin_riw_dik_fung');
+		redirect('/member/admin_ajuan_pegawai');
 	}
 
 	function admin_riw_dik_fung_detail($id_record){
@@ -1450,10 +1451,6 @@ class Member extends CI_Controller{
 	}
 
 	function get_riw_dik_fung_detail($id_record){
-		// $id		= $id_record;
-		// $data = array(
-		// 	'id'			=> $id,
-		// );
 
 		$cb1 = array();
 		$cb2 = array();
@@ -1473,14 +1470,14 @@ class Member extends CI_Controller{
 		$data['head_page'] 	= $this->load->view('template/head','',true);
 		$data['top_menu'] 	= $this->load->view('template/top_menu','',true);
 
-		$info['detail']		= $this->get_riw_dik_fung_detail($id_record);
+		$info['detail']		= $this->get_riw_dik_teknis_detail($id_record);
 		$info['select_option']		= $this->Mmember->list_status_ajuan();
-		$data['main_page'] 	= $this->load->view('member/admin_riw_dik_fung_detail',$info,true);
+		$data['main_page'] 	= $this->load->view('member/admin_riw_dik_teknis_detail',$info,true);
 
 		$data['modal'] 		= $this->load->view('template/modal','',true);
 		$data['left_menu'] 	= $this->load->view('template/left_menu','',true);
 		$data['foot'] 		= $this->load->view('template/foot','',true);
-		$data['custom_js'] 	= $this->load->view('member/admin_riw_dik_fung_detail_js','',true);
+		$data['custom_js'] 	= $this->load->view('member/admin_riw_dik_teknis_detail_js','',true);
 
 		$this->load->view('template/body',$data);
 	}
@@ -1488,7 +1485,69 @@ class Member extends CI_Controller{
 	function get_riw_dik_teknis_detail($id_record){
 		$cb1 = array();
 		$cb2 = array();
-		$result = $this->Mmember->get_riw_dik_fung_detail($id_record)->result();
+		$result = $this->Mmember->get_riw_dik_teknis_detail($id_record)->result();
+		foreach($result as $key => $val){
+			$cb1 = $val;
+		}
+
+		foreach($cb1 as $key2 => $val2){
+			$cb2[strtolower($key2)] = $val2;
+		}
+		return json_encode($cb2);
+
+	}
+
+	function admin_riw_dik_jenjang_detail($id_record){
+		$data['head_page'] 	= $this->load->view('template/head','',true);
+		$data['top_menu'] 	= $this->load->view('template/top_menu','',true);
+
+		$info['detail']		= $this->get_riw_dik_jenjang_detail($id_record);
+		$info['select_option']		= $this->Mmember->list_status_ajuan();
+		$data['main_page'] 	= $this->load->view('member/admin_riw_dik_jenjang_detail',$info,true);
+
+		$data['modal'] 		= $this->load->view('template/modal','',true);
+		$data['left_menu'] 	= $this->load->view('template/left_menu','',true);
+		$data['foot'] 		= $this->load->view('template/foot','',true);
+		$data['custom_js'] 	= $this->load->view('member/admin_riw_dik_jenjang_detail_js','',true);
+
+		$this->load->view('template/body',$data);
+	}
+
+	function get_riw_dik_jenjang_detail($id_record){
+		$cb1 = array();
+		$cb2 = array();
+		$result = $this->Mmember->get_riw_dik_jenjang_detail($id_record)->result();
+		foreach($result as $key => $val){
+			$cb1 = $val;
+		}
+
+		foreach($cb1 as $key2 => $val2){
+			$cb2[strtolower($key2)] = $val2;
+		}
+		return json_encode($cb2);
+
+	}
+
+	function admin_riw_edu_detail($id_record){
+		$data['head_page'] 	= $this->load->view('template/head','',true);
+		$data['top_menu'] 	= $this->load->view('template/top_menu','',true);
+
+		$info['detail']		= $this->get_riw_edu_detail($id_record);
+		$info['select_option']		= $this->Mmember->list_status_ajuan();
+		$data['main_page'] 	= $this->load->view('member/admin_riw_edu_detail',$info,true);
+
+		$data['modal'] 		= $this->load->view('template/modal','',true);
+		$data['left_menu'] 	= $this->load->view('template/left_menu','',true);
+		$data['foot'] 		= $this->load->view('template/foot','',true);
+		$data['custom_js'] 	= $this->load->view('member/admin_riw_edu_detail_js','',true);
+
+		$this->load->view('template/body',$data);
+	}
+
+	function get_riw_edu_detail($id_record){
+		$cb1 = array();
+		$cb2 = array();
+		$result = $this->Mmember->get_riw_edu_detail($id_record)->result();
 		foreach($result as $key => $val){
 			$cb1 = $val;
 		}

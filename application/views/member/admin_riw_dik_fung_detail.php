@@ -66,28 +66,44 @@
                                         </div>
                                     </div>
                                 </form>
-                                <div class="form-group offset">
-                                    <div>
-                                        <form action="<?php echo $path; ?>member/update_ajuan/2/<?php if(isset($data)){echo $data->no;}else{echo '-';} ?>" class="form-horizontal" method="POST" id="upload_form" enctype="multipart/form-data" data-collabel="3" data-alignlabel="left">
-                                            <a class="btn btn-info" href="<?php echo base_url();?>member/admin_riw_dik_fung">Batal</a>
-                                            <select class="selectpicker" id="select_status" name="status_ajuan">
-                                                <?php foreach($option as $option){ ?>
-                                                    <option value="<?php echo $option['id']; ?>"><?php echo $option['deskripsi']; ?></option>
-                                                <?php } ?>
-                                            </select>
-                                            <select class="selectpicker" id="select_kategori" name="">
-                                                <option value=''> Pilih Kategori </option>
-                                            </select>
-                                            <button class="btn btn-theme" href="#!"><i class="fa fa-check"></i> Approve</button>
-                                        </form>
-                                    </div>
-                                </div>
+                                
                             </div>
                         </div>
                         <div class="col-lg-4">
-                            <img src="<?php echo base_url();?>/assets/img/noimage.jpg" class="img-responsive" id="blah">
+                            <img src="<?php echo base_url();?>/assets/<?php if(isset($data)){echo 'uploads/data_dikfungsi/'.$data->nama_berkas;}else{echo 'img/noimage';} ?>.jpg" class="img-responsive" id="blah">
                         </div>
 
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="panel-body">
+                                <form action="<?php echo $path; ?>member/update_ajuan/<?php echo $this->uri->segment(4) ?>/<?php if(isset($data)){echo $data->no;}else{echo '-';} ?>" class="form-horizontal" method="POST" id="upload_form" enctype="multipart/form-data" data-collabel="3" data-alignlabel="left">
+                                    <div class="form-group">
+                                        <label class="control-label">Keterangan</label>
+                                        <div>
+                                            <input type="text" class="form-control" name="keterangan">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Status</label>
+                                        <select class="selectpicker" id="select_status" name="status_ajuan">
+                                            <?php foreach($option as $option){ ?>
+                                                <option value="<?php echo $option['id']; ?>"><?php echo $option['deskripsi']; ?></option>
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Kategori</label>
+                                        <select class="selectpicker" id="select_kategori" name="jenis_diklat">
+                                            <option value='1'> Pengembangan </option>
+                                            <option value='2'> Pemberdayaan </option>
+                                        </select>
+                                    </div>
+                                    <a class="btn btn-info" href="<?php echo base_url();?>member/admin_ajuan_pegawai">Batal</a>
+                                    <button class="btn btn-theme" href="#!"><i class="fa fa-check"></i> Approve</button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>

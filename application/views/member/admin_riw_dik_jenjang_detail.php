@@ -17,7 +17,7 @@
         <div class="col-lg-12">
             <section class="panel">
                 <header class="panel-heading bg-inverse">
-                <h3><strong>Approve</strong> Riwayat Diklat Teknis Pegawai </h3>
+                <h3><strong>Approve</strong> Riwayat Diklat Fungsional Pegawai </h3>
                     <label class="color"><strong><?php echo $this->session->userdata('nama'); ?></strong></label>
                 </header>
                 <div class="panel-body">
@@ -26,21 +26,21 @@
                             <div class="panel-body">
                                 <form class="form-horizontal">
                                     <div class="form-group">
-                                        <label class="control-label">Nama Diklat</label>
+                                        <label class="control-label">Jenis Diklat</label>
                                         <div>
-                                            <input type="text" class="form-control" disabled value="<?php if(isset($data)){echo $data->nama_diklat;}else{echo '-';} ?>">
+                                            <input type="text" class="form-control" disabled value="<?php if(isset($data)){echo $data->jns_diklat;}else{echo '-';} ?>">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label">Tempat Belajar</label>
+                                        <label class="control-label">Angkatan</label>
                                         <div>
-                                            <input type="text" class="form-control" disabled value="<?php if(isset($data)){echo $data->tmp_belajar;}else{echo '-';} ?>">
+                                            <input type="text" class="form-control" disabled value="<?php if(isset($data)){echo $data->angkatan;}else{echo '-';} ?>">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label">Lokasi</label>
+                                        <label class="control-label">Penyelenggara</label>
                                         <div>
-                                            <input type="text" class="form-control" disabled value="<?php if(isset($data)){echo $data->lokasi;}else{echo '-';} ?>">
+                                            <input type="text" class="form-control" disabled value="<?php if(isset($data)){echo $data->penyelenggara;}else{echo '-';} ?>">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -54,22 +54,29 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label">Jumlah Jam</label>
+                                        <label class="control-label">Predikat</label>
                                         <div>
-                                            <input type="text" class="form-control tanggal" disabled value="<?php if(isset($data)){echo $data->jml_jam;}else{echo '-';} ?>">
+                                            <input type="text" class="form-control tanggal" disabled value="<?php if(isset($data)){echo $data->predikat;}else{echo '-';} ?>">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label">Penyelenggara</label>
+                                        <label class="control-label">Lokasi</label>
                                         <div>
-                                            <input type="text" class="form-control" disabled value="<?php if(isset($data)){echo $data->penyelenggara;}else{echo '-';} ?>">
+                                            <input type="text" class="form-control" disabled value="<?php if(isset($data)){echo $data->lokasi;}else{echo '-';} ?>">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Jumlah Jam</label>
+                                        <div>
+                                            <input type="text" class="form-control" disabled value="<?php if(isset($data)){echo $data->jml_jam;}else{echo '-';} ?>">
                                         </div>
                                     </div>
                                 </form>
+                                
                             </div>
                         </div>
                         <div class="col-lg-4">
-                            <img src="<?php echo base_url();?>/assets/<?php if(isset($data)){echo 'uploads/data_dikteknis/'.$data->nama_berkas;}else{echo 'img/noimage';} ?>.jpg" class="img-responsive" id="blah">
+                            <img src="<?php echo base_url();?>/assets/<?php if(isset($data)){echo 'uploads/data_dikjenjang/'.$data->nama_berkas;}else{echo 'img/noimage';} ?>.jpg" class="img-responsive" id="blah">
                         </div>
 
                     </div>
@@ -77,7 +84,7 @@
                         <div class="col-lg-8">
                             <div class="panel-body">
                                 <form action="<?php echo $path; ?>member/update_ajuan/<?php echo $this->uri->segment(4) ?>/<?php if(isset($data)){echo $data->no;}else{echo '-';} ?>" class="form-horizontal" method="POST" id="upload_form" enctype="multipart/form-data" data-collabel="3" data-alignlabel="left">
-                                    <div id="field-keterangan" class="form-group">
+                                    <div class="form-group">
                                         <label class="control-label">Keterangan</label>
                                         <div>
                                             <input type="text" class="form-control" name="keterangan">
@@ -87,7 +94,7 @@
                                         <label class="control-label">Status</label>
                                         <select class="selectpicker" id="select_status" name="status_ajuan">
                                             <?php foreach($option as $option){ ?>
-                                                <option id="option-<?php echo $option['id']; ?>" value="<?php echo $option['id']; ?>"><?php echo $option['deskripsi']; ?></option>
+                                                <option value="<?php echo $option['id']; ?>"><?php echo $option['deskripsi']; ?></option>
                                             <?php } ?>
                                         </select>
                                     </div>
