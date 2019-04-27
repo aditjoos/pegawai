@@ -76,7 +76,7 @@
                             </div>
                         </div>
                         <div class="col-lg-4">
-                            <img src="<?php echo base_url();?>/assets/img/noimage.jpg" class="img-responsive" id="blah">
+                            <img src="<?php echo base_url();?>/assets/<?php if(isset($data)){echo 'uploads/data_dikteknis/'.$data->nama_berkas;}else{echo 'img/noimage.jpg';} ?>" class="img-responsive" id="blah">
                         </div>
 
                     </div>
