@@ -794,7 +794,7 @@ class Member extends CI_Controller{
         	'allowed_types' =>'jpg|jpeg|png|pdf', 
         	'file_name' => $nm_file, 
         );
-
+        
         $this->load->library('upload',$config);
         if(is_uploaded_file($_FILES['file_image']['tmp_name'])){
 	        if($this->upload->do_upload("file_image")){
@@ -814,8 +814,13 @@ class Member extends CI_Controller{
 	            $config['new_image']= './assets/uploads/'.$folder.'/'.$nm_file; 
 	            $this->load->library('image_lib', $config);
 	            $this->image_lib->resize();
+	            
+	            $foto2	= $_FILES['file_image']['name'];
+	            $pisah2 = explode('.',$foto2);
+	            $ext2 	= $pisah2[1];
+	            $filefix2 = $nm_file.'.'.$ext2;
 
-	            $arr = array('nama_berkas' => $nm_file, );
+	            $arr = array('nama_berkas' => $filefix2,);
 				$this->Mmember->update($folder,$arr,'no',$last_rec);
 
 	            echo json_decode($result);
@@ -853,18 +858,41 @@ class Member extends CI_Controller{
 
 				if($id_ajuan == "1"){
 					$info_ajuan = "<span class='label label-info'>$deskripsi</span>";
+
+					$btn_aksi = "
+								<button class='btn btn-success'><i class='fa fa-picture-o'></i></button>
+								<button class='btn btn-warning'><i class='fa fa-pencil'></i></button>
+								<button class='btn btn-danger'><i class='fa fa-trash-o'></i></button>
+								";
 				}else if($id_ajuan == "2"){
 					$info_ajuan = "<span class='label label-primary'>$deskripsi</span>";
+
+					$btn_aksi = "<button class='btn btn-success'><i class='fa fa-picture-o'></i></button>";
 				}else if($id_ajuan == "3"){
 					$info_ajuan = "<span class='label label-success'>$deskripsi</span>";
+
+					$btn_aksi = "<button class='btn btn-success'><i class='fa fa-picture-o'></i></button>";
 				}else if($id_ajuan == "4"){
 					$info_ajuan = "<span class='label label-warning'>$deskripsi</span>";
+					$btn_aksi = "
+								<button class='btn btn-success'><i class='fa fa-comment'></i></button>
+								<button class='btn btn-warning'><i class='fa fa-pencil'></i></button>
+								<button class='btn btn-danger'><i class='fa fa-trash-o'></i></button>
+								";
 				}else if($id_ajuan == "5"){
 					$info_ajuan = "<span class='label label-danger'>$deskripsi</span>";
+
+					$btn_aksi = "
+								<button class='btn btn-success'><i class='fa fa-comment'></i></button>
+								<button class='btn btn-warning'><i class='fa fa-pencil'></i></button>
+								<button class='btn btn-danger'><i class='fa fa-trash-o'></i></button>
+								";
 				}else if($id_ajuan == "6"){
 					$info_ajuan = "<span class='label label-info'>$deskripsi</span>";
+					$btn_aksi = "<button class='btn btn-success'><i class='fa fa-picture-o'></i></button>";
 				}else if($id_ajuan == "7"){
-					$info_ajuan = "<span class='label label-theme-inverse'>$deskripsi</span>";
+					$info_ajuan = "<span class='label label-success'>$deskripsi</span>";
+					$btn_aksi = "<button class='btn btn-success'><i class='fa fa-picture-o'></i></button>";
 				}else{
 					$info_ajuan = "-";
 				}
@@ -876,9 +904,7 @@ class Member extends CI_Controller{
 							<td>$no_ijazah</td>
 							<td style='text-align:center'>$info_ajuan</td>
 							<td>
-								<button class='btn btn-success'><i class='fa fa-file'></i></button>
-								<button class='btn btn-warning'><i class='fa fa-pencil'></i></button>
-								<button class='btn btn-danger'><i class='fa fa-trash-o'></i></button>
+								$btn_aksi
 							</td>
 						</tr>";
 			}
@@ -892,6 +918,8 @@ class Member extends CI_Controller{
 	}
 
 	function riw_dik_fungsi_add(){
+		$id = $this->input->post('id',true);
+		echo $id;
 		$data['head_page'] 	= $this->load->view('template/head','',true);
 		$data['top_menu'] 	= $this->load->view('template/top_menu','',true);
 
@@ -918,7 +946,7 @@ class Member extends CI_Controller{
 		if($tot>'0'){
 			$tbl = '';
 			foreach ($rsl as $key) {
-				$no = $key->no;
+				$no = $key->no; $nox = $this->encryption->encrypt($no);
 				$idcard = $key->idcard;
 				$nip = $key->nip;
 				$nama_diklat = $key->nama_diklat;
@@ -934,18 +962,42 @@ class Member extends CI_Controller{
 
 				if($id_ajuan == "1"){
 					$info_ajuan = "<span class='label label-info'>$deskripsi</span>";
+
+					$btn_aksi = "
+								<button class='btn btn-success'><i class='fa fa-picture-o'></i></button>
+								<a class='btn btn-warning' href='riw_dik_fungsi_edit/$nox'><i class='fa fa-pencil'></i></a>
+								<button class='btn btn-danger'><i class='fa fa-trash-o'></i></button>
+								";
 				}else if($id_ajuan == "2"){
 					$info_ajuan = "<span class='label label-primary'>$deskripsi</span>";
+
+					$btn_aksi = "<button class='btn btn-success'><i class='fa fa-picture-o'></i></button>";
 				}else if($id_ajuan == "3"){
 					$info_ajuan = "<span class='label label-success'>$deskripsi</span>";
+
+					$btn_aksi = "<button class='btn btn-success'><i class='fa fa-picture-o'></i></button>";
 				}else if($id_ajuan == "4"){
 					$info_ajuan = "<span class='label label-warning'>$deskripsi</span>";
+					$btn_aksi = "
+								<button class='btn btn-success'><i class='fa fa-comment'></i></button>
+								<a class='btn btn-warning' href='riw_dik_fungsi_edit/$nox'><i class='fa fa-pencil'></i></a>
+								<button class='btn btn-danger'><i class='fa fa-trash-o'></i></button>
+								";
 				}else if($id_ajuan == "5"){
 					$info_ajuan = "<span class='label label-danger'>$deskripsi</span>";
+
+					$btn_aksi = "
+								<button class='btn btn-success'><i class='fa fa-comment'></i></button>
+								<a class='btn btn-warning' href='riw_dik_fungsi_edit/$nox'><i class='fa fa-pencil'></i></a>
+								<button class='btn btn-danger' onclick=''><i class='fa fa-pencil'></i></button>
+								<button class='btn btn-danger'><i class='fa fa-trash-o'></i></button>
+								";
 				}else if($id_ajuan == "6"){
 					$info_ajuan = "<span class='label label-info'>$deskripsi</span>";
+					$btn_aksi = "<button class='btn btn-success'><i class='fa fa-picture-o'></i></button>";
 				}else if($id_ajuan == "7"){
 					$info_ajuan = "<span class='label label-success'>$deskripsi</span>";
+					$btn_aksi = "<button class='btn btn-success'><i class='fa fa-picture-o'></i></button>";
 				}else{
 					$info_ajuan = "-";
 				}
@@ -966,9 +1018,7 @@ class Member extends CI_Controller{
 							<td style='text-align:center;'>$jml_jam</td>
 							<td style='text-align:center'>$info_ajuan</td>
 							<td>
-								<button class='btn btn-success'><i class='fa fa-file'></i></button>
-								<button class='btn btn-warning'><i class='fa fa-pencil'></i></button>
-								<button class='btn btn-danger'><i class='fa fa-trash-o'></i></button>
+								$btn_aksi
 							</td>
 
 						</tr>
@@ -982,6 +1032,47 @@ class Member extends CI_Controller{
 		echo json_encode($data);
 
 	}
+
+	function riw_dik_fungsi_edit(){
+		$data['head_page'] 	= $this->load->view('template/head','',true);
+		$data['top_menu'] 	= $this->load->view('template/top_menu','',true);
+
+		$idx 	= $this->uri->segment(3, 0);
+		$id		= $this->encryption->decrypt($idx);
+		$info['konten'] = $this->konten_dik_fungsi($id);
+
+		$data['main_page'] 	= $this->load->view('member/riw_dik_fungsi_edit',$info,true);
+
+		$data['modal'] 		= $this->load->view('template/modal','',true);
+		$data['left_menu'] 	= $this->load->view('template/left_menu','',true);
+		$data['foot'] 		= $this->load->view('template/foot','',true);
+		$data['custom_js'] 	= $this->load->view('member/riw_dik_fungsi_edit_js','',true);
+
+		$this->load->view('template/body',$data);
+	}
+
+	function konten_dik_fungsi($id){
+		$card 	= $this->session->userdata('id_user');
+		$tbl  	= "data_dikfungsi";
+		$q = $this->Mmember->riwayat_ajuan_detail($tbl,$id)->result();
+		foreach($q as $key => $val){
+			$cb1 = $val;
+		}
+
+		foreach($cb1 as $key2 => $val2){
+			$cb2[strtolower($key2)] = $val2;
+		}
+		return json_encode($cb2);
+	}
+	/*function load_konten_dik_fungsi(){
+
+		if(isset($q)){
+			$nm_diklat = $q->nama_diklat;
+		}
+
+		$data = array('nm_diklat' => $id, );
+		echo json_encode($data);
+	}*/
 
 	function riw_dik_teknis_add(){
 		$data['head_page'] 	= $this->load->view('template/head','',true);
@@ -1026,18 +1117,41 @@ class Member extends CI_Controller{
 
 				if($id_ajuan == "1"){
 					$info_ajuan = "<span class='label label-info'>$deskripsi</span>";
+
+					$btn_aksi = "
+								<button class='btn btn-success'><i class='fa fa-picture-o'></i></button>
+								<button class='btn btn-warning'><i class='fa fa-pencil'></i></button>
+								<button class='btn btn-danger'><i class='fa fa-trash-o'></i></button>
+								";
 				}else if($id_ajuan == "2"){
 					$info_ajuan = "<span class='label label-primary'>$deskripsi</span>";
+
+					$btn_aksi = "<button class='btn btn-success'><i class='fa fa-picture-o'></i></button>";
 				}else if($id_ajuan == "3"){
 					$info_ajuan = "<span class='label label-success'>$deskripsi</span>";
+
+					$btn_aksi = "<button class='btn btn-success'><i class='fa fa-picture-o'></i></button>";
 				}else if($id_ajuan == "4"){
 					$info_ajuan = "<span class='label label-warning'>$deskripsi</span>";
+					$btn_aksi = "
+								<button class='btn btn-success'><i class='fa fa-comment'></i></button>
+								<button class='btn btn-warning'><i class='fa fa-pencil'></i></button>
+								<button class='btn btn-danger'><i class='fa fa-trash-o'></i></button>
+								";
 				}else if($id_ajuan == "5"){
 					$info_ajuan = "<span class='label label-danger'>$deskripsi</span>";
+
+					$btn_aksi = "
+								<button class='btn btn-success'><i class='fa fa-comment'></i></button>
+								<button class='btn btn-warning'><i class='fa fa-pencil'></i></button>
+								<button class='btn btn-danger'><i class='fa fa-trash-o'></i></button>
+								";
 				}else if($id_ajuan == "6"){
 					$info_ajuan = "<span class='label label-info'>$deskripsi</span>";
+					$btn_aksi = "<button class='btn btn-success'><i class='fa fa-picture-o'></i></button>";
 				}else if($id_ajuan == "7"){
 					$info_ajuan = "<span class='label label-success'>$deskripsi</span>";
+					$btn_aksi = "<button class='btn btn-success'><i class='fa fa-picture-o'></i></button>";
 				}else{
 					$info_ajuan = "-";
 				}
@@ -1058,9 +1172,7 @@ class Member extends CI_Controller{
 							<td style='text-align:center;'>$jml_jam</td>
 							<td style='text-align:center'>$info_ajuan</td>
 							<td>
-								<button class='btn btn-success'><i class='fa fa-file'></i></button>
-								<button class='btn btn-warning'><i class='fa fa-pencil'></i></button>
-								<button class='btn btn-danger'><i class='fa fa-trash-o'></i></button>
+								$btn_aksi
 							</td>
 
 						</tr>
@@ -1288,31 +1400,39 @@ class Member extends CI_Controller{
 					$info_ajuan = "<span class='label label-info'>$deskripsi</span>";
 
 					$btn_aksi = "
-								<button class='btn btn-success'><i class='fa fa-file'></i></button>
+								<button class='btn btn-success'><i class='fa fa-picture-o'></i></button>
 								<button class='btn btn-warning'><i class='fa fa-pencil'></i></button>
 								<button class='btn btn-danger'><i class='fa fa-trash-o'></i></button>
 								";
 				}else if($id_ajuan == "2"){
 					$info_ajuan = "<span class='label label-primary'>$deskripsi</span>";
 
-					$btn_aksi = "<button class='btn btn-success'><i class='fa fa-file'></i></button>";
+					$btn_aksi = "<button class='btn btn-success'><i class='fa fa-picture-o'></i></button>";
 				}else if($id_ajuan == "3"){
 					$info_ajuan = "<span class='label label-success'>$deskripsi</span>";
 
-					$btn_aksi = "<button class='btn btn-success'><i class='fa fa-file'></i></button>";
+					$btn_aksi = "<button class='btn btn-success'><i class='fa fa-picture-o'></i></button>";
 				}else if($id_ajuan == "4"){
 					$info_ajuan = "<span class='label label-warning'>$deskripsi</span>";
 					$btn_aksi = "
-								<button class='btn btn-success'><i class='fa fa-commenting'></i></button>
+								<button class='btn btn-success'><i class='fa fa-comment'></i></button>
 								<button class='btn btn-warning'><i class='fa fa-pencil'></i></button>
 								<button class='btn btn-danger'><i class='fa fa-trash-o'></i></button>
 								";
 				}else if($id_ajuan == "5"){
 					$info_ajuan = "<span class='label label-danger'>$deskripsi</span>";
+
+					$btn_aksi = "
+								<button class='btn btn-success'><i class='fa fa-comment'></i></button>
+								<button class='btn btn-warning'><i class='fa fa-pencil'></i></button>
+								<button class='btn btn-danger'><i class='fa fa-trash-o'></i></button>
+								";
 				}else if($id_ajuan == "6"){
 					$info_ajuan = "<span class='label label-info'>$deskripsi</span>";
+					$btn_aksi = "<button class='btn btn-success'><i class='fa fa-picture-o'></i></button>";
 				}else if($id_ajuan == "7"){
 					$info_ajuan = "<span class='label label-success'>$deskripsi</span>";
+					$btn_aksi = "<button class='btn btn-success'><i class='fa fa-picture-o'></i></button>";
 				}else{
 					$info_ajuan = "-";
 				}

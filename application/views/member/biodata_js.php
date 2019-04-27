@@ -62,5 +62,10 @@
 	        }
 	    })
 	}
+
+	function edit_dik_fungsi(id){
+		// $("#ktn").load("Operator_con/diklat_kelas_detail",{'id':id});
+		window.location.href = 'riw_dik_fungsi_add',{'id':id};
+	}
 	
 </script>

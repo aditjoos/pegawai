@@ -7,12 +7,11 @@
 
 ?>
 
-
     <div class="row">
         <div class="col-lg-12">
             <section class="panel">
                 <header class="panel-heading bg-inverse">
-                    <h3><strong>Tambah</strong> Riwayat Diklat Fungsional </h3>
+                    <h3><strong>Tambah</strong> Riwayat Jabatan Fungsional </h3>
                     <label class="color"><strong><?php echo $this->session->userdata('nama'); ?></strong></label>
                 </header>
                 <div class="panel-body">
@@ -21,46 +20,45 @@
                             <div class="panel-body">
                                 <form class="form-horizontal" method="POST" id="upload_form" enctype="multipart/form-data" data-collabel="3" data-alignlabel="left">
                                     <div class="form-group">
-                                        <label class="control-label">Nama Diklat</label>
-                                        <div>
-                                            <input type="text" class="form-control" id="nama" name="nama" >
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label">Tempat Belajar</label>
-                                        <div>
-                                            <select class="form-control" id="belajar" name="belajar">
-                                                <option value="Dalam Negeri">Dalam Negeri</option>
-                                                <option value="Luar Negeri">Luar Negeri</option>
+                                        <label class="control-label">Eselon</label>
+                                        <div class="col-lg-2">
+                                            <select class="form-control" id="eselon" name="eselon">
+                                                <option value="">-</option>
+                                                <option value="I">I</option>
+                                                <option value="II">II</option>
+                                                <option value="III">III</option>
+                                                <option value="IV">IV</option>
                                             </select>
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label">Lokasi</label>
-                                        <div>
-                                            <input type="text" class="form-control" id="lokasi" name="lokasi">
+                                        <label class="col-lg-3" style="text-align: right; margin-top: 7px;">Nama Jabatan</label>
+                                        <div class="col-lg-4">
+                                            <input type="text" class="form-control" id="jabatan" name="jabatan">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label">Tanggal Mulai</label>
+                                        <label class="control-label">Nama Jabatan</label>
+                                        <div class="col-lg-4">
+                                            <input type="text" class="form-control tanggal" id="unitkerja" name="unitkerja">
+                                        </div>
+                                        <label class="col-lg-2" style="text-align: right; margin-top: 7px;">TMT Jabatan</label>
                                         <div class="col-lg-3">
-                                            <input type="text" class="form-control tanggal" id="tgl_mulai" name="tgl_mulai" autocomplete="off">
+                                            <input type="text" class="form-control tanggal" id="tmt" name="tmt">
                                         </div>
-                                        <label class="col-lg-3" style="text-align: right; margin-top: 7px;">Tanggal Selesai</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Nomor SK</label>
+                                        <div class="col-lg-4">
+                                            <input type="text" class="form-control" id="no_sk" name="no_sk">
+                                        </div>
+                                        <label class="col-lg-2" style="text-align: right; margin-top: 7px;">Tanggal SK</label>
                                         <div class="col-lg-3">
-                                            <input type="text" class="form-control tanggal" id="tgl_selesai" name="tgl_selesai" autocomplete="off">
+                                            <input type="text" class="form-control tanggal" id="tgl_sk" name="tgl_sk">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label">Jumlah Jam</label>
+                                        <label class="control-label">Pejabat Penandatangan</label>
                                         <div>
-                                            <input type="text" class="form-control" id="jml_jam" name="jml_jam" onkeyup="this.value=this.value.replace(/[^\d]/,'')">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label">Penyelenggara</label>
-                                        <div>
-                                            <input type="text" class="form-control" id="created" name="created">
+                                            <input type="text" class="form-control" id="pejab_sk" name="pejab_sk">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -101,3 +99,4 @@
 
         </div>
     </div>
+
