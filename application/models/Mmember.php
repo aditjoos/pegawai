@@ -477,7 +477,7 @@ class Mmember extends CI_Model {
 
 
 	function riw_edu_add_process($data){
-		$sql = "INSERT INTO `sas_tkplb`.`data_pendidikan` (
+		$sql1 = "INSERT INTO `sas_tkplb`.`data_pendidikan` (
 					`idcard`, 
 					`nip`, 
 					`tingkat_pend`, 
@@ -499,9 +499,9 @@ class Mmember extends CI_Model {
 					'".$data['tmp_belajar']."',
 					'".$data['lokasi']."',
 					'".$data['nomor_ijazah']."'
-				);
-				
-				INSERT INTO `sas_tkplb`.`ajuan` (
+				);"
+		;
+		$sql2 = "INSERT INTO `sas_tkplb`.`ajuan` (
 					`jenis_ajuan`,
 					`no_jenis_ajuan`,
 					`tgl_ajuan`,
@@ -531,12 +531,104 @@ class Mmember extends CI_Model {
 					6,
 					'".$data['id_user']."',
 					'',
-					CUDRATE(),
+					CURDATE(),
 					''
 				);"
-			;
+		;
 		
-		$this->db->query($sql);
+		$this->db->query($sql1+$sql2);
+	}
+
+	function list_ajuan_dik_fung(){
+		$q = 	"SELECT
+					a.idcard,
+					a.no_jenis_ajuan,
+					b.gelar_depan,
+					b.nama,
+					b.gelar_belakang,
+					a.nama_ajuan,
+					a.tgl_ajuan,
+					a.jenis_ajuan,
+					a.deskripsi
+				FROM
+					v_ajuan AS a
+				INNER JOIN 
+					guru AS b 
+				ON 
+					a.idcard = b.id;";
+
+		$sql = strtolower($q);
+		return $this->db->query($sql);
+	}
+
+	function get_riw_dik_fung_detail($id_record){
+		$q = 	"SELECT * FROM data_dikfungsi WHERE no = ".$id_record;
+
+		$sql = strtolower($q);
+		return $this->db->query($sql);
+	}
+
+	function get_riw_dik_teknis_detail($id_record){
+		$q = 	"SELECT * FROM data_dikteknis WHERE no = ".$id_record;
+
+		$sql = strtolower($q);
+		return $this->db->query($sql);
+	}
+
+	function get_riw_dik_jenjang_detail($id_record){
+		$q = 	"SELECT * FROM data_dikjenjang WHERE no = ".$id_record;
+
+		$sql = strtolower($q);
+		return $this->db->query($sql);
+	}
+
+	function get_riw_edu_detail($id_record){
+		$q = 	"SELECT * FROM data_pendidikan WHERE no = ".$id_record;
+
+		$sql = strtolower($q);
+		return $this->db->query($sql);
+	}
+
+	function list_status_ajuan(){
+		$q = "SELECT id_statusajuan as id, deskripsi FROM ref_ajuanstatus";
+
+		$sql = strtolower($q);
+		return $this->db->query($sql)->result();
+	}
+
+	function update_ajuan($data){
+		$q1 = "UPDATE 
+					ajuan 
+				SET 
+					id_ajuanstatus = '".$data['id_ajuanstatus']."', 
+					update_by = '".$data['update_by']."', 
+					tgl_update = CURDATE() 
+				WHERE jenis_ajuan = '".$data['jenis_ajuan']."' AND no_jenis_ajuan = ".$data['no_jenis_ajuan'].";";
+		
+		$q2 = "";
+		$jenis_ajuan = $data['jenis_ajuan'];
+		$table = "";
+		if($jenis_ajuan == "2" || $jenis_ajuan == "3" || $jenis_ajuan == "4" || $jenis_ajuan == "13" ){
+			if($jenis_ajuan == "2"){
+				$table = "data_dikfungsi";
+			}elseif($jenis_ajuan == "3"){
+				$table = "data_dikteknis";
+			}elseif($jenis_ajuan == "4"){
+				$table = "data_dikjenjang";
+			}elseif($jenis_ajuan == "13"){
+				$table = "data_seminar";
+			}
+			$q2 = "UPDATE 
+						$table
+					SET 
+						jenis_diklat = ".$data['jenis_diklat']."
+					WHERE `no` = '".$data['no_jenis_ajuan']."';";
+			$this->db->query($q2);
+			// echo "<script>console.log($table)</script>";
+		}
+
+		// $sql = strtolower($q1.$q2);
+		$this->db->query($q1);
 	}
 
 	//===========================[ /\      adit      /\ ]=====(end)=====================
