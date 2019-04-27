@@ -8,6 +8,7 @@
 		list_pendidikan();
 		list_dik_fungsi();
 		list_dik_teknis();
+		list_dik_jenjang();
 	})
 
 	function list_pendidikan(){
@@ -57,7 +58,7 @@
 	        success  : function(data){
 	            console.log(data);
 	            var tbl = data.tbl;
-	            $("#ls_dik_teknis").html(tbl);
+	            $("#ls_dik_jenjang").html(tbl);
 	        }
 	    })
 	}

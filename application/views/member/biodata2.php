@@ -297,21 +297,18 @@
                                                 <table class="table table-bordered">
                                                     <thead>
                                                         <tr style="text-align: center;" class="bg-theme-inverse">
-                                                            <td rowspan="2">Jenis Diklat</td>
-                                                            <td rowspan="2">Angkatan</td>
-                                                            <td rowspan="2">Penyelenggara</td>
-                                                            <td rowspan="2">Lokasi</td>
-                                                            <td colspan="3">Waktu</td>
-                                                            <td rowspan="2">Predikat</td>
-                                                            <td rowspan="2">Status</td>
-                                                            <td rowspan="2">Berkas</td>
-                                                        </tr>
-                                                        <tr style="text-align: center;" class="bg-theme-inverse">
-                                                            <td>Tgl Mulai</td>
-                                                            <td>Tgl Selesai</td>
-                                                            <td>Total Jam</td>
+                                                            <td>Jenis Diklat</td>
+                                                            <td>Penyelenggara</td>
+                                                            <td>Lokasi</td>
+                                                            <td>Tanggal</td>
+                                                            <td>Jml Jam</td>
+                                                            <td>Predikat</td>
+                                                            <td>Status</td>
+                                                            <td>Aksi</td>
                                                         </tr>
                                                     </thead>
+                                                    <tbody id="ls_dik_jenjang"></tbody>
+
                                                 </table>
                                             </div>
                                         </div>

@@ -1255,6 +1255,98 @@ class Member extends CI_Controller{
         }
 	}
 
+	function list_dik_jenjang(){
+		$card = $this->session->userdata('id_user');
+
+		$tbl = "data_dikjenjang";
+		$arr = array('idcard' => $card, );
+		$q = $this->Mmember->riwayat_ajuan($tbl,$card);
+		$tot = $q->num_rows();
+		$rsl = $q->result();
+
+		if($tot>'0'){
+			$tbl = '';
+			foreach ($rsl as $key) {
+				$no = $key->no;
+				$idcard = $key->idcard;
+				$nip = $key->nip;
+				
+				$jns_diklat = $key->jns_diklat;
+				$angkatan = $key->angkatan;
+				$created = $key->penyelenggara;
+				$tgl_mulai = $key->tgl_mulai;
+				$tgl_selesai = $key->tgl_selesai;
+				$predikat = $key->predikat;
+				$lokasi = $key->lokasi;
+				$jml_jam = $key->jml_jam;
+
+				$file = $key->nama_berkas;
+				$id_ajuan = $key->id_ajuanstatus;
+				$deskripsi = $key->deskripsi;
+
+				if($id_ajuan == "1"){
+					$info_ajuan = "<span class='label label-info'>$deskripsi</span>";
+
+					$btn_aksi = "
+								<button class='btn btn-success'><i class='fa fa-file'></i></button>
+								<button class='btn btn-warning'><i class='fa fa-pencil'></i></button>
+								<button class='btn btn-danger'><i class='fa fa-trash-o'></i></button>
+								";
+				}else if($id_ajuan == "2"){
+					$info_ajuan = "<span class='label label-primary'>$deskripsi</span>";
+
+					$btn_aksi = "<button class='btn btn-success'><i class='fa fa-file'></i></button>";
+				}else if($id_ajuan == "3"){
+					$info_ajuan = "<span class='label label-success'>$deskripsi</span>";
+
+					$btn_aksi = "<button class='btn btn-success'><i class='fa fa-file'></i></button>";
+				}else if($id_ajuan == "4"){
+					$info_ajuan = "<span class='label label-warning'>$deskripsi</span>";
+					$btn_aksi = "
+								<button class='btn btn-success'><i class='fa fa-commenting'></i></button>
+								<button class='btn btn-warning'><i class='fa fa-pencil'></i></button>
+								<button class='btn btn-danger'><i class='fa fa-trash-o'></i></button>
+								";
+				}else if($id_ajuan == "5"){
+					$info_ajuan = "<span class='label label-danger'>$deskripsi</span>";
+				}else if($id_ajuan == "6"){
+					$info_ajuan = "<span class='label label-info'>$deskripsi</span>";
+				}else if($id_ajuan == "7"){
+					$info_ajuan = "<span class='label label-success'>$deskripsi</span>";
+				}else{
+					$info_ajuan = "-";
+				}
+
+				$tbl .= "
+						<tr>
+							<td>
+								$jns_diklat<br>
+								Angkatan: $angkatan
+							</td>
+							<td>$created</td>
+							<td>$lokasi</td>
+							<td>
+								Mulai: <span style='color:green;'>$tgl_mulai</span><br>
+								Selesai: <span style='color:red;'>$tgl_selesai</span>
+							</td>
+							<td style='text-align:center;'>$jml_jam</td>
+							<td style='text-align:center;'>$predikat</td>
+							<td style='text-align:center'>$info_ajuan</td>
+							<td>
+								$btn_aksi
+							</td>
+
+						</tr>
+						";
+			}
+		}else{
+			$tbl = "<tr><td colspan='10' style='text-align:center;'>Data tidak ditemukan.</td></tr>";
+		}
+
+		$data = array('tbl' => $tbl, );
+		echo json_encode($data);
+
+	}
 
 	function riw_pangkat_add(){
 		$data['head_page'] 	= $this->load->view('template/head','',true);
