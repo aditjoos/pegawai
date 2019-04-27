@@ -33,7 +33,7 @@
                                     <div class="form-group">
                                         <label class="control-label">Angkatan</label>
                                         <div>
-                                            <input type="text" class="form-control" id="angkatan" name="angkatan">
+                                            <input type="text" class="form-control" id="angkatan" name="angkatan" onkeyup="this.value=this.value.replace(/[^\d]/,'')">
                                         </div>
                                     </div>
                                     <div class="form-group">
