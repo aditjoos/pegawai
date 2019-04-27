@@ -555,7 +555,7 @@ class Mmember extends CI_Model {
 				INNER JOIN 
 					guru AS b 
 				ON 
-					a.idcard = b.id;";
+					a.idcard = b.id ORDER BY tgl_ajuan DESC;";
 
 		$sql = strtolower($q);
 		return $this->db->query($sql);
@@ -607,9 +607,13 @@ class Mmember extends CI_Model {
 		
 		$q2 = "";
 		$jenis_ajuan = $data['jenis_ajuan'];
+		$jenis_diklat = $data['jenis_diklat'];
 		$table = "";
-		if($jenis_ajuan == "2" || $jenis_ajuan == "3" || $jenis_ajuan == "4" || $jenis_ajuan == "13" ){
-			if($jenis_ajuan == "2"){
+		if($jenis_ajuan == "1" || $jenis_ajuan == "2" || $jenis_ajuan == "3" || $jenis_ajuan == "4" || $jenis_ajuan == "13" ){
+			if($jenis_ajuan == "1"){
+				$jenis_diklat = "PENGEMBANGAN";
+				$table = "data_pendidikan";
+			}elseif($jenis_ajuan == "2"){
 				$table = "data_dikfungsi";
 			}elseif($jenis_ajuan == "3"){
 				$table = "data_dikteknis";
@@ -621,7 +625,7 @@ class Mmember extends CI_Model {
 			$q2 = "UPDATE 
 						$table
 					SET 
-						jenis_diklat = ".$data['jenis_diklat']."
+						jenis_diklat = '$jenis_diklat'
 					WHERE `no` = '".$data['no_jenis_ajuan']."';";
 			$this->db->query($q2);
 			// echo "<script>console.log($table)</script>";
