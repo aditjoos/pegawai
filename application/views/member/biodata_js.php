@@ -8,6 +8,7 @@
 		list_pendidikan();
 		list_dik_fungsi();
 		list_dik_teknis();
+		list_dik_jenjang();
 	})
 
 	function list_pendidikan(){
@@ -57,9 +58,14 @@
 	        success  : function(data){
 	            console.log(data);
 	            var tbl = data.tbl;
-	            $("#ls_dik_teknis").html(tbl);
+	            $("#ls_dik_jenjang").html(tbl);
 	        }
 	    })
+	}
+
+	function edit_dik_fungsi(id){
+		// $("#ktn").load("Operator_con/diklat_kelas_detail",{'id':id});
+		window.location.href = 'riw_dik_fungsi_add',{'id':id};
 	}
 	
 </script>

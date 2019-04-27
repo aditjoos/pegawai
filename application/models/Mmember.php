@@ -472,6 +472,21 @@ class Mmember extends CI_Model {
 		return $this->db->query($sql);
 	}
 
+	function riwayat_ajuan_detail($tbl,$rec){
+		$q = "
+			SELECT
+				*
+			FROM
+				ajuan a 
+			INNER JOIN ref_jenisajuan b ON a.jenis_ajuan = b.id_jenisajuan
+			INNER JOIN $tbl c ON a.no_jenis_ajuan = c.`no`
+			WHERE a.no_jenis_ajuan = '$rec';
+			";
+
+		$sql = strtolower($q);
+		return $this->db->query($sql);
+	}
+
 
 	//===========================[ \/      adit      \/ ]=====(start)===================
 

@@ -153,7 +153,8 @@ $config['composer_autoload'] = FALSE;
 | DO NOT CHANGE THIS UNLESS YOU FULLY UNDERSTAND THE REPERCUSSIONS!!
 |
 */
-$config['permitted_uri_chars'] = 'a-z 0-9~%.:_\-';
+//$config['permitted_uri_chars'] = 'a-z 0-9~%.:_\-'; //old
+$config['permitted_uri_chars'] = 'a-z 0-9~%.:_\'+,-='; //new
 
 
 /*
@@ -305,7 +306,7 @@ $config['cache_query_string'] = FALSE;
 | http://codeigniter.com/user_guide/libraries/encryption.html
 |
 */
-$config['encryption_key'] = '';
+$config['encryption_key'] = 's1ft3ch_m4l4ng_2019';
 
 /*
 |--------------------------------------------------------------------------

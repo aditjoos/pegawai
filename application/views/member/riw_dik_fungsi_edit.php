@@ -1,9 +1,9 @@
 <?php
 	$path = base_url();
-	if(isset($biodata)){
-		//var_dump(json_decode($biodata));
-		$data = json_decode($biodata);
+	if(isset($konten)){
+		$data = json_decode($konten);
 	}
+
 
 ?>
 
@@ -12,7 +12,7 @@
         <div class="col-lg-12">
             <section class="panel">
                 <header class="panel-heading bg-inverse">
-                    <h3><strong>Tambah</strong> Riwayat Diklat Fungsional </h3>
+                    <h3><strong>Edit</strong> Riwayat Diklat Fungsional </h3>
                     <label class="color"><strong><?php echo $this->session->userdata('nama'); ?></strong></label>
                 </header>
                 <div class="panel-body">
@@ -23,7 +23,7 @@
                                     <div class="form-group">
                                         <label class="control-label">Nama Diklat</label>
                                         <div>
-                                            <input type="text" class="form-control" id="nama" name="nama" >
+                                            <input type="text" class="form-control" id="nama" name="nama" value="<?php if(isset($data)){echo $data->nama_diklat;}else{echo '-';} ?>">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -38,29 +38,33 @@
                                     <div class="form-group">
                                         <label class="control-label">Lokasi</label>
                                         <div>
-                                            <input type="text" class="form-control" id="lokasi" name="lokasi">
+                                            <input type="text" class="form-control" id="lokasi" name="lokasi" value="<?php if(isset($data)){echo $data->lokasi;}else{echo '-';} ?>">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label">Tanggal Mulai</label>
                                         <div class="col-lg-3">
-                                            <input type="text" class="form-control tanggal" id="tgl_mulai" name="tgl_mulai" autocomplete="off">
+                                            <input type="text" class="form-control tanggal" id="tgl_mulai" name="tgl_mulai" autocomplete="off"
+                                            value="<?php if(isset($data)){echo date('d-m-Y', strtotime($data->tgl_mulai));}else{echo '-';} ?>">
                                         </div>
                                         <label class="col-lg-3" style="text-align: right; margin-top: 7px;">Tanggal Selesai</label>
                                         <div class="col-lg-3">
-                                            <input type="text" class="form-control tanggal" id="tgl_selesai" name="tgl_selesai" autocomplete="off">
+                                            <input type="text" class="form-control tanggal" id="tgl_selesai" name="tgl_selesai" autocomplete="off"
+                                            value="<?php if(isset($data)){echo date('d-m-Y', strtotime($data->tgl_selesai));}else{echo '-';} ?>">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label">Jumlah Jam</label>
                                         <div>
-                                            <input type="text" class="form-control" id="jml_jam" name="jml_jam" onkeyup="this.value=this.value.replace(/[^\d]/,'')">
+                                            <input type="text" class="form-control" id="jml_jam" name="jml_jam" onkeyup="this.value=this.value.replace(/[^\d]/,'')"
+                                            value="<?php if(isset($data)){echo $data->jml_jam;}else{echo '-';} ?>">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label">Penyelenggara</label>
                                         <div>
-                                            <input type="text" class="form-control" id="created" name="created">
+                                            <input type="text" class="form-control" id="created" name="created"
+                                            value="<?php if(isset($data)){echo $data->penyelenggara;}else{echo '-';} ?>">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -92,7 +96,7 @@
                             </div>
                         </div>
                         <div class="col-lg-4">
-                            <img src="<?php echo base_url();?>/assets/img/noimage.jpg" class="img-responsive" id="blah">
+                            <img src="<?php if(isset($data)){echo $data->nama_berkas;}else{echo base_url('assets/img/noimage.jpg');} ?>" class="img-responsive" id="blah">
                         </div>
 
                     </div>
