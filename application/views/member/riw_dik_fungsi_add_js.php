@@ -27,34 +27,33 @@ $(document).ready(function() {
 		e.preventDefault();
 
 		var file = $("#file_image").val();
-		var edu = $("#edu").val();
-		var sekolah = $("#sekolah").val();
-		var prodi = $("#prodi").val();
-		var tahun = $("#tahun").val();
-		var tanggal = $("#tanggal").val();
+		var nama = $("#nama").val();
 		var belajar = $("#belajar").val();
 		var lokasi = $("#lokasi").val();
-		var ijasah = $("#ijasah").val();
+		var tgl_mulai = $("#tgl_mulai").val();
+		var tgl_selesai = $("#tgl_selesai").val();
+		var jml_jam = $("#jml_jam").val();
+		var created = $("#created").val();
 
-		if(!edu){
-			$.notific8('Lengkapi isian Tingkat Pendidikan',{ life:5000,horizontalEdge:"top", theme:"danger" ,heading:" Simpan Gagal !! "});
-		}else if(!sekolah){
-			$.notific8('Lengkapi isian Nama Sekolah / Universitas',{ life:5000,horizontalEdge:"top", theme:"danger" ,heading:" Simpan Gagal !! "});
-		}else if(!prodi){
-			$.notific8('Lengkapi isian Jurusan / Program Studi',{ life:5000,horizontalEdge:"top", theme:"danger" ,heading:" Simpan Gagal !! "});
-		}else if(!tahun){
-			$.notific8('Lengkapi isian tahun masuk',{ life:5000,horizontalEdge:"top", theme:"danger" ,heading:" Simpan Gagal !! "});
-		}else if(!tanggal){
-			$.notific8('Lengkapi isian tanggal lulus',{ life:5000,horizontalEdge:"top", theme:"danger" ,heading:" Simpan Gagal !! "});
+		if(!nama){
+			$.notific8('Lengkapi isian Nama Diklat',{ life:5000,horizontalEdge:"top", theme:"danger" ,heading:" Simpan Gagal !! "});
+		}else if(!belajar){
+			$.notific8('Lengkapi isian Tempat Belajar',{ life:5000,horizontalEdge:"top", theme:"danger" ,heading:" Simpan Gagal !! "});
 		}else if(!lokasi){
-			$.notific8('Lengkapi isian lokasi',{ life:5000,horizontalEdge:"top", theme:"danger" ,heading:" Simpan Gagal !! "});
-		}else if(!ijasah){
-			$.notific8('Lengkapi isian nomor ijasah',{ life:5000,horizontalEdge:"top", theme:"danger" ,heading:" Simpan Gagal !! "});
+			$.notific8('Lengkapi isian Lokasi',{ life:5000,horizontalEdge:"top", theme:"danger" ,heading:" Simpan Gagal !! "});
+		}else if(!tgl_mulai){
+			$.notific8('Lengkapi isian Tanggal Mulai',{ life:5000,horizontalEdge:"top", theme:"danger" ,heading:" Simpan Gagal !! "});
+		}else if(!tgl_selesai){
+			$.notific8('Lengkapi isian Tanggal Selsai',{ life:5000,horizontalEdge:"top", theme:"danger" ,heading:" Simpan Gagal !! "});
+		}else if(!jml_jam){
+			$.notific8('Lengkapi isian Jumlah Jam',{ life:5000,horizontalEdge:"top", theme:"danger" ,heading:" Simpan Gagal !! "});
+		}else if(!created){
+			$.notific8('Lengkapi isian Penyelenggara',{ life:5000,horizontalEdge:"top", theme:"danger" ,heading:" Simpan Gagal !! "});
 		}else if(!file){
 			$.notific8('Tidak terdapat berkas foto pendukung',{ life:5000,horizontalEdge:"top", theme:"danger" ,heading:" Simpan Gagal !! "});
 		}else{
 			$.ajax({
-                url: 'do_upload_pendidikan',
+                url: 'do_upload_dik_fungsi',
                 type: "POST",
                 data: new FormData(this),
                 processData: false,

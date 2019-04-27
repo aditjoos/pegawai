@@ -7,6 +7,7 @@
 	$(document).ready(function(){
 		list_pendidikan();
 		list_dik_fungsi();
+		list_dik_teknis();
 	})
 
 	function list_pendidikan(){
@@ -35,15 +36,28 @@
 	    })
 	}
 
-	function list_dik_fungsi(){
+	function list_dik_teknis(){
 		$.ajax({
-	        url      : "list_dik_fungsi",
+	        url      : "list_dik_teknis",
 	        type     : 'POST',
 	        dataType : 'json',
 	        success  : function(data){
 	            console.log(data);
 	            var tbl = data.tbl;
-	            $("#ls_dik_fungsi").html(tbl);
+	            $("#ls_dik_teknis").html(tbl);
+	        }
+	    })
+	}
+
+	function list_dik_jenjang(){
+		$.ajax({
+	        url      : "list_dik_jenjang",
+	        type     : 'POST',
+	        dataType : 'json',
+	        success  : function(data){
+	            console.log(data);
+	            var tbl = data.tbl;
+	            $("#ls_dik_teknis").html(tbl);
 	        }
 	    })
 	}
