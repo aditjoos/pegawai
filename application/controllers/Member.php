@@ -747,8 +747,8 @@ class Member extends CI_Controller{
 
 		$tbl = "data_pendidikan";
 		$arr = array('idcard' => $card, );
-		// $q = $this->Mmember->select_all_order('data_pendidikan',$arr,'no','DESC');
-		$q = $this->Mmember->riwayat_ajuan($tbl,$card);
+		$no = "1";
+		$q = $this->Mmember->riwayat_ajuan($tbl,$no,$card);
 		$tot = $q->num_rows();
 		$rsl = $q->result();
 
@@ -771,42 +771,42 @@ class Member extends CI_Controller{
 				$tanggal = date("d-m-Y", strtotime($thn_lulus));
 
 				if($id_ajuan == "1"){
-					$info_ajuan = "<span class='label label-info'>$deskripsi</span>";
+					$info_ajuan = "<span class='label label-info col-md-12'>$deskripsi</span>";
 
 					$btn_aksi = "
-								<button class='btn btn-success'><i class='fa fa-picture-o'></i></button>
-								<button class='btn btn-warning'><i class='fa fa-pencil'></i></button>
-								<button class='btn btn-danger'><i class='fa fa-trash-o'></i></button>
+								<button class='btn btn-success' onclick='buka_berkas($no,1);'><i class='fa fa-picture-o'></i></button>
+								<a class='btn btn-warning' href='riw_dik_fungsi_edit/$nox'><i class='fa fa-pencil'></i></a>
+								<button class='btn btn-danger' onclick='confirm_hapus($no,1);'><i class='fa fa-trash-o'></i></button>
 								";
 				}else if($id_ajuan == "2"){
-					$info_ajuan = "<span class='label label-primary'>$deskripsi</span>";
+					$info_ajuan = "<span class='label label-primary col-md-12'>$deskripsi</span>";
 
-					$btn_aksi = "<button class='btn btn-success'><i class='fa fa-picture-o'></i></button>";
+					$btn_aksi = "<button class='btn btn-success' onclick='buka_berkas($no,1);'><i class='fa fa-picture-o'></i></button>";
 				}else if($id_ajuan == "3"){
-					$info_ajuan = "<span class='label label-success'>$deskripsi</span>";
+					$info_ajuan = "<span class='label label-success col-md-12'>$deskripsi</span>";
 
-					$btn_aksi = "<button class='btn btn-success'><i class='fa fa-picture-o'></i></button>";
+					$btn_aksi = "<button class='btn btn-success' onclick='buka_berkas($no,1);'><i class='fa fa-picture-o'></i></button>";
 				}else if($id_ajuan == "4"){
-					$info_ajuan = "<span class='label label-warning'>$deskripsi</span>";
+					$info_ajuan = "<span class='label label-warning col-md-12'>$deskripsi</span>";
 					$btn_aksi = "
 								<button class='btn btn-success'><i class='fa fa-comment'></i></button>
-								<button class='btn btn-warning'><i class='fa fa-pencil'></i></button>
-								<button class='btn btn-danger'><i class='fa fa-trash-o'></i></button>
+								<a class='btn btn-warning' href='riw_dik_fungsi_edit/$nox'><i class='fa fa-pencil'></i></a>
+								<button class='btn btn-danger' onclick='confirm_hapus($no,1);'><i class='fa fa-trash-o'></i></button>
 								";
 				}else if($id_ajuan == "5"){
-					$info_ajuan = "<span class='label label-danger'>$deskripsi</span>";
+					$info_ajuan = "<span class='label label-danger col-md-12'>$deskripsi</span>";
 
 					$btn_aksi = "
 								<button class='btn btn-success'><i class='fa fa-comment'></i></button>
-								<button class='btn btn-warning'><i class='fa fa-pencil'></i></button>
-								<button class='btn btn-danger'><i class='fa fa-trash-o'></i></button>
+								<a class='btn btn-warning' href='riw_dik_fungsi_edit/$nox'><i class='fa fa-pencil'></i></a>
+								<button class='btn btn-danger' onclick='confirm_hapus($no,1);'><i class='fa fa-trash-o'></i></button>
 								";
 				}else if($id_ajuan == "6"){
-					$info_ajuan = "<span class='label label-info'>$deskripsi</span>";
-					$btn_aksi = "<button class='btn btn-success'><i class='fa fa-picture-o'></i></button>";
+					$info_ajuan = "<span class='label label-info col-md-12'>$deskripsi</span>";
+					$btn_aksi = "<button class='btn btn-success' onclick='buka_berkas($no,1);'><i class='fa fa-picture-o'></i></button>";
 				}else if($id_ajuan == "7"){
-					$info_ajuan = "<span class='label label-success'>$deskripsi</span>";
-					$btn_aksi = "<button class='btn btn-success'><i class='fa fa-picture-o'></i></button>";
+					$info_ajuan = "<span class='label label-success col-md-12'>$deskripsi</span>";
+					$btn_aksi = "<button class='btn btn-success' onclick='buka_berkas($no,1);'><i class='fa fa-picture-o'></i></button>";
 				}else{
 					$info_ajuan = "-";
 				}
@@ -1072,9 +1072,10 @@ class Member extends CI_Controller{
 	function list_dik_fungsi(){
 		$card = $this->session->userdata('id_user');
 
-		$tbl = "data_dikfungsi";
+		$tbl = "data_dikfungsi"; 
 		$arr = array('idcard' => $card, );
-		$q = $this->Mmember->riwayat_ajuan($tbl,$card);
+		$no = "2";
+		$q = $this->Mmember->riwayat_ajuan($tbl,$no,$card);
 		$tot = $q->num_rows();
 		$rsl = $q->result();
 
@@ -1102,42 +1103,42 @@ class Member extends CI_Controller{
 				$deskripsi = $key->deskripsi;
 
 				if($id_ajuan == "1"){
-					$info_ajuan = "<span class='label label-info'>$deskripsi</span>";
+					$info_ajuan = "<span class='label label-info col-md-12'>$deskripsi</span>";
 
 					$btn_aksi = "
-								<button class='btn btn-success'><i class='fa fa-picture-o'></i></button>
+								<button class='btn btn-success' onclick='buka_berkas($no,2);'><i class='fa fa-picture-o'></i></button>
 								<a class='btn btn-warning' href='riw_dik_fungsi_edit/$nox'><i class='fa fa-pencil'></i></a>
 								<button class='btn btn-danger' onclick='confirm_hapus($no,2);'><i class='fa fa-trash-o'></i></button>
 								";
 				}else if($id_ajuan == "2"){
-					$info_ajuan = "<span class='label label-primary'>$deskripsi</span>";
+					$info_ajuan = "<span class='label label-primary col-md-12'>$deskripsi</span>";
 
-					$btn_aksi = "<button class='btn btn-success'><i class='fa fa-picture-o'></i></button>";
+					$btn_aksi = "<button class='btn btn-success' onclick='buka_berkas($no,2);'><i class='fa fa-picture-o'></i></button>";
 				}else if($id_ajuan == "3"){
-					$info_ajuan = "<span class='label label-success'>$deskripsi</span>";
+					$info_ajuan = "<span class='label label-success col-md-12'>$deskripsi</span>";
 
-					$btn_aksi = "<button class='btn btn-success'><i class='fa fa-picture-o'></i></button>";
+					$btn_aksi = "<button class='btn btn-success' onclick='buka_berkas($no,2);'><i class='fa fa-picture-o'></i></button>";
 				}else if($id_ajuan == "4"){
-					$info_ajuan = "<span class='label label-warning'>$deskripsi</span>";
+					$info_ajuan = "<span class='label label-warning col-md-12'>$deskripsi</span>";
 					$btn_aksi = "
 								<button class='btn btn-success'><i class='fa fa-comment'></i></button>
 								<a class='btn btn-warning' href='riw_dik_fungsi_edit/$nox'><i class='fa fa-pencil'></i></a>
-								<button class='btn btn-danger'><i class='fa fa-trash-o'></i></button>
+								<button class='btn btn-danger' onclick='confirm_hapus($no,2);'><i class='fa fa-trash-o'></i></button>
 								";
 				}else if($id_ajuan == "5"){
-					$info_ajuan = "<span class='label label-danger'>$deskripsi</span>";
+					$info_ajuan = "<span class='label label-danger col-md-12'>$deskripsi</span>";
 
 					$btn_aksi = "
 								<button class='btn btn-success'><i class='fa fa-comment'></i></button>
 								<a class='btn btn-warning' href='riw_dik_fungsi_edit/$nox'><i class='fa fa-pencil'></i></a>
-								<button class='btn btn-danger'><i class='fa fa-trash-o'></i></button>
+								<button class='btn btn-danger' onclick='confirm_hapus($no,2);'><i class='fa fa-trash-o'></i></button>
 								";
 				}else if($id_ajuan == "6"){
-					$info_ajuan = "<span class='label label-info'>$deskripsi</span>";
-					$btn_aksi = "<button class='btn btn-success'><i class='fa fa-picture-o'></i></button>";
+					$info_ajuan = "<span class='label label-info col-md-12'>$deskripsi</span>";
+					$btn_aksi = "<button class='btn btn-success' onclick='buka_berkas($no,2);'><i class='fa fa-picture-o'></i></button>";
 				}else if($id_ajuan == "7"){
-					$info_ajuan = "<span class='label label-success'>$deskripsi</span>";
-					$btn_aksi = "<button class='btn btn-success'><i class='fa fa-picture-o'></i></button>";
+					$info_ajuan = "<span class='label label-success col-md-12'>$deskripsi</span>";
+					$btn_aksi = "<button class='btn btn-success' onclick='buka_berkas($no,2);'><i class='fa fa-picture-o'></i></button>";
 				}else{
 					$info_ajuan = "-";
 				}
@@ -1173,6 +1174,23 @@ class Member extends CI_Controller{
 
 	}
 	 
+	function open_berkas(){
+		$id = $this->input->post("id",true);
+		$tbl = $this->input->post("tbl",true);
+
+		$arr = array('id_jenisajuan' => $tbl, );
+		$q = $this->Mmember->select_all_order('ref_jenisajuan',$arr,'id_jenisajuan','ASC')->row();
+		$tblx = $q->tabel_ref;
+
+		$arr1 = array('no' => $id, );
+		$q1 = $this->Mmember->select_all_order($tblx,$arr1,'no','ASC')->row();
+
+		$berkas = $q1->nama_berkas;
+
+		$data = array('info' => $berkas,'tabel' => $tblx, );
+		echo json_encode($data);
+	}
+
 
 	function riw_dik_fungsi_edit(){
 		$data['head_page'] 	= $this->load->view('template/head','',true);
@@ -1276,14 +1294,18 @@ class Member extends CI_Controller{
 
 		$tbl = "data_dikteknis";
 		$arr = array('idcard' => $card, );
-		$q = $this->Mmember->riwayat_ajuan($tbl,$card);
+		$no = "3";
+		$q = $this->Mmember->riwayat_ajuan($tbl,$no,$card);
 		$tot = $q->num_rows();
 		$rsl = $q->result();
 
 		if($tot>'0'){
 			$tbl = '';
 			foreach ($rsl as $key) {
-				$no = $key->no;
+				$no = $key->no; 
+				$nox = $this->encrypt->encode($no);
+				$nox = str_replace(array('+', '/', '='), array('-', '_', '~'), $nox);
+
 				$idcard = $key->idcard;
 				$nip = $key->nip;
 				$nama_diklat = $key->nama_diklat;
@@ -1300,42 +1322,42 @@ class Member extends CI_Controller{
 				$deskripsi = $key->deskripsi;
 
 				if($id_ajuan == "1"){
-					$info_ajuan = "<span class='label label-info'>$deskripsi</span>";
+					$info_ajuan = "<span class='label label-info col-md-12'>$deskripsi</span>";
 
 					$btn_aksi = "
-								<button class='btn btn-success'><i class='fa fa-picture-o'></i></button>
-								<button class='btn btn-warning'><i class='fa fa-pencil'></i></button>
-								<button class='btn btn-danger'><i class='fa fa-trash-o'></i></button>
+								<button class='btn btn-success' onclick='buka_berkas($no,3);'><i class='fa fa-picture-o'></i></button>
+								<a class='btn btn-warning' href='riw_dik_teknis_edit/$nox'><i class='fa fa-pencil'></i></a>
+								<button class='btn btn-danger' onclick='confirm_hapus($no,3);'><i class='fa fa-trash-o'></i></button>
 								";
 				}else if($id_ajuan == "2"){
-					$info_ajuan = "<span class='label label-primary'>$deskripsi</span>";
+					$info_ajuan = "<span class='label label-primary col-md-12'>$deskripsi</span>";
 
-					$btn_aksi = "<button class='btn btn-success'><i class='fa fa-picture-o'></i></button>";
+					$btn_aksi = "<button class='btn btn-success' onclick='buka_berkas($no,3);'><i class='fa fa-picture-o'></i></button>";
 				}else if($id_ajuan == "3"){
-					$info_ajuan = "<span class='label label-success'>$deskripsi</span>";
+					$info_ajuan = "<span class='label label-success col-md-12'>$deskripsi</span>";
 
-					$btn_aksi = "<button class='btn btn-success'><i class='fa fa-picture-o'></i></button>";
+					$btn_aksi = "<button class='btn btn-success' onclick='buka_berkas($no,3);'><i class='fa fa-picture-o'></i></button>";
 				}else if($id_ajuan == "4"){
-					$info_ajuan = "<span class='label label-warning'>$deskripsi</span>";
+					$info_ajuan = "<span class='label label-warning col-md-12'>$deskripsi</span>";
 					$btn_aksi = "
 								<button class='btn btn-success'><i class='fa fa-comment'></i></button>
-								<button class='btn btn-warning'><i class='fa fa-pencil'></i></button>
-								<button class='btn btn-danger'><i class='fa fa-trash-o'></i></button>
+								<a class='btn btn-warning' href='riw_dik_teknis_edit/$nox'><i class='fa fa-pencil'></i></a>
+								<button class='btn btn-danger' onclick='confirm_hapus($no,3);'><i class='fa fa-trash-o'></i></button>
 								";
 				}else if($id_ajuan == "5"){
-					$info_ajuan = "<span class='label label-danger'>$deskripsi</span>";
+					$info_ajuan = "<span class='label label-danger col-md-12'>$deskripsi</span>";
 
 					$btn_aksi = "
 								<button class='btn btn-success'><i class='fa fa-comment'></i></button>
-								<button class='btn btn-warning'><i class='fa fa-pencil'></i></button>
-								<button class='btn btn-danger'><i class='fa fa-trash-o'></i></button>
+								<a class='btn btn-warning' href='riw_dik_teknis_edit/$nox'><i class='fa fa-pencil'></i></a>
+								<button class='btn btn-danger' onclick='confirm_hapus($no,3);'><i class='fa fa-trash-o'></i></button>
 								";
 				}else if($id_ajuan == "6"){
-					$info_ajuan = "<span class='label label-info'>$deskripsi</span>";
-					$btn_aksi = "<button class='btn btn-success'><i class='fa fa-picture-o'></i></button>";
+					$info_ajuan = "<span class='label label-info col-md-12'>$deskripsi</span>";
+					$btn_aksi = "<button class='btn btn-success' onclick='buka_berkas($no,3);'><i class='fa fa-picture-o'></i></button>";
 				}else if($id_ajuan == "7"){
-					$info_ajuan = "<span class='label label-success'>$deskripsi</span>";
-					$btn_aksi = "<button class='btn btn-success'><i class='fa fa-picture-o'></i></button>";
+					$info_ajuan = "<span class='label label-success col-md-12'>$deskripsi</span>";
+					$btn_aksi = "<button class='btn btn-success' onclick='buka_berkas($no,3);'><i class='fa fa-picture-o'></i></button>";
 				}else{
 					$info_ajuan = "-";
 				}
@@ -1444,12 +1466,51 @@ class Member extends CI_Controller{
 	            $this->load->library('image_lib', $config);
 	            $this->image_lib->resize();
 
-	            $arr = array('nama_berkas' => $nm_file, );
+	            $foto2	= $_FILES['file_image']['name'];
+	            $pisah2 = explode('.',$foto2);
+	            $ext2 	= $pisah2[1];
+	            $filefix2 = $nm_file.'.'.$ext2;
+
+	            $arr = array('nama_berkas' => $filefix2, );
 				$this->Mmember->update($folder,$arr,'no',$last_rec);
 
 	            echo json_decode($result);
 	        }
         }
+	}
+
+	function riw_dik_teknis_edit(){
+		$data['head_page'] 	= $this->load->view('template/head','',true);
+		$data['top_menu'] 	= $this->load->view('template/top_menu','',true);
+
+		$idx 	= $this->uri->segment(3);
+		$idx 	= str_replace(array('-', '_', '~'), array('+', '/', '='), $idx);
+		$id		= $this->encrypt->decode($idx);
+		
+		$tbl  	= "data_dikteknis";
+		$info['tbl'] = $tbl;
+		$info['id_rec'] = $idx;
+
+		$q 		= $this->Mmember->riwayat_ajuan_detail($tbl,$id)->row();
+		if(isset($q)){
+			$info['nm_diklat'] = $q->nama_diklat;
+			$info['lokasi'] = $q->lokasi;
+			$info['tgl_mulai'] = $q->tgl_mulai;
+			$info['tgl_selesai'] = $q->tgl_selesai;
+			$info['jml_jam'] = $q->jml_jam;
+			$info['penyelenggara'] = $q->penyelenggara;
+			$info['nama_berkas'] = $q->nama_berkas;
+		}
+
+
+		$data['main_page'] 	= $this->load->view('member/riw_dik_teknis_edit',$info,true);
+
+		$data['modal'] 		= $this->load->view('template/modal','',true);
+		$data['left_menu'] 	= $this->load->view('template/left_menu','',true);
+		$data['foot'] 		= $this->load->view('template/foot','',true);
+		$data['custom_js'] 	= $this->load->view('member/riw_dik_teknis_edit_js','',true);
+
+		$this->load->view('template/body',$data);
 	}
 
 	function riw_dik_jenjang_add(){
@@ -1543,7 +1604,12 @@ class Member extends CI_Controller{
 	            $this->load->library('image_lib', $config);
 	            $this->image_lib->resize();
 
-	            $arr = array('nama_berkas' => $nm_file, );
+	            $foto2	= $_FILES['file_image']['name'];
+	            $pisah2 = explode('.',$foto2);
+	            $ext2 	= $pisah2[1];
+	            $filefix2 = $nm_file.'.'.$ext2;
+
+	            $arr = array('nama_berkas' => $filefix2, );
 				$this->Mmember->update($folder,$arr,'no',$last_rec);
 
 	            echo json_decode($result);
@@ -1555,18 +1621,21 @@ class Member extends CI_Controller{
 		$card = $this->session->userdata('id_user');
 
 		$tbl = "data_dikjenjang";
+		$no = "4";
 		$arr = array('idcard' => $card, );
-		$q = $this->Mmember->riwayat_ajuan($tbl,$card);
+		$q = $this->Mmember->riwayat_ajuan($tbl,$no,$card);
 		$tot = $q->num_rows();
 		$rsl = $q->result();
 
 		if($tot>'0'){
 			$tbl = '';
 			foreach ($rsl as $key) {
-				$no = $key->no;
+				$no = $key->no; 
+				$nox = $this->encrypt->encode($no);
+				$nox = str_replace(array('+', '/', '='), array('-', '_', '~'), $nox);
+
 				$idcard = $key->idcard;
 				$nip = $key->nip;
-				
 				$jns_diklat = $key->jns_diklat;
 				$angkatan = $key->angkatan;
 				$created = $key->penyelenggara;
@@ -1583,42 +1652,42 @@ class Member extends CI_Controller{
 				$deskripsi = $key->deskripsi;
 
 				if($id_ajuan == "1"){
-					$info_ajuan = "<span class='label label-info'>$deskripsi</span>";
+					$info_ajuan = "<span class='label label-info col-md-12'>$deskripsi</span>";
 
 					$btn_aksi = "
-								<button class='btn btn-success'><i class='fa fa-picture-o'></i></button>
-								<button class='btn btn-warning'><i class='fa fa-pencil'></i></button>
-								<button class='btn btn-danger'><i class='fa fa-trash-o'></i></button>
+								<button class='btn btn-success' onclick='buka_berkas($no,4);'><i class='fa fa-picture-o'></i></button>
+								<a class='btn btn-warning' href='riw_dik_fungsi_edit/$nox'><i class='fa fa-pencil'></i></a>
+								<button class='btn btn-danger' onclick='confirm_hapus($no,4);'><i class='fa fa-trash-o'></i></button>
 								";
 				}else if($id_ajuan == "2"){
-					$info_ajuan = "<span class='label label-primary'>$deskripsi</span>";
+					$info_ajuan = "<span class='label label-primary col-md-12'>$deskripsi</span>";
 
-					$btn_aksi = "<button class='btn btn-success'><i class='fa fa-picture-o'></i></button>";
+					$btn_aksi = "<button class='btn btn-success' onclick='buka_berkas($no,4);'><i class='fa fa-picture-o'></i></button>";
 				}else if($id_ajuan == "3"){
-					$info_ajuan = "<span class='label label-success'>$deskripsi</span>";
+					$info_ajuan = "<span class='label label-success col-md-12'>$deskripsi</span>";
 
-					$btn_aksi = "<button class='btn btn-success'><i class='fa fa-picture-o'></i></button>";
+					$btn_aksi = "<button class='btn btn-success' onclick='buka_berkas($no,4);'><i class='fa fa-picture-o'></i></button>";
 				}else if($id_ajuan == "4"){
-					$info_ajuan = "<span class='label label-warning'>$deskripsi</span>";
+					$info_ajuan = "<span class='label label-warning col-md-12'>$deskripsi</span>";
 					$btn_aksi = "
 								<button class='btn btn-success'><i class='fa fa-comment'></i></button>
-								<button class='btn btn-warning'><i class='fa fa-pencil'></i></button>
-								<button class='btn btn-danger'><i class='fa fa-trash-o'></i></button>
+								<a class='btn btn-warning' href='riw_dik_fungsi_edit/$nox'><i class='fa fa-pencil'></i></a>
+								<button class='btn btn-danger' onclick='confirm_hapus($no,4);'><i class='fa fa-trash-o'></i></button>
 								";
 				}else if($id_ajuan == "5"){
-					$info_ajuan = "<span class='label label-danger'>$deskripsi</span>";
+					$info_ajuan = "<span class='label label-danger col-md-12'>$deskripsi</span>";
 
 					$btn_aksi = "
 								<button class='btn btn-success'><i class='fa fa-comment'></i></button>
-								<button class='btn btn-warning'><i class='fa fa-pencil'></i></button>
-								<button class='btn btn-danger'><i class='fa fa-trash-o'></i></button>
+								<a class='btn btn-warning' href='riw_dik_fungsi_edit/$nox'><i class='fa fa-pencil'></i></a>
+								<button class='btn btn-danger' onclick='confirm_hapus($no,4);'><i class='fa fa-trash-o'></i></button>
 								";
 				}else if($id_ajuan == "6"){
-					$info_ajuan = "<span class='label label-info'>$deskripsi</span>";
-					$btn_aksi = "<button class='btn btn-success'><i class='fa fa-picture-o'></i></button>";
+					$info_ajuan = "<span class='label label-info col-md-12'>$deskripsi</span>";
+					$btn_aksi = "<button class='btn btn-success' onclick='buka_berkas($no,4);'><i class='fa fa-picture-o'></i></button>";
 				}else if($id_ajuan == "7"){
-					$info_ajuan = "<span class='label label-success'>$deskripsi</span>";
-					$btn_aksi = "<button class='btn btn-success'><i class='fa fa-picture-o'></i></button>";
+					$info_ajuan = "<span class='label label-success col-md-12'>$deskripsi</span>";
+					$btn_aksi = "<button class='btn btn-success' onclick='buka_berkas($no,4);'><i class='fa fa-picture-o'></i></button>";
 				}else{
 					$info_ajuan = "-";
 				}

@@ -465,3 +465,18 @@
     </div>
     <!-- //modal-body-->
 </div>
+
+<div id="md-foto" class="modal fade" data-width="800" >
+    <div class="modal-header bg-primary">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+        <h4 class="modal-title"><i class="fa fa-picture-o"></i> Berkas</h4>
+    </div>
+    <!-- //modal-header-->
+    <div class="modal-body" id="ktn">
+        <iframe id="frm_berkas" src="URL"></iframe>
+    </div>
+    <div style="text-align: right;" class="col-lg-12">
+        <button type="button" class="btn btn-inverse" data-dismiss="modal" aria-hidden="true">Tutup</button>
+    </div>
+    <!-- //modal-body-->
+</div>

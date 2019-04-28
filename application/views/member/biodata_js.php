@@ -92,4 +92,30 @@
 	    })
 	}
 
+	function buka_berkas(id,tbl){
+		line = $("#line").val();
+
+		$.ajax({
+	        url      : line+"Member/open_berkas",
+	        type     : 'POST',
+	        dataType : 'json',
+	        data 	 : {'id':id,'tbl':tbl},
+	        success  : function(data){
+	            console.log(data);
+	            var info = data.info;
+	            var tbl = data.tabel;
+	            
+	            if(!info){
+					$("#ktn").html("<iframe frameborder='0' scrolling='yes' width='100%' height='100%' src='"+line+"assets/img/noimage.jpg'></iframe>");
+	            }else{
+					$("#ktn").html("<iframe frameborder='0' scrolling='yes' width='100%' height='100%' src='"+line+"assets/uploads/"+tbl+"/"+info+"'></iframe>");
+	            }
+
+				
+	        }
+	    })
+
+		$("#md-foto").modal("show");
+	}
+
 </script>

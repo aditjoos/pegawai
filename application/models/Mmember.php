@@ -456,8 +456,8 @@ class Mmember extends CI_Model {
 
 	}
 
-	function riwayat_ajuan($tbl,$idcard){
-		$q = "
+	function riwayat_ajuan($tbl,$no,$idcard){
+			/*
 			SELECT
 				*
 			FROM
@@ -466,6 +466,19 @@ class Mmember extends CI_Model {
 			INNER JOIN ref_ajuanstatus c ON b.id_ajuanstatus = c.id_statusajuan
 			WHERE
 				a.idcard = '$idcard' AND a.`no` = b.no_jenis_ajuan
+			*/
+		$q = "
+			SELECT
+				*
+			FROM
+				ajuan a
+			INNER JOIN ref_jenisajuan b ON a.jenis_ajuan = b.id_jenisajuan
+			INNER JOIN $tbl c ON a.no_jenis_ajuan = c.`no`
+			INNER JOIN ref_ajuanstatus d ON a.id_ajuanstatus = d.id_statusajuan
+			WHERE
+				a.jenis_ajuan = '$no'
+			AND a.idcard = '$idcard'
+
 			";
 
 		$sql = strtolower($q);
