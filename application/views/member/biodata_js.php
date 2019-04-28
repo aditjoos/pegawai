@@ -64,8 +64,32 @@
 	}
 
 	function edit_dik_fungsi(id){
-		// $("#ktn").load("Operator_con/diklat_kelas_detail",{'id':id});
 		window.location.href = 'riw_dik_fungsi_add',{'id':id};
 	}
 	
+	function confirm_hapus(id,tb){
+		if(tb == '2'){var tbl = "data_dikfungsi";}
+
+		$("#md-hapus").modal("show");
+		$("#hapus").attr("onclick","hapus_"+tbl+"("+id+");");
+
+	}
+
+	function hapus_data_dikfungsi(id){
+		line = $("#line").val();
+		$.ajax({
+	        url      : line+"Member/hapus_data_dikfungsi",
+	        type     : 'POST',
+	        dataType : 'json',
+	        data 	 : {'id':id},
+	        success  : function(data){
+	            console.log(data);
+	            var info = data.info;
+				location.reload(true);
+				$.notific8('Data terpilih berhasil di hapus',{ life:5000,horizontalEdge:"top", theme:"success" ,heading:" Hapus Sukses !! "});
+
+	        }
+	    })
+	}
+
 </script>

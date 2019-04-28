@@ -449,3 +449,19 @@
 
         </div>
     </div>
+
+<div id="md-hapus" class="modal fade">
+    <div class="modal-header bg-danger">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+        <h4 class="modal-title"><i class="fa fa-warning"></i> Konfirmasi</h4>
+    </div>
+    <!-- //modal-header-->
+    <div class="modal-body">
+        Apakah Anda yakin untuk menghapus data terpilih?
+    </div>
+    <div style="text-align: right;" class="col-lg-12">
+        <button class='btn btn-danger' id="hapus"><i class='fa fa-trash-o'></i> Hapus</button>
+        <button type="button" class="btn btn-inverse" data-dismiss="modal" aria-hidden="true">Batal</button>
+    </div>
+    <!-- //modal-body-->
+</div>
