@@ -957,13 +957,14 @@ class Member extends CI_Controller{
 		$tgl = date("Y-m-d h:i:s");
 
 		$arr1 = array(
-			'jenis_ajuan' => '2', 
-			'no_jenis_ajuan' => $last_rec, 
 			'tgl_ajuan' => $tgl, 
 			'id_ajuanstatus' => '1', // pengajuan pegawai
 			'idcard' => $id,
 		);
-		$this->Mmember->update('ajuan',$arr1,'no_jenis_ajuan',$id_rec);
+
+		$arrx = array('no_jenis_ajuan' => $id_rec,'jenis_ajuan' => '2', );
+		$this->Mmember->update2('ajuan',$arr1,$arrx);
+		// $this->Mmember->update('ajuan',$arr1,'no_jenis_ajuan',$id_rec);
 
 	    $nm_file = $id.'_'.$last_rec;
         $config = array(
@@ -1046,7 +1047,9 @@ class Member extends CI_Controller{
 			'id_ajuanstatus' => '1', // pengajuan pegawai
 			'idcard' => $id,
 		);
-		$this->Mmember->update('ajuan',$arr1,'no_jenis_ajuan',$id_rec);
+		$arrx = array('no_jenis_ajuan' => $id_rec,'jenis_ajuan' => '2', );
+		$this->Mmember->update2('ajuan',$arr1,$arrx);
+		// $this->Mmember->update('ajuan',$arr1,'no_jenis_ajuan',$id_rec);
 
 		$data = array('info' => 'sukses', );
 		echo json_encode($data);
@@ -1204,7 +1207,7 @@ class Member extends CI_Controller{
 		$info['tbl'] = $tbl;
 		$info['id_rec'] = $idx;
 
-		$q 		= $this->Mmember->riwayat_ajuan_detail($tbl,$id)->row();
+		$q 		= $this->Mmember->riwayat_ajuan_detail($tbl,$id,'2')->row();
 		if(isset($q)){
 			$info['nm_diklat'] = $q->nama_diklat;
 			$info['lokasi'] = $q->lokasi;
@@ -1491,7 +1494,7 @@ class Member extends CI_Controller{
 		$info['tbl'] = $tbl;
 		$info['id_rec'] = $idx;
 
-		$q 		= $this->Mmember->riwayat_ajuan_detail($tbl,$id)->row();
+		$q 		= $this->Mmember->riwayat_ajuan_detail($tbl,$id,'3')->row();
 		if(isset($q)){
 			$info['nm_diklat'] = $q->nama_diklat;
 			$info['lokasi'] = $q->lokasi;
@@ -1513,11 +1516,55 @@ class Member extends CI_Controller{
 		$this->load->view('template/body',$data);
 	}
 
+	function update_dik_teknis(){
+		$id		= $this->session->userdata('id_user');
+		$folder = "data_dikteknis";
+
+		$nama = $this->input->post('nama',true);
+		$belajar = $this->input->post('belajar',true);
+		$lokasi = $this->input->post('lokasi',true);
+		$tgl_mulai = $this->input->post('tgl_mulai',true);
+		$tgl_selesai = $this->input->post('tgl_selesai',true);
+		$jml_jam = $this->input->post('jml_jam',true);
+		$created = $this->input->post('created',true);
+		$idx = $this->input->post('id_rec',true);
+		$idx 	= str_replace(array('-', '_', '~'), array('+', '/', '='), $idx);
+		$id_rec	= $this->encrypt->decode($idx);
+
+		$start = date("Y-m-d", strtotime($tgl_mulai));
+		$finish = date("Y-m-d", strtotime($tgl_selesai));
+
+		$arr = array(
+			'idcard' => $id,
+			'nama_diklat' => $nama,
+			'tmp_belajar' => $belajar,
+			'lokasi' => $lokasi,
+			'tgl_mulai' => $start,
+			'tgl_selesai' => $finish,
+			'jml_jam' => $jml_jam,
+			'penyelenggara' => $created,
+		);
+		$this->Mmember->update($folder,$arr,'no',$id_rec);
+		
+		$tgl = date("Y-m-d h:i:s");
+
+		$arr1 = array(
+			'tgl_ajuan' => $tgl, 
+			'id_ajuanstatus' => '1', // pengajuan pegawai
+			'idcard' => $id,
+		);
+		$arrx = array('no_jenis_ajuan' => $id_rec,'jenis_ajuan' => '3', );
+		$this->Mmember->update2('ajuan',$arr1,$arrx);
+		// $this->Mmember->update('ajuan',$arr1,'no_jenis_ajuan',$id_rec);
+
+		$data = array('info' => 'sukses', );
+		echo json_encode($data);
+	}
+
 	function riw_dik_jenjang_add(){
 		$data['head_page'] 	= $this->load->view('template/head','',true);
 		$data['top_menu'] 	= $this->load->view('template/top_menu','',true);
 
-		// $info['biodata']	= $this->get_biodata2();
 		$data['main_page'] 	= $this->load->view('member/riw_dik_jenjang_add','',true);
 
 		$data['modal'] 		= $this->load->view('template/modal','',true);
@@ -1609,7 +1656,7 @@ class Member extends CI_Controller{
 	            $ext2 	= $pisah2[1];
 	            $filefix2 = $nm_file.'.'.$ext2;
 
-	            $arr = array('nama_berkas' => $filefix2, );
+	            $arr = array('nama_berkas' => $filefix2,);
 				$this->Mmember->update($folder,$arr,'no',$last_rec);
 
 	            echo json_decode($result);
@@ -1656,7 +1703,7 @@ class Member extends CI_Controller{
 
 					$btn_aksi = "
 								<button class='btn btn-success' onclick='buka_berkas($no,4);'><i class='fa fa-picture-o'></i></button>
-								<a class='btn btn-warning' href='riw_dik_fungsi_edit/$nox'><i class='fa fa-pencil'></i></a>
+								<a class='btn btn-warning' href='riw_dik_jenjang_edit/$nox'><i class='fa fa-pencil'></i></a>
 								<button class='btn btn-danger' onclick='confirm_hapus($no,4);'><i class='fa fa-trash-o'></i></button>
 								";
 				}else if($id_ajuan == "2"){
@@ -1671,7 +1718,7 @@ class Member extends CI_Controller{
 					$info_ajuan = "<span class='label label-warning col-md-12'>$deskripsi</span>";
 					$btn_aksi = "
 								<button class='btn btn-success'><i class='fa fa-comment'></i></button>
-								<a class='btn btn-warning' href='riw_dik_fungsi_edit/$nox'><i class='fa fa-pencil'></i></a>
+								<a class='btn btn-warning' href='riw_dik_jenjang_edit/$nox'><i class='fa fa-pencil'></i></a>
 								<button class='btn btn-danger' onclick='confirm_hapus($no,4);'><i class='fa fa-trash-o'></i></button>
 								";
 				}else if($id_ajuan == "5"){
@@ -1679,7 +1726,7 @@ class Member extends CI_Controller{
 
 					$btn_aksi = "
 								<button class='btn btn-success'><i class='fa fa-comment'></i></button>
-								<a class='btn btn-warning' href='riw_dik_fungsi_edit/$nox'><i class='fa fa-pencil'></i></a>
+								<a class='btn btn-warning' href='riw_dik_jenjang_edit/$nox'><i class='fa fa-pencil'></i></a>
 								<button class='btn btn-danger' onclick='confirm_hapus($no,4);'><i class='fa fa-trash-o'></i></button>
 								";
 				}else if($id_ajuan == "6"){
@@ -1721,6 +1768,43 @@ class Member extends CI_Controller{
 		$data = array('tbl' => $tbl, );
 		echo json_encode($data);
 
+	}
+
+	function riw_dik_jenjang_edit(){
+		$data['head_page'] 	= $this->load->view('template/head','',true);
+		$data['top_menu'] 	= $this->load->view('template/top_menu','',true);
+
+		$idx 	= $this->uri->segment(3);
+		$idx 	= str_replace(array('-', '_', '~'), array('+', '/', '='), $idx);
+		$id		= $this->encrypt->decode($idx);
+		
+		$tbl  	= "data_dikjenjang";
+		$info['tbl'] = $tbl;
+		$info['id_rec'] = $idx;
+
+		$q 		= $this->Mmember->riwayat_ajuan_detail($tbl,$id,'4')->row();
+		if(isset($q)){
+
+			$info['jns_diklat'] = $q->jns_diklat;
+			$info['angkatan'] = $q->angkatan;
+			$info['penyelenggara'] = $q->penyelenggara;
+			$info['tgl_mulai'] = $q->tgl_mulai;
+			$info['tgl_selesai'] = $q->tgl_selesai;
+			$info['predikat'] = $q->predikat;
+			$info['lokasi'] = $q->lokasi;
+			$info['jml_jam'] = $q->jml_jam;
+			$info['nama_berkas'] = $q->nama_berkas;
+		}
+
+
+		$data['main_page'] 	= $this->load->view('member/riw_dik_jenjang_edit',$info,true);
+
+		$data['modal'] 		= $this->load->view('template/modal','',true);
+		$data['left_menu'] 	= $this->load->view('template/left_menu','',true);
+		$data['foot'] 		= $this->load->view('template/foot','',true);
+		$data['custom_js'] 	= $this->load->view('member/riw_dik_jenjang_edit_js','',true);
+
+		$this->load->view('template/body',$data);
 	}
 
 	function riw_pangkat_add(){
