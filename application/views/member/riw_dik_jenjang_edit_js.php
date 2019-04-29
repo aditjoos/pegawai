@@ -51,10 +51,36 @@ $(document).ready(function() {
 		}else if(!jml_jam){
 			$.notific8('Lengkapi isian Jumlah Jam',{ life:5000,horizontalEdge:"top", theme:"danger" ,heading:" Simpan Gagal !! "});
 		}else if(!file){
-			$.notific8('Tidak terdapat berkas foto pendukung',{ life:5000,horizontalEdge:"top", theme:"danger" ,heading:" Simpan Gagal !! "});
-		}else{
+			line = $("#line").val();
+			id_rec = $("#id_rec").val();
+
+			$("#btn_submit").attr("disabled", true);
+			$("#btn_submit").html("<i class='fa fa-sun-o fa-spin'></i> Update");
+
 			$.ajax({
-                url: 'do_upload_dik_jenjang',
+		        url      : line+"Member/update_dik_fungsi",
+		        type     : 'POST',
+		        dataType : 'json',
+		        data 	 : {'nama':nama,'belajar':belajar,'lokasi':lokasi,'tgl_mulai':tgl_mulai,'tgl_selesai':tgl_selesai,
+							'jml_jam':jml_jam,'created':created,'id_rec':id_rec},
+		        success  : function(data){
+		            console.log(data);
+		            var info = data.info;
+					$.notific8('Data telah diperbarui.',{ life:5000,horizontalEdge:"top", theme:"success" ,heading:" Update Sukses !! "});
+		            setTimeout(function(){ 
+						window.history.back();
+					}, 2000);
+		        }
+		    })
+		}else{
+			line = $("#line").val();
+			id_rec = $("#id_rec").val();
+
+			$("#btn_submit").attr("disabled", true);
+			$("#btn_submit").html("<i class='fa fa-sun-o fa-spin'></i> Update");
+
+			$.ajax({
+                url: line+'Member/do_upload_dik_jenjang',
                 type: "POST",
                 data: new FormData(this),
                 processData: false,
@@ -62,8 +88,10 @@ $(document).ready(function() {
                 cache: false,
                 async: false,
                 success: function(data) {
-					window.location.href = "biodata2";
-					$.notific8('silahkan menunggu informasi dari tim Kepegawaian',{ life:5000,horizontalEdge:"top", theme:"success" ,heading:" Simpan Berhasil !! "});
+					$.notific8('Data telah diperbarui.',{ life:5000,horizontalEdge:"top", theme:"success" ,heading:" Update Sukses !! "});
+		            setTimeout(function(){ 
+						window.history.back();
+					}, 2000);
                 }
             });
 		}

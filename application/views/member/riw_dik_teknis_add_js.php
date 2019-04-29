@@ -52,6 +52,10 @@ $(document).ready(function() {
 		}else if(!file){
 			$.notific8('Tidak terdapat berkas foto pendukung',{ life:5000,horizontalEdge:"top", theme:"danger" ,heading:" Simpan Gagal !! "});
 		}else{
+
+			$("#btn_submit").attr("disabled", true);
+			$("#btn_submit").html("<i class='fa fa-sun-o fa-spin'></i> Update");
+			
 			$.ajax({
                 url: 'do_upload_dik_teknis',
                 type: "POST",
@@ -61,8 +65,11 @@ $(document).ready(function() {
                 cache: false,
                 async: false,
                 success: function(data) {
-					window.location.href = "biodata2";
 					$.notific8('silahkan menunggu informasi dari tim Kepegawaian',{ life:5000,horizontalEdge:"top", theme:"success" ,heading:" Simpan Berhasil !! "});
+
+					setTimeout(function(){ 
+						window.location.href = "biodata2";
+					}, 2000);
                 }
             });
 		}

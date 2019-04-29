@@ -50,9 +50,12 @@ $(document).ready(function() {
 		}else if(!created){
 			$.notific8('Lengkapi isian Penyelenggara',{ life:5000,horizontalEdge:"top", theme:"danger" ,heading:" Simpan Gagal !! "});
 		}else if(!file){
-			// $.notific8('Tidak terdapat berkas foto pendukung',{ life:5000,horizontalEdge:"top", theme:"danger" ,heading:" Simpan Gagal !! "});
 			line = $("#line").val();
 			id_rec = $("#id_rec").val();
+
+			$("#btn_submit").attr("disabled", true);
+			$("#btn_submit").html("<i class='fa fa-sun-o fa-spin'></i> Update");
+
 			$.ajax({
 		        url      : line+"Member/update_dik_teknis",
 		        type     : 'POST',
@@ -62,13 +65,19 @@ $(document).ready(function() {
 		        success  : function(data){
 		            console.log(data);
 		            var info = data.info;
-					window.history.back();
+
 					$.notific8('Data telah diperbarui.',{ life:5000,horizontalEdge:"top", theme:"success" ,heading:" Update Sukses !! "});
+		            setTimeout(function(){ 
+						window.history.back();
+					}, 2000);
 		            
 		        }
 		    })
 			
 		}else{
+			$("#btn_submit").attr("disabled", true);
+			$("#btn_submit").html("<i class='fa fa-sun-o fa-spin'></i> Update");
+			
 			$.ajax({
                 url: 'do_upload_dik_teknis_update',
                 type: "POST",
@@ -78,8 +87,10 @@ $(document).ready(function() {
                 cache: false,
                 async: false,
                 success: function(data) {
-					window.history.back();
-					$.notific8('silahkan menunggu informasi dari tim Kepegawaian',{ life:5000,horizontalEdge:"top", theme:"success" ,heading:" Simpan Berhasil !! "});
+					$.notific8('Data telah diperbarui.',{ life:5000,horizontalEdge:"top", theme:"success" ,heading:" Update Sukses !! "});
+		            setTimeout(function(){ 
+						window.history.back();
+					}, 2000);
                 }
             });
 		}

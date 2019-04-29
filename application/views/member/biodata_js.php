@@ -108,7 +108,7 @@
 	            if(!info){
 					$("#ktn").html("<iframe frameborder='0' scrolling='yes' width='100%' height='100%' src='"+line+"assets/img/noimage.jpg' ></iframe>");
 	            }else{
-					$("#ktn").html("<iframe frameborder='0'  src='"+line+"assets/uploads/"+tbl+"/"+info+"'></iframe>");
+					$("#ktn").html("<iframe frameborder='0' scrolling='yes' width='100%' height='100%' src='"+line+"assets/uploads/"+tbl+"/"+info+"'></iframe>");
 	            }
 
 				
