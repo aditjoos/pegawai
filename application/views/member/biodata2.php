@@ -400,8 +400,8 @@
                                             </div>
                                             <div class="table-responsive ">
                                                 <table class="table">
-                                                    <tbody>
-                                                        <tr>
+                                                    <thead>
+                                                        <tr style="text-align: center;" class="bg-theme-inverse">
                                                             <td>Nama Jabatan</td>
                                                             <td>TMT Jabatan</td>
                                                             <td>Tahun Mulai</td>
@@ -415,7 +415,9 @@
                                                             <td>Berkas</td>
                                                         </tr>
                                                        
-                                                    </tbody>
+                                                    </thead>
+                                                    <tbody id="ls_pekerjaan"></tbody>
+
                                                 </table>
                                             </div>
                                         </div>

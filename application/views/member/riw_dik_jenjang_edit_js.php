@@ -35,9 +35,6 @@ $(document).ready(function() {
 		var lokasi = $("#lokasi").val();
 		var jml_jam = $("#jml_jam").val();
 
-		'jns_diklat':jns_diklat,'angkatan':angkatan,'created':created,'tgl_mulai':tgl_mulai,'tgl_selesai':tgl_selesai,
-		'predikat':predikat,'lokasi':lokasi,'jml_jam':jml_jam,
-
 		if(!angkatan){
 			$.notific8('Lengkapi isian Angkatan',{ life:5000,horizontalEdge:"top", theme:"danger" ,heading:" Simpan Gagal !! "});
 		}else if(!created){
@@ -60,7 +57,7 @@ $(document).ready(function() {
 			$("#btn_submit").html("<i class='fa fa-sun-o fa-spin'></i> Update");
 
 			$.ajax({
-		        url      : line+"Member/update_dik_fungsi",
+		        url      : line+"Member/update_dik_jenjang",
 		        type     : 'POST',
 		        dataType : 'json',
 		        data 	 : {'jns_diklat':jns_diklat,'angkatan':angkatan,'created':created,'tgl_mulai':tgl_mulai,'tgl_selesai':tgl_selesai,

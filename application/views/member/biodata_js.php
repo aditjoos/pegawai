@@ -9,6 +9,7 @@
 		list_dik_fungsi();
 		list_dik_teknis();
 		list_dik_jenjang();
+		list_pekerjaan();
 	})
 
 	function list_pendidikan(){
@@ -59,6 +60,19 @@
 	            console.log(data);
 	            var tbl = data.tbl;
 	            $("#ls_dik_jenjang").html(tbl);
+	        }
+	    })
+	}
+
+	function list_pekerjaan(){
+		$.ajax({
+	        url      : "list_pekerjaan",
+	        type     : 'POST',
+	        dataType : 'json',
+	        success  : function(data){
+	            console.log(data);
+	            var tbl = data.tbl;
+	            $("#ls_pekerjaan").html(tbl);
 	        }
 	    })
 	}

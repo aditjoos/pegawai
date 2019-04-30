@@ -22,21 +22,21 @@
                                     <div class="form-group">
                                         <label class="control-label">Nama Jabatan</label>
                                         <div class="col-lg-4">
-                                            <input type="text" class="form-control" id="pejabat" name="pejabat">
+                                            <input type="text" class="form-control" id="jabatan" name="jabatan">
                                         </div>
                                         <label class="col-lg-2" style="text-align: right; margin-top: 7px;">TMT Jabatan</label>
                                         <div class="col-lg-3">
-                                            <input type="text" class="form-control tanggal" id="tmt" name="tmt">
+                                            <input type="text" class="form-control tanggal" id="tmt_jabatan" name="tmt_jabatan">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label">Tahun Mulai</label>
                                         <div class="col-lg-3">
-                                            <input type="text" class="form-control tahun" id="unitkerja" name="unitkerja">
+                                            <input type="text" class="form-control tahun" id="thn_mulai" name="thn_mulai">
                                         </div>
                                         <label class="col-lg-3" style="text-align: right; margin-top: 7px;">Sampai Dengan</label>
                                         <div class="col-lg-3">
-                                            <input type="text" class="form-control tahun" id="tmt" name="tmt">
+                                            <input type="text" class="form-control tahun" id="thn_selesai" name="thn_selesai">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -52,7 +52,7 @@
                                     <div class="form-group">
                                         <label class="control-label">NIP Pejabat Penandatangan</label>
                                         <div class="col-lg-4">
-                                            <input type="text" class="form-control " id="nip_pejab" name="nip_pejab" onkeyup="this.value=this.value.replace(/[^\d]/,'')">
+                                            <input type="text" class="form-control " id="nip_pejab_baru" name="nip_pejab_baru" onkeyup="this.value=this.value.replace(/[^\d]/,'')">
                                         </div>
                                         <label class="col-lg-2" style="text-align: right; margin-top: 7px;">NIP Lama</label>
                                         <div class="col-lg-3">
@@ -85,10 +85,10 @@
                                             </div>
                                     </div>
                                     <div class="form-group offset">
-                                            <div>
-                                                    <button class="btn btn-theme" type="submit"><i class="fa fa-check"></i> Simpan</button>
-                                                    <button class="btn">Batal</button>
-                                            </div>
+                                        <div>
+                                            <button class="btn btn-theme" type="submit" id="btn_submit"><i class="fa fa-check"></i> Simpan</button>
+                                            <a class="btn btn-info" href="biodata2">Batal</a>
+                                        </div>
                                     </div>
                                 </form>
                             </div>

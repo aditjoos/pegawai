@@ -101,9 +101,10 @@
                                     <div class="form-group offset">
                                             <div>
                                                     <button class="btn btn-theme" type="submit" id="btn_submit"><i class="fa fa-check"></i> Simpan</button>
-                                                    <button class="btn">Batal</button>
+                                                    <a class="btn btn-info" href="biodata2">Batal</a>
                                             </div>
                                     </div>
+                                    <input type="hidden" id="id_rec" name="id_rec" value="<?php echo $id_rec;?>">
                                 </form>
                             </div>
                         </div>

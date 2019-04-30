@@ -6,7 +6,7 @@
 <script type="text/javascript" src="<?php echo $path; ?>assets/js/private/profile.js"></script>
 <script>
 $(document).ready(function() {	
-	opt_edu();
+	
 	$(".tanggal").datepicker({
 		format: "dd-mm-yyyy",
 	    autoclose: true
@@ -26,35 +26,42 @@ $(document).ready(function() {
 	$("#upload_form").submit(function(e) {
 		e.preventDefault();
 
+		var jabatan = $("#jabatan").val();
+		var tmt_jabatan = $("#tmt_jabatan").val();
+		var thn_mulai = $("#thn_mulai").val();
+		var thn_selesai = $("#thn_selesai").val();
+		var no_sk = $("#no_sk").val();
+		var tgl_sk = $("#tgl_sk").val();
+		var nip_pejab_baru = $("#nip_pejab_baru").val();
+		var nip_pejab_lama = $("#nip_pejab_lama").val();
+		var nm_pejab = $("#nm_pejab").val();
 		var file = $("#file_image").val();
-		var edu = $("#edu").val();
-		var sekolah = $("#sekolah").val();
-		var prodi = $("#prodi").val();
-		var tahun = $("#tahun").val();
-		var tanggal = $("#tanggal").val();
-		var belajar = $("#belajar").val();
-		var lokasi = $("#lokasi").val();
-		var ijasah = $("#ijasah").val();
 
-		if(!edu){
-			$.notific8('Lengkapi isian Tingkat Pendidikan',{ life:5000,horizontalEdge:"top", theme:"danger" ,heading:" Simpan Gagal !! "});
-		}else if(!sekolah){
-			$.notific8('Lengkapi isian Nama Sekolah / Universitas',{ life:5000,horizontalEdge:"top", theme:"danger" ,heading:" Simpan Gagal !! "});
-		}else if(!prodi){
-			$.notific8('Lengkapi isian Jurusan / Program Studi',{ life:5000,horizontalEdge:"top", theme:"danger" ,heading:" Simpan Gagal !! "});
-		}else if(!tahun){
-			$.notific8('Lengkapi isian tahun masuk',{ life:5000,horizontalEdge:"top", theme:"danger" ,heading:" Simpan Gagal !! "});
-		}else if(!tanggal){
-			$.notific8('Lengkapi isian tanggal lulus',{ life:5000,horizontalEdge:"top", theme:"danger" ,heading:" Simpan Gagal !! "});
-		}else if(!lokasi){
-			$.notific8('Lengkapi isian lokasi',{ life:5000,horizontalEdge:"top", theme:"danger" ,heading:" Simpan Gagal !! "});
-		}else if(!ijasah){
-			$.notific8('Lengkapi isian nomor ijasah',{ life:5000,horizontalEdge:"top", theme:"danger" ,heading:" Simpan Gagal !! "});
+		if(!jabatan){
+			$.notific8('Lengkapi isian Nama jabatan',{ life:5000,horizontalEdge:"top", theme:"danger" ,heading:" Simpan Gagal !! "});
+		}else if(!tmt_jabatan){
+			$.notific8('Lengkapi isian tmt jabatan',{ life:5000,horizontalEdge:"top", theme:"danger" ,heading:" Simpan Gagal !! "});
+		}else if(!thn_mulai){
+			$.notific8('Lengkapi isian tahun mulai',{ life:5000,horizontalEdge:"top", theme:"danger" ,heading:" Simpan Gagal !! "});
+		}else if(!thn_selesai){
+			$.notific8('Lengkapi isian tahun selesai',{ life:5000,horizontalEdge:"top", theme:"danger" ,heading:" Simpan Gagal !! "});
+		}else if(!no_sk){
+			$.notific8('Lengkapi isian nomor sk',{ life:5000,horizontalEdge:"top", theme:"danger" ,heading:" Simpan Gagal !! "});
+		}else if(!tgl_sk){
+			$.notific8('Lengkapi isian tanggal sk',{ life:5000,horizontalEdge:"top", theme:"danger" ,heading:" Simpan Gagal !! "});
+		}else if(!nip_pejab_baru){
+			$.notific8('Lengkapi isian nip pejabat baru',{ life:5000,horizontalEdge:"top", theme:"danger" ,heading:" Simpan Gagal !! "});
+		}else if(!nip_pejab_lama){
+			$.notific8('Lengkapi isian nip pejabat lama',{ life:5000,horizontalEdge:"top", theme:"danger" ,heading:" Simpan Gagal !! "});
+		}else if(!nm_pejab){
+			$.notific8('Lengkapi isian nama pejabat',{ life:5000,horizontalEdge:"top", theme:"danger" ,heading:" Simpan Gagal !! "});
 		}else if(!file){
 			$.notific8('Tidak terdapat berkas foto pendukung',{ life:5000,horizontalEdge:"top", theme:"danger" ,heading:" Simpan Gagal !! "});
 		}else{
+			$("#btn_submit").attr("disabled", true);
+			$("#btn_submit").html("<i class='fa fa-sun-o fa-spin'></i> Proses");
 			$.ajax({
-                url: 'do_upload_pendidikan',
+                url: 'do_upload_pekerjaan',
                 type: "POST",
                 data: new FormData(this),
                 processData: false,
@@ -62,8 +69,11 @@ $(document).ready(function() {
                 cache: false,
                 async: false,
                 success: function(data) {
-					window.location.href = "biodata2";
 					$.notific8('silahkan menunggu informasi dari tim Kepegawaian',{ life:5000,horizontalEdge:"top", theme:"success" ,heading:" Simpan Berhasil !! "});
+
+					setTimeout(function(){ 
+						window.location.href = "biodata2";
+					}, 2000);
                 }
             });
 		}
@@ -73,19 +83,6 @@ $(document).ready(function() {
 
 
 });//end script
-
-function opt_edu(){
-	$.ajax({
-        url      : "opt_edu",
-        type     : 'POST',
-        dataType : 'json',
-        success  : function(data){
-            console.log(data);
-            var opt = data.opt;
-            $("#edu").html(opt);
-        }
-    })
-}
 
 function filePreview(input){
     if(input.files && input.files[0]){
