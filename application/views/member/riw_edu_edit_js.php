@@ -51,7 +51,26 @@ $(document).ready(function() {
 		}else if(!ijasah){
 			$.notific8('Lengkapi isian nomor ijasah',{ life:5000,horizontalEdge:"top", theme:"danger" ,heading:" Simpan Gagal !! "});
 		}else if(!file){
-			$.notific8('Tidak terdapat berkas foto pendukung',{ life:5000,horizontalEdge:"top", theme:"danger" ,heading:" Simpan Gagal !! "});
+			line = $("#line").val();
+			id_rec = $("#id_rec").val();
+
+			$("#btn_submit").attr("disabled", true);
+			$("#btn_submit").html("<i class='fa fa-sun-o fa-spin'></i> Update");
+
+			$.ajax({
+		        url      : line+"Member/update_pendidikan",
+		        type     : 'POST',
+		        dataType : 'json',
+		        data 	 : {"edu":edu,"sekolah":sekolah,"prodi":prodi,"tahun":tahun,"tanggal":tanggal,"belajar":belajar,"lokasi":lokasi,"ijasah":ijasah,'id_rec':id_rec},
+		        success  : function(data){
+		            console.log(data);
+		            var info = data.info;
+					$.notific8('Data telah diperbarui.',{ life:5000,horizontalEdge:"top", theme:"success" ,heading:" Update Sukses !! "});
+		            setTimeout(function(){ 
+						window.history.back();
+					}, 2000);
+		        }
+		    })
 		}else{
 			$("#btn_submit").attr("disabled", true);
 			$("#btn_submit").html("<i class='fa fa-sun-o fa-spin'></i> Update");
@@ -80,8 +99,9 @@ $(document).ready(function() {
 });//end script
 
 function opt_edu(){
+	ln = $("#line").val();
 	$.ajax({
-        url      : "opt_edu",
+        url      : ln+"Member/opt_edu",
         type     : 'POST',
         dataType : 'json',
         success  : function(data){

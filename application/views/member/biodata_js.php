@@ -68,7 +68,11 @@
 	}
 	
 	function confirm_hapus(id,tb){
-		if(tb == '2'){var tbl = "data_dikfungsi";}
+		if(tb == '1'){var tbl = "data_pendidikan";}
+		else if(tb == '2'){var tbl = "data_dikfungsi";}
+		else if(tb == '3'){var tbl = "data_dikteknis";}
+		else if(tb == '4'){var tbl = "data_dikjenjang";}
+		else if(tb == '5'){var tbl = "data_pangkat";}
 
 		$("#md-hapus").modal("show");
 		$("#hapus").attr("onclick","hapus_"+tbl+"("+id+");");
@@ -92,6 +96,24 @@
 	    })
 	}
 
+	function hapus_data_pendidikan(id){
+		line = $("#line").val();
+		$.ajax({
+	        url      : line+"Member/hapus_data_pendidikan",
+	        type     : 'POST',
+	        dataType : 'json',
+	        data 	 : {'id':id},
+	        success  : function(data){
+	            console.log(data);
+	            var info = data.info;
+				location.reload(true);
+				$.notific8('Data terpilih berhasil di hapus',{ life:5000,horizontalEdge:"top", theme:"success" ,heading:" Hapus Sukses !! "});
+
+	        }
+	    })
+	}
+
+
 	function buka_berkas(id,tbl){
 		line = $("#line").val();
 
@@ -106,9 +128,9 @@
 	            var tbl = data.tabel;
 	            
 	            if(!info){
-					$("#ktn").html("<iframe frameborder='0' scrolling='yes' width='100%' height='100%' src='"+line+"assets/img/noimage.jpg' ></iframe>");
+					$("#ktn").html("<embed frameborder='0' scrolling='yes' width='100%' height='100%' src='"+line+"assets/img/noimage.jpg' >");
 	            }else{
-					$("#ktn").html("<iframe frameborder='0' scrolling='yes' width='100%' height='100%' src='"+line+"assets/uploads/"+tbl+"/"+info+"'></iframe>");
+					$("#ktn").html("<embed frameborder='0' scrolling='yes' width='100%' height='100%' src='"+line+"assets/uploads/"+tbl+"/"+info+"'>");
 	            }
 
 				

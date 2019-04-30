@@ -472,8 +472,8 @@
         <h4 class="modal-title"><i class="fa fa-picture-o"></i> Berkas</h4>
     </div>
     <!-- //modal-header-->
-    <div class="modal-body iframe-container" id="ktn">
-        <iframe id="frm_berkas" src="URL"></iframe>
+    <div class="modal-body" id="ktn">
+        
     </div>
     <div class="modal-footer col-lg-12">
         <button type="button" class="btn btn-inverse" data-dismiss="modal" aria-hidden="true">Tutup</button>

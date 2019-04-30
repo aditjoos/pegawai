@@ -6,7 +6,6 @@
 <script type="text/javascript" src="<?php echo $path; ?>assets/js/private/profile.js"></script>
 <script>
 $(document).ready(function() {	
-	opt_edu();
 	$(".tanggal").datepicker({
 		format: "dd-mm-yyyy",
 	    autoclose: true
@@ -36,6 +35,9 @@ $(document).ready(function() {
 		var lokasi = $("#lokasi").val();
 		var jml_jam = $("#jml_jam").val();
 
+		'jns_diklat':jns_diklat,'angkatan':angkatan,'created':created,'tgl_mulai':tgl_mulai,'tgl_selesai':tgl_selesai,
+		'predikat':predikat,'lokasi':lokasi,'jml_jam':jml_jam,
+
 		if(!angkatan){
 			$.notific8('Lengkapi isian Angkatan',{ life:5000,horizontalEdge:"top", theme:"danger" ,heading:" Simpan Gagal !! "});
 		}else if(!created){
@@ -61,8 +63,8 @@ $(document).ready(function() {
 		        url      : line+"Member/update_dik_fungsi",
 		        type     : 'POST',
 		        dataType : 'json',
-		        data 	 : {'nama':nama,'belajar':belajar,'lokasi':lokasi,'tgl_mulai':tgl_mulai,'tgl_selesai':tgl_selesai,
-							'jml_jam':jml_jam,'created':created,'id_rec':id_rec},
+		        data 	 : {'jns_diklat':jns_diklat,'angkatan':angkatan,'created':created,'tgl_mulai':tgl_mulai,'tgl_selesai':tgl_selesai,
+							'predikat':predikat,'lokasi':lokasi,'jml_jam':jml_jam,'id_rec':id_rec},
 		        success  : function(data){
 		            console.log(data);
 		            var info = data.info;
@@ -101,19 +103,6 @@ $(document).ready(function() {
 
 
 });//end script
-
-function opt_edu(){
-	$.ajax({
-        url      : "opt_edu",
-        type     : 'POST',
-        dataType : 'json',
-        success  : function(data){
-            console.log(data);
-            var opt = data.opt;
-            $("#edu").html(opt);
-        }
-    })
-}
 
 function filePreview(input){
     if(input.files && input.files[0]){
