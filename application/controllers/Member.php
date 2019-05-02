@@ -626,7 +626,7 @@ class Member extends CI_Controller{
 		echo json_encode($result);
 	}
 
-	// ---------------------------------------------------------------------------------------------------------------- dendra
+	//================================================================================================================== deny
 
 	function riw_edu_add(){
 		$data['head_page'] 	= $this->load->view('template/head','',true);
@@ -651,6 +651,22 @@ class Member extends CI_Controller{
 		foreach ($rsl as $key) {
 			$id = $key->id;
 			$nm = $key->jenjang;
+
+			$opt .="<option value='$nm'>$nm</option>";
+		}
+
+		$data = array('opt' => $opt, );
+		echo json_encode($data);
+	}
+
+	function opt_golruang(){
+		$rsl = $this->Mmember->select_all('ref_golruang','id','ASC')->result();
+
+		
+		$opt = "<option value=''>-</option>";
+		foreach ($rsl as $key) {
+			$id = $key->id;
+			$nm = $key->golongan;
 
 			$opt .="<option value='$nm'>$nm</option>";
 		}
@@ -1958,6 +1974,7 @@ class Member extends CI_Controller{
 		echo json_encode($data);
 	}
 
+	// pangkat ************************************************************************
 	function riw_pangkat_add(){
 		$data['head_page'] 	= $this->load->view('template/head','',true);
 		$data['top_menu'] 	= $this->load->view('template/top_menu','',true);
@@ -1973,6 +1990,245 @@ class Member extends CI_Controller{
 		$this->load->view('template/body',$data);
 	}
 
+	function do_upload_pangkat(){
+		$id		= $this->session->userdata('id_user');
+		$folder = "data_pangkat";
+
+		$gol = $_POST["gol"];
+		$tmt_gol = $_POST["tmt_gol"];
+		$pejab_sk = $_POST["pejab_sk"];
+		$no_sk = $_POST["no_sk"];
+		$tgl_sk = $_POST["tgl_sk"];
+		$ket = $_POST["ket"];
+
+		$tanggal_tmt = date("Y-m-d", strtotime($tmt_gol));
+		$tanggal_sk = date("Y-m-d", strtotime($tgl_sk));
+
+		$arr = array(
+			'idcard' => $id,
+			'nip' => $id,
+
+			"golongan" => $gol,
+			"tmt_golongan" => $tanggal_tmt,
+			"pejabat_sk" => $pejab_sk,
+			"no_sk" => $no_sk,
+			"tgl_sk" => $tanggal_sk,
+			"ket" => $ket,
+
+		);
+
+		$this->Mmember->insert($folder,$arr); 
+
+		if (!is_dir('assets/uploads/' . $folder)){
+	        mkdir('./assets/uploads/' . $folder, 0777, true);
+	    }
+
+		$sql = $this->Mmember->last_data1($folder,$id)->row();
+		$last_rec = $sql->nomor;
+
+		$tgl = date("Y-m-d h:i:s");
+
+		$arr1 = array(
+			'jenis_ajuan' => '5', 
+			'no_jenis_ajuan' => $last_rec, 
+			'tgl_ajuan' => $tgl, 
+			'id_ajuanstatus' => '1', // pengajuan pegawai
+			'idcard' => $id,
+		);
+		$this->Mmember->insert('ajuan',$arr1); 
+
+	    $nm_file = $id.'_'.$last_rec;
+        $config = array(
+        	'upload_path' => './assets/uploads/' . $folder, 
+        	'allowed_types' =>'jpg|jpeg|png|pdf', 
+        	'file_name' => $nm_file, 
+        );
+
+        $this->load->library('upload',$config);
+        if(is_uploaded_file($_FILES['file_image']['tmp_name'])){
+	        if($this->upload->do_upload("file_image")){
+	            $data = array('upload_data' => $this->upload->data());
+	 			
+	            //Resize and Compress Image
+	            $config['image_library']='gd2';
+	            $config['source_image']='./assets/uploads/'.$folder.'/'.$nm_file; 
+	            $config['create_thumb']= TRUE;
+	            $config['maintain_ratio'] = TRUE;
+	            $config['quality']= '60%';
+	            $config['width']= 600;
+	            $config['max_width']= 1200;
+	            $config['height']= 450;
+	            $config['max_height']= 1200;
+	            $config['max_size']= 3000;
+	            $config['new_image']= './assets/uploads/'.$folder.'/'.$nm_file; 
+	            $this->load->library('image_lib', $config);
+	            $this->image_lib->resize();
+
+				$foto2	= $_FILES['file_image']['name'];
+	            $pisah2 = explode('.',$foto2);
+	            $ext2 	= $pisah2[1];
+	            $filefix2 = $nm_file.'.'.$ext2;
+
+	            $arr = array('nama_berkas' => $filefix2,);
+				$this->Mmember->update($folder,$arr,'no',$last_rec);
+
+	            echo json_decode($result);
+	        }
+        }	
+	}
+
+	function list_pangkat(){
+		$card = $this->session->userdata('id_user');
+
+		$tbl = "data_pangkat";
+		$no = "5";
+		$arr = array('idcard' => $card, );
+		$q = $this->Mmember->riwayat_ajuan($tbl,$no,$card);
+		$tot = $q->num_rows();
+		$rsl = $q->result();
+
+		if($tot>'0'){
+			$tbl = '';
+			foreach ($rsl as $key) {
+				$no = $key->no; 
+				$nox = $this->encrypt->encode($no);
+				$nox = str_replace(array('+', '/', '='), array('-', '_', '~'), $nox);
+
+				$idcard = $key->idcard;
+				$nip = $key->nip;
+				$gol = $key->golongan;
+				$tanggal_tmt = date("d-m-Y",strtotime($key->tmt_golongan));
+				$pejab_sk = $key->pejabat_sk;
+				$no_sk = $key->no_sk;
+				$tanggal_sk = date("d-m-Y",strtotime($key->tgl_sk));
+				$ket = $key->ket;
+
+				$file = $key->nama_berkas;
+				$id_ajuan = $key->id_ajuanstatus;
+				$deskripsi = $key->deskripsi;
+
+				if($id_ajuan == "1"){
+					$info_ajuan = "<span class='label label-info col-md-12'>$deskripsi</span>";
+
+					$btn_aksi = "
+								<button class='btn btn-success' onclick='buka_berkas($no,5);'><i class='fa fa-picture-o'></i></button>
+								<a class='btn btn-warning' href='riw_pangkat_edit/$nox'><i class='fa fa-pencil'></i></a>
+								<button class='btn btn-danger' onclick='confirm_hapus($no,5);'><i class='fa fa-trash-o'></i></button>
+								";
+				}else if($id_ajuan == "2"){
+					$info_ajuan = "<span class='label label-primary col-md-12'>$deskripsi</span>";
+
+					$btn_aksi = "<button class='btn btn-success' onclick='buka_berkas($no,5);'><i class='fa fa-picture-o'></i></button>";
+				}else if($id_ajuan == "3"){
+					$info_ajuan = "<span class='label label-success col-md-12'>$deskripsi</span>";
+
+					$btn_aksi = "<button class='btn btn-success' onclick='buka_berkas($no,5);'><i class='fa fa-picture-o'></i></button>";
+				}else if($id_ajuan == "4"){
+					$info_ajuan = "<span class='label label-warning col-md-12'>$deskripsi</span>";
+					$btn_aksi = "
+								<button class='btn btn-success'><i class='fa fa-comment'></i></button>
+								<a class='btn btn-warning' href='riw_pangkat_edit/$nox'><i class='fa fa-pencil'></i></a>
+								<button class='btn btn-danger' onclick='confirm_hapus($no,5);'><i class='fa fa-trash-o'></i></button>
+								";
+				}else if($id_ajuan == "5"){
+					$info_ajuan = "<span class='label label-danger col-md-12'>$deskripsi</span>";
+
+					$btn_aksi = "
+								<button class='btn btn-success'><i class='fa fa-comment'></i></button>
+								<a class='btn btn-warning' href='riw_pangkat_edit/$nox'><i class='fa fa-pencil'></i></a>
+								<button class='btn btn-danger' onclick='confirm_hapus($no,5);'><i class='fa fa-trash-o'></i></button>
+								";
+				}else if($id_ajuan == "6"){
+					$info_ajuan = "<span class='label label-info col-md-12'>$deskripsi</span>";
+					$btn_aksi = "<button class='btn btn-success' onclick='buka_berkas($no,5);'><i class='fa fa-picture-o'></i></button>";
+				}else if($id_ajuan == "7"){
+					$info_ajuan = "<span class='label label-success col-md-12'>$deskripsi</span>";
+					$btn_aksi = "<button class='btn btn-success' onclick='buka_berkas($no,5);'><i class='fa fa-picture-o'></i></button>";
+				}else{
+					$info_ajuan = "-";
+				}
+
+				$tbl .= "
+						<tr>
+							<td>
+								$gol
+							</td>
+							<td>$tanggal_tmt</td>
+							<td>$pejab_sk</td>
+							<td style='text-align:center;'>$no_sk</td>
+							<td style='text-align:center;'>$tanggal_sk</td>
+							<td style='text-align:center'>$ket</td>
+							<td style='text-align:center'>$info_ajuan</td>
+							<td>
+								$btn_aksi
+							</td>
+
+						</tr>
+						";
+			}
+		}else{
+			$tbl = "<tr><td colspan='10' style='text-align:center;'>Data tidak ditemukan.</td></tr>";
+		}
+
+		$data = array('tbl' => $tbl, );
+		echo json_encode($data);
+
+	}
+
+	function riw_pangkat_edit(){
+		$data['head_page'] 	= $this->load->view('template/head','',true);
+		$data['top_menu'] 	= $this->load->view('template/top_menu','',true);
+
+		$idx 	= $this->uri->segment(3);
+		$idx 	= str_replace(array('-', '_', '~'), array('+', '/', '='), $idx);
+		$id		= $this->encrypt->decode($idx);
+		
+		$tbl  	= "data_pangkat";
+		$info['tbl'] = $tbl;
+		$info['id_rec'] = $idx;
+
+		$q 		= $this->Mmember->riwayat_ajuan_detail($tbl,$id,'5')->row();
+		if(isset($q)){
+
+			$info['gol'] = $q->golongan;
+			$info['tanggal_tmt'] = date("d-m-Y",strtotime($q->tmt_golongan));
+			$info['pejab_sk'] = $q->pejabat_sk;
+			$info['no_sk'] = $q->no_sk;
+			$info['tanggal_sk'] = date("d-m-Y",strtotime($q->tgl_sk));
+			$info['ket'] = $q->ket;
+
+		}
+
+
+		$data['main_page'] 	= $this->load->view('member/riw_pangkat_edit',$info,true);
+
+		$data['modal'] 		= $this->load->view('template/modal','',true);
+		$data['left_menu'] 	= $this->load->view('template/left_menu','',true);
+		$data['foot'] 		= $this->load->view('template/foot','',true);
+		$data['custom_js'] 	= $this->load->view('member/riw_pekerjaan_edit_js','',true);
+
+		$this->load->view('template/body',$data);
+	}
+
+	function hapus_data_pangkat(){
+		$id = $this->input->post("id",true);
+
+		$tbl = "data_pangkat";
+		$arr = array('no' => $id,);
+		$this->Mmember->delete($tbl,$arr);
+
+		$tbl = "ajuan";
+		$arr = array('no_jenis_ajuan' => $id,);
+		$this->Mmember->delete($tbl,$arr);
+
+		$data = array('info' => 'sukses', );
+		echo json_encode($data);
+	}
+
+	// pangkat ************************************************************************
+
+	// Jabatan Struktural ************************************************************************
+
 	function riw_jab_struktur_add(){
 		$data['head_page'] 	= $this->load->view('template/head','',true);
 		$data['top_menu'] 	= $this->load->view('template/top_menu','',true);
@@ -1987,7 +2243,9 @@ class Member extends CI_Controller{
 
 		$this->load->view('template/body',$data);
 	}
-	// Jabatan Fungsional--------------------------------------
+	// Jabatan Struktural ************************************************************************
+
+	// Jabatan Fungsional************************************************************************
 	function riw_jab_fungsi_add(){
 		$data['head_page'] 	= $this->load->view('template/head','',true);
 		$data['top_menu'] 	= $this->load->view('template/top_menu','',true);
@@ -2002,9 +2260,9 @@ class Member extends CI_Controller{
 
 		$this->load->view('template/body',$data);
 	}
-	// Jabatan Fungsional--------------------------------------
+	// Jabatan Fungsional************************************************************************
 
-	// pekerjaan-----------------------------------------------
+	// pekerjaan************************************************************************
 	function riw_pekerjaan_add(){
 		$data['head_page'] 	= $this->load->view('template/head','',true);
 		$data['top_menu'] 	= $this->load->view('template/top_menu','',true);
@@ -2329,10 +2587,10 @@ class Member extends CI_Controller{
 		echo json_encode($data);
 	}
 
-	// pekerjaan-----------------------------------------------
+	// pekerjaan************************************************************************
 
 
-	// ---------------------------------------------------------------------------------------------------------------- dendra
+	//================================================================================================================== deny
 
 	//=============================[ /\ Function Lama  /\ ]==============================
 	//                               |                 | 

@@ -10,6 +10,7 @@
 		list_dik_teknis();
 		list_dik_jenjang();
 		list_pekerjaan();
+		list_pangkat();
 	})
 
 	function list_pendidikan(){
@@ -73,6 +74,19 @@
 	            console.log(data);
 	            var tbl = data.tbl;
 	            $("#ls_pekerjaan").html(tbl);
+	        }
+	    })
+	}
+
+	function list_pangkat(){
+		$.ajax({
+	        url      : "list_pangkat",
+	        type     : 'POST',
+	        dataType : 'json',
+	        success  : function(data){
+	            console.log(data);
+	            var tbl = data.tbl;
+	            $("#ls_pangkat").html(tbl);
 	        }
 	    })
 	}
@@ -145,6 +159,22 @@
 	    })
 	}
 
+	function hapus_data_pangkat(id){
+		line = $("#line").val();
+		$.ajax({
+	        url      : line+"Member/hapus_data_pangkat",
+	        type     : 'POST',
+	        dataType : 'json',
+	        data 	 : {'id':id},
+	        success  : function(data){
+	            console.log(data);
+	            var info = data.info;
+				location.reload(true);
+				$.notific8('Data terpilih berhasil di hapus',{ life:5000,horizontalEdge:"top", theme:"success" ,heading:" Hapus Sukses !! "});
+
+	        }
+	    })
+	}
 
 	function buka_berkas(id,tbl){
 		line = $("#line").val();

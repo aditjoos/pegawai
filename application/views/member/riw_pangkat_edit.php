@@ -11,7 +11,7 @@
         <div class="col-lg-12">
             <section class="panel">
                 <header class="panel-heading bg-inverse">
-                    <h3><strong>Tambah</strong> Riwayat Kepangkatan </h3>
+                    <h3><strong>Edit</strong> Riwayat Kepangkatan </h3>
                     <label class="color"><strong><?php echo $this->session->userdata('nama'); ?></strong></label>
                 </header>
                 <div class="panel-body">
@@ -26,29 +26,35 @@
                                         </div>
                                         <label class="col-lg-2" style="text-align: right; margin-top: 7px;">TMT</label>
                                         <div class="col-lg-3">
-                                            <input type="text" class="form-control tanggal" id="tmt_gol" name="tmt_gol" autocomplete="off">
+                                            <input type="text" class="form-control tanggal" id="tmt_gol" name="tmt_gol" autocomplete="off"
+                                            value = "<?php if(isset($tanggal_tmt)){echo $tanggal_tmt; }else{echo "-";} ?>">
+
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label">Nama Pejabat</label>
                                         <div>
-                                            <input type="text" class="form-control" id="pejab_sk" name="pejab_sk" placeholder="Pejabat Penandatangan SK">
+                                            <input type="text" class="form-control" id="pejab_sk" name="pejab_sk" placeholder="Pejabat Penandatangan SK"
+                                            value="<?php if(isset($pejab_sk)){echo $pejab_sk; }else{echo "-";} ?>">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label">Nomor SK</label>
                                         <div class="col-lg-4">
-                                            <input type="text" class="form-control" id="no_sk" name="no_sk">
+                                            <input type="text" class="form-control" id="no_sk" name="no_sk"
+                                            value="<?php if(isset($no_sk)){echo $no_sk; }else{echo "-";} ?>">
                                         </div>
                                         <label class="col-lg-2" style="text-align: right; margin-top: 7px;">Tanggal SK</label>
                                         <div class="col-lg-3">
-                                            <input type="text" class="form-control tanggal" id="tgl_sk" name="tgl_sk" autocomplete="off">
+                                            <input type="text" class="form-control tanggal" id="tgl_sk" name="tgl_sk" autocomplete="off"
+                                            value="<?php if(isset($tanggal_sk)){echo $tanggal_sk; }else{echo "-";} ?>">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label">Keterangan</label>
                                         <div>
-                                            <input type="text" class="form-control" id="ket" name="ket">
+                                            <input type="text" class="form-control" id="ket" name="ket"
+                                            value="<?php if(isset($ket)){echo $ket; }else{echo "-";} ?>">
                                         </div>
                                     </div>
                                     <div class="form-group">

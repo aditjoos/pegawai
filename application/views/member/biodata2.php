@@ -327,6 +327,7 @@
                                                             <td colspan="3">Pejabat</td>
                                                             <td rowspan="2">Status</td>
                                                             <td rowspan="2">Berkas</td>
+                                                            <td rowspan="2">Aksi</td>
                                                         </tr>
                                                         <tr style="text-align: center;" class="bg-theme-inverse">
                                                             <td>Jenis</td>
@@ -334,8 +335,10 @@
                                                             <td>Penandatangan</td>
                                                             <td>Nomor SK</td>
                                                             <td>Tanggal SK</td>
+                                                            
                                                         </tr>
                                                     </thead>
+                                                    <tbody id="ls_pangkat"></tbody>
                                                 </table>
                                             </div>
                                         </div>
