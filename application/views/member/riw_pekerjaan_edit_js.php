@@ -56,7 +56,29 @@ $(document).ready(function() {
 		}else if(!nm_pejab){
 			$.notific8('Lengkapi isian nama pejabat',{ life:5000,horizontalEdge:"top", theme:"danger" ,heading:" Simpan Gagal !! "});
 		}else if(!file){
-			$.notific8('Tidak terdapat berkas foto pendukung',{ life:5000,horizontalEdge:"top", theme:"danger" ,heading:" Simpan Gagal !! "});
+			line = $("#line").val();
+			id_rec = $("#id_rec").val();
+
+			$("#btn_submit").attr("disabled", true);
+			$("#btn_submit").html("<i class='fa fa-sun-o fa-spin'></i> Update");
+
+			$.ajax({
+		        url      : line+"Member/update_pekerjaan",
+		        type     : 'POST',
+		        dataType : 'json',
+		        data 	 : {"jabatan":jabatan,"tmt_jabatan":tmt_jabatan,"thn_mulai":thn_mulai,"thn_selesai":thn_selesai,"no_sk":no_sk,
+		        			"tgl_sk":tgl_sk,"nip_pejab_baru":nip_pejab_baru,"nip_pejab_lama":nip_pejab_lama,"nm_pejab":nm_pejab,'id_rec':id_rec},
+		        success  : function(data){
+		            console.log(data);
+		            var info = data.info;
+
+					$.notific8('Data telah diperbarui.',{ life:5000,horizontalEdge:"top", theme:"success" ,heading:" Update Sukses !! "});
+		            setTimeout(function(){ 
+						window.history.back();
+					}, 2000);
+		            
+		        }
+		    })
 		}else{
 			$("#btn_submit").attr("disabled", true);
 			$("#btn_submit").html("<i class='fa fa-sun-o fa-spin'></i> Proses");

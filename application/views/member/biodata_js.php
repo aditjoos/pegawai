@@ -9,6 +9,8 @@
 		list_dik_fungsi();
 		list_dik_teknis();
 		list_dik_jenjang();
+		list_pekerjaan();
+		list_pangkat();
 	})
 
 	function list_pendidikan(){
@@ -63,9 +65,141 @@
 	    })
 	}
 
+	function list_pekerjaan(){
+		$.ajax({
+	        url      : "list_pekerjaan",
+	        type     : 'POST',
+	        dataType : 'json',
+	        success  : function(data){
+	            console.log(data);
+	            var tbl = data.tbl;
+	            $("#ls_pekerjaan").html(tbl);
+	        }
+	    })
+	}
+
+	function list_pangkat(){
+		$.ajax({
+	        url      : "list_pangkat",
+	        type     : 'POST',
+	        dataType : 'json',
+	        success  : function(data){
+	            console.log(data);
+	            var tbl = data.tbl;
+	            $("#ls_pangkat").html(tbl);
+	        }
+	    })
+	}
+
 	function edit_dik_fungsi(id){
-		// $("#ktn").load("Operator_con/diklat_kelas_detail",{'id':id});
 		window.location.href = 'riw_dik_fungsi_add',{'id':id};
 	}
 	
+	function confirm_hapus(id,tb){
+		if(tb == '1'){var tbl = "data_pendidikan";}
+		else if(tb == '2'){var tbl = "data_dikfungsi";}
+		else if(tb == '3'){var tbl = "data_dikteknis";}
+		else if(tb == '4'){var tbl = "data_dikjenjang";}
+		else if(tb == '5'){var tbl = "data_pangkat";}
+		else if(tb == '8'){var tbl = "data_pekerjaan";}
+
+		$("#md-hapus").modal("show");
+		$("#hapus").attr("onclick","hapus_"+tbl+"("+id+");");
+
+	}
+
+	function hapus_data_dikfungsi(id){
+		line = $("#line").val();
+		$.ajax({
+	        url      : line+"Member/hapus_data_dikfungsi",
+	        type     : 'POST',
+	        dataType : 'json',
+	        data 	 : {'id':id},
+	        success  : function(data){
+	            console.log(data);
+	            var info = data.info;
+				location.reload(true);
+				$.notific8('Data terpilih berhasil di hapus',{ life:5000,horizontalEdge:"top", theme:"success" ,heading:" Hapus Sukses !! "});
+
+	        }
+	    })
+	}
+
+	function hapus_data_pendidikan(id){
+		line = $("#line").val();
+		$.ajax({
+	        url      : line+"Member/hapus_data_pendidikan",
+	        type     : 'POST',
+	        dataType : 'json',
+	        data 	 : {'id':id},
+	        success  : function(data){
+	            console.log(data);
+	            var info = data.info;
+				location.reload(true);
+				$.notific8('Data terpilih berhasil di hapus',{ life:5000,horizontalEdge:"top", theme:"success" ,heading:" Hapus Sukses !! "});
+
+	        }
+	    })
+	}
+
+	function hapus_data_pekerjaan(id){
+		line = $("#line").val();
+		$.ajax({
+	        url      : line+"Member/hapus_data_pekerjaan",
+	        type     : 'POST',
+	        dataType : 'json',
+	        data 	 : {'id':id},
+	        success  : function(data){
+	            console.log(data);
+	            var info = data.info;
+				location.reload(true);
+				$.notific8('Data terpilih berhasil di hapus',{ life:5000,horizontalEdge:"top", theme:"success" ,heading:" Hapus Sukses !! "});
+
+	        }
+	    })
+	}
+
+	function hapus_data_pangkat(id){
+		line = $("#line").val();
+		$.ajax({
+	        url      : line+"Member/hapus_data_pangkat",
+	        type     : 'POST',
+	        dataType : 'json',
+	        data 	 : {'id':id},
+	        success  : function(data){
+	            console.log(data);
+	            var info = data.info;
+				location.reload(true);
+				$.notific8('Data terpilih berhasil di hapus',{ life:5000,horizontalEdge:"top", theme:"success" ,heading:" Hapus Sukses !! "});
+
+	        }
+	    })
+	}
+
+	function buka_berkas(id,tbl){
+		line = $("#line").val();
+
+		$.ajax({
+	        url      : line+"Member/open_berkas",
+	        type     : 'POST',
+	        dataType : 'json',
+	        data 	 : {'id':id,'tbl':tbl},
+	        success  : function(data){
+	            console.log(data);
+	            var info = data.info;
+	            var tbl = data.tabel;
+	            
+	            if(!info){
+					$("#ktn").html("<embed frameborder='0' scrolling='yes' width='100%' height='100%' src='"+line+"assets/img/noimage.jpg' >");
+	            }else{
+					$("#ktn").html("<embed frameborder='0' scrolling='yes' width='100%' height='100%' src='"+line+"assets/uploads/"+tbl+"/"+info+"'>");
+	            }
+
+				
+	        }
+	    })
+
+		$("#md-foto").modal("show");
+	}
+
 </script>

@@ -411,6 +411,11 @@ class Mmember extends CI_Model {
 		return $query;
 	}
 
+	function update2($tbl,$arr1,$arr2){
+		$this->db->where($arr2);
+		$this->db->update($tbl, $arr1);
+	}
+
 	function update($tbl,$arr,$id_0,$id_1){
 		$this->db->where($id_0, $id_1);
 		$this->db->update($tbl, $arr);
@@ -456,23 +461,26 @@ class Mmember extends CI_Model {
 
 	}
 
-	function riwayat_ajuan($tbl,$idcard){
+	function riwayat_ajuan($tbl,$no,$idcard){
 		$q = "
 			SELECT
 				*
 			FROM
-				$tbl a
-			INNER JOIN ajuan b ON a.idcard = b.idcard
-			INNER JOIN ref_ajuanstatus c ON b.id_ajuanstatus = c.id_statusajuan
+				ajuan a
+			INNER JOIN ref_jenisajuan b ON a.jenis_ajuan = b.id_jenisajuan
+			INNER JOIN $tbl c ON a.no_jenis_ajuan = c.`no`
+			INNER JOIN ref_ajuanstatus d ON a.id_ajuanstatus = d.id_statusajuan
 			WHERE
-				a.idcard = '$idcard' AND a.`no` = b.no_jenis_ajuan
+				a.jenis_ajuan = '$no'
+			AND a.idcard = '$idcard'
+
 			";
 
 		$sql = strtolower($q);
 		return $this->db->query($sql);
 	}
 
-	function riwayat_ajuan_detail($tbl,$rec){
+	function riwayat_ajuan_detail($tbl,$rec,$notbl){
 		$q = "
 			SELECT
 				*
@@ -480,7 +488,8 @@ class Mmember extends CI_Model {
 				ajuan a 
 			INNER JOIN ref_jenisajuan b ON a.jenis_ajuan = b.id_jenisajuan
 			INNER JOIN $tbl c ON a.no_jenis_ajuan = c.`no`
-			WHERE a.no_jenis_ajuan = '$rec';
+			WHERE a.no_jenis_ajuan = '$rec'
+			AND a.jenis_ajuan = '$notbl'
 			";
 
 		$sql = strtolower($q);

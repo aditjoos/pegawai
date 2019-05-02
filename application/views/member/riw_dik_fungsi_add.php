@@ -84,8 +84,8 @@
                                     </div>
                                     <div class="form-group offset">
                                             <div>
-                                                    <button class="btn btn-theme" type="submit"><i class="fa fa-check"></i> Simpan</button>
-                                                    <button class="btn">Batal</button>
+                                                    <button class="btn btn-theme" type="submit" id="btn_submit"><i class="fa fa-check"></i> Simpan</button>
+                                                    <a class="btn btn-info" href="biodata2">Batal</a>
                                             </div>
                                     </div>
                                 </form>

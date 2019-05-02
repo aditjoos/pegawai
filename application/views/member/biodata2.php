@@ -327,6 +327,7 @@
                                                             <td colspan="3">Pejabat</td>
                                                             <td rowspan="2">Status</td>
                                                             <td rowspan="2">Berkas</td>
+                                                            <td rowspan="2">Aksi</td>
                                                         </tr>
                                                         <tr style="text-align: center;" class="bg-theme-inverse">
                                                             <td>Jenis</td>
@@ -334,8 +335,10 @@
                                                             <td>Penandatangan</td>
                                                             <td>Nomor SK</td>
                                                             <td>Tanggal SK</td>
+                                                            
                                                         </tr>
                                                     </thead>
+                                                    <tbody id="ls_pangkat"></tbody>
                                                 </table>
                                             </div>
                                         </div>
@@ -400,22 +403,20 @@
                                             </div>
                                             <div class="table-responsive ">
                                                 <table class="table">
-                                                    <tbody>
-                                                        <tr>
+                                                    <thead>
+                                                        <tr style="text-align: center;" class="bg-theme-inverse">
                                                             <td>Nama Jabatan</td>
-                                                            <td>TMT Jabatan</td>
-                                                            <td>Tahun Mulai</td>
-                                                            <td>Tahun Selesai</td>
-                                                            <td>Nomor SK</td>
-                                                            <td>Tanggal SK</td>
-                                                            <td>NIP Baru</td>
-                                                            <td>NIP Lama</td>
+                                                            <td>Tahun</td>
+                                                            <td>SK</td>
+                                                            <td>NIP</td>
                                                             <td>Pejabat</td>
                                                             <td>Status</td>
                                                             <td>Berkas</td>
                                                         </tr>
                                                        
-                                                    </tbody>
+                                                    </thead>
+                                                    <tbody id="ls_pekerjaan"></tbody>
+
                                                 </table>
                                             </div>
                                         </div>
@@ -449,3 +450,34 @@
 
         </div>
     </div>
+
+<div id="md-hapus" class="modal fade">
+    <div class="modal-header bg-danger">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+        <h4 class="modal-title"><i class="fa fa-warning"></i> Konfirmasi</h4>
+    </div>
+    <!-- //modal-header-->
+    <div class="modal-body">
+        Apakah Anda yakin untuk menghapus data terpilih?
+    </div>
+    <div style="text-align: right;" class="col-lg-12">
+        <button class='btn btn-danger' id="hapus"><i class='fa fa-trash-o'></i> Hapus</button>
+        <button type="button" class="btn btn-inverse" data-dismiss="modal" aria-hidden="true">Batal</button>
+    </div>
+    <!-- //modal-body-->
+</div>
+
+<div id="md-foto" class="modal fade" data-width="800" >
+    <div class="modal-header bg-primary">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+        <h4 class="modal-title"><i class="fa fa-picture-o"></i> Berkas</h4>
+    </div>
+    <!-- //modal-header-->
+    <div class="modal-body" id="ktn">
+        
+    </div>
+    <div class="modal-footer col-lg-12">
+        <button type="button" class="btn btn-inverse" data-dismiss="modal" aria-hidden="true">Tutup</button>
+      </div>
+    <!-- //modal-body-->
+</div>

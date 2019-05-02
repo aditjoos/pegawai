@@ -21,30 +21,18 @@
                                 <form class="form-horizontal" method="POST" id="upload_form" enctype="multipart/form-data" data-collabel="3" data-alignlabel="left">
                                     <div class="form-group">
                                         <label class="control-label">Golongan / Ruang</label>
-                                        <div class="col-lg-6">
-                                            <input type="text" class="form-control" id="no_sk" name="no_sk">
+                                        <div class="col-lg-4">
+                                            <select class="form-control" id="gol" name="gol"></select>
                                         </div>
+                                        <label class="col-lg-2" style="text-align: right; margin-top: 7px;">TMT</label>
                                         <div class="col-lg-3">
-                                            <input type="text" class="form-control tanggal" id="tmt" name="tmt">
-                                            <span class="help-block">TMT Golongan Ruang</span>
+                                            <input type="text" class="form-control tanggal" id="tmt_gol" name="tmt_gol" autocomplete="off">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label">Golongan / Ruang</label>
+                                        <label class="control-label">Nama Pejabat</label>
                                         <div>
-                                            <select class="form-control" id="gol_ruang" name="gol_ruang"></select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label">TMT Golongan Ruang</label>
-                                        <div>
-                                            <input type="text" class="form-control tanggal" id="tmt" name="tmt">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label">Pejabat Penandatangan</label>
-                                        <div>
-                                            <input type="text" class="form-control" id="pejab_sk" name="pejab_sk">
+                                            <input type="text" class="form-control" id="pejab_sk" name="pejab_sk" placeholder="Pejabat Penandatangan SK">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -54,7 +42,7 @@
                                         </div>
                                         <label class="col-lg-2" style="text-align: right; margin-top: 7px;">Tanggal SK</label>
                                         <div class="col-lg-3">
-                                            <input type="text" class="form-control tanggal" id="tgl_sk" name="tgl_sk">
+                                            <input type="text" class="form-control tanggal" id="tgl_sk" name="tgl_sk" autocomplete="off">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -84,8 +72,8 @@
                                     </div>
                                     <div class="form-group offset">
                                             <div>
-                                                    <button class="btn btn-theme" type="submit"><i class="fa fa-check"></i> Simpan</button>
-                                                    <button class="btn">Batal</button>
+                                                <button class="btn btn-theme" type="submit" id="btn_submit"><i class="fa fa-check"></i> Simpan</button>
+                                                <a class="btn btn-info" href="biodata2">Batal</a>
                                             </div>
                                     </div>
                                 </form>

@@ -11,7 +11,7 @@
         <div class="col-lg-12">
             <section class="panel">
                 <header class="panel-heading bg-inverse">
-                    <h3><strong>Tambah</strong> Riwayat Pendidikan </h3>
+                    <h3><strong>Edit</strong> Riwayat Pendidikan </h3>
                     <label class="color"><strong><?php echo $this->session->userdata('nama'); ?></strong></label>
                 </header>
                 <div class="panel-body">
@@ -28,23 +28,27 @@
                                     <div class="form-group">
                                         <label class="control-label">Nama Sekolah / Univ.</label>
                                         <div>
-                                            <input type="text" class="form-control" id="sekolah" name="sekolah">
+                                            <input type="text" class="form-control" id="sekolah" name="sekolah"
+                                            value="<?php if(isset($nm_sekolah)){echo $nm_sekolah;}else{echo '-';} ?>">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label">Jurusan / Prodi</label>
                                         <div>
-                                            <input type="text" class="form-control" id="prodi" name="prodi">
+                                            <input type="text" class="form-control" id="prodi" name="prodi"
+                                            value="<?php if(isset($jurusan)){echo $jurusan;}else{echo '-';} ?>">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label">Tahun Masuk</label>
                                         <div class="col-lg-3">
-                                            <input type="text" class="form-control tahun" id="tahun" name="tahun">
+                                            <input type="text" class="form-control tahun" id="tahun" name="tahun"
+                                            value="<?php if(isset($thn_masuk)){echo $thn_masuk;}else{echo '-';} ?>">
                                         </div>
                                         <label class="col-lg-2" style="text-align: right; margin-top: 5px;">Tanggal Lulus</label>
                                         <div class="col-lg-3">
-                                            <input type="text" class="form-control tanggal" id="tanggal" name="tanggal">
+                                            <input type="text" class="form-control tanggal" id="tanggal" name="tanggal"
+                                            value="<?php if(isset($thn_lulus)){echo date('d-m-Y',strtotime($thn_lulus));}else{echo '-';} ?>">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -59,13 +63,16 @@
                                     <div class="form-group">
                                         <label class="control-label">Lokasi</label>
                                         <div>
-                                            <input type="text" class="form-control" id="lokasi" name="lokasi">
+                                            <input type="text" class="form-control" id="lokasi" name="lokasi"
+                                            value="<?php if(isset($lokasi)){echo $lokasi;}else{echo '-';} ?>">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label">No. Ijazah</label>
                                         <div>
-                                            <input type="text" class="form-control" id="ijasah" name="ijasah">
+                                            <input type="text" class="form-control" id="ijasah" name="ijasah"
+                                            value="<?php if(isset($no_ijazah)){echo $no_ijazah;}else{echo '-';} ?>">
+
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -89,15 +96,16 @@
                                     </div>
                                     <div class="form-group offset">
                                         <div>
-                                            <button class="btn btn-theme" type="submit" id="btn_submit"><i class="fa fa-check"></i> Simpan</button>
+                                            <button class="btn btn-theme" type="submit" id="btn_submit"><i class="fa fa-check"></i> Update</button>
                                             <a class="btn btn-info" href="biodata2">Batal</a>
                                         </div>
                                     </div>
+                                    <input type="hidden" id="id_rec" name="id_rec" value="<?php echo $id_rec;?>">
                                 </form>
                             </div>
                         </div>
                         <div class="col-lg-4">
-                            <img src="<?php echo base_url();?>/assets/img/noimage.jpg" class="img-responsive" id="blah">
+                            <img src="<?php if(isset($nama_berkas)){echo $path.'assets/uploads/'.$tbl.'/'.$nama_berkas;}else{echo $path.'assets/img/noimage.jpg';} ?>" class="img-responsive" id="blah">
                         </div>
 
                     </div>

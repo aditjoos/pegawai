@@ -6,7 +6,6 @@
 <script type="text/javascript" src="<?php echo $path; ?>assets/js/private/profile.js"></script>
 <script>
 $(document).ready(function() {	
-	opt_edu();
 	$(".tanggal").datepicker({
 		format: "dd-mm-yyyy",
 	    autoclose: true
@@ -27,37 +26,60 @@ $(document).ready(function() {
 		e.preventDefault();
 
 		var file = $("#file_image").val();
-		var nama = $("#nama").val();
-		var belajar = $("#belajar").val();
-		var lokasi = $("#lokasi").val();
+		var jns_diklat = $("#jns_diklat").val();
+		var angkatan = $("#angkatan").val();
+		var created = $("#created").val();
 		var tgl_mulai = $("#tgl_mulai").val();
 		var tgl_selesai = $("#tgl_selesai").val();
+		var predikat = $("#predikat").val();
+		var lokasi = $("#lokasi").val();
 		var jml_jam = $("#jml_jam").val();
-		var created = $("#created").val();
 
-		if(!nama){
-			$.notific8('Lengkapi isian Nama Diklat',{ life:5000,horizontalEdge:"top", theme:"danger" ,heading:" Simpan Gagal !! "});
-		}else if(!belajar){
-			$.notific8('Lengkapi isian Tempat Belajar',{ life:5000,horizontalEdge:"top", theme:"danger" ,heading:" Simpan Gagal !! "});
-		}else if(!lokasi){
-			$.notific8('Lengkapi isian Lokasi',{ life:5000,horizontalEdge:"top", theme:"danger" ,heading:" Simpan Gagal !! "});
+		if(!angkatan){
+			$.notific8('Lengkapi isian Angkatan',{ life:5000,horizontalEdge:"top", theme:"danger" ,heading:" Simpan Gagal !! "});
+		}else if(!created){
+			$.notific8('Lengkapi isian Penyelenggara',{ life:5000,horizontalEdge:"top", theme:"danger" ,heading:" Simpan Gagal !! "});
 		}else if(!tgl_mulai){
 			$.notific8('Lengkapi isian Tanggal Mulai',{ life:5000,horizontalEdge:"top", theme:"danger" ,heading:" Simpan Gagal !! "});
 		}else if(!tgl_selesai){
 			$.notific8('Lengkapi isian Tanggal Selsai',{ life:5000,horizontalEdge:"top", theme:"danger" ,heading:" Simpan Gagal !! "});
+		}else if(!predikat){
+			$.notific8('Lengkapi isian Predikat',{ life:5000,horizontalEdge:"top", theme:"danger" ,heading:" Simpan Gagal !! "});
+		}else if(!lokasi){
+			$.notific8('Lengkapi isian Lokasi',{ life:5000,horizontalEdge:"top", theme:"danger" ,heading:" Simpan Gagal !! "});
 		}else if(!jml_jam){
 			$.notific8('Lengkapi isian Jumlah Jam',{ life:5000,horizontalEdge:"top", theme:"danger" ,heading:" Simpan Gagal !! "});
-		}else if(!created){
-			$.notific8('Lengkapi isian Penyelenggara',{ life:5000,horizontalEdge:"top", theme:"danger" ,heading:" Simpan Gagal !! "});
 		}else if(!file){
-			$.notific8('Tidak terdapat berkas foto pendukung',{ life:5000,horizontalEdge:"top", theme:"danger" ,heading:" Simpan Gagal !! "});
-		}else{
+			line = $("#line").val();
+			id_rec = $("#id_rec").val();
 
 			$("#btn_submit").attr("disabled", true);
 			$("#btn_submit").html("<i class='fa fa-sun-o fa-spin'></i> Update");
-			
+
 			$.ajax({
-                url: 'do_upload_dik_teknis',
+		        url      : line+"Member/update_dik_jenjang",
+		        type     : 'POST',
+		        dataType : 'json',
+		        data 	 : {'jns_diklat':jns_diklat,'angkatan':angkatan,'created':created,'tgl_mulai':tgl_mulai,'tgl_selesai':tgl_selesai,
+							'predikat':predikat,'lokasi':lokasi,'jml_jam':jml_jam,'id_rec':id_rec},
+		        success  : function(data){
+		            console.log(data);
+		            var info = data.info;
+					$.notific8('Data telah diperbarui.',{ life:5000,horizontalEdge:"top", theme:"success" ,heading:" Update Sukses !! "});
+		            setTimeout(function(){ 
+						window.history.back();
+					}, 2000);
+		        }
+		    })
+		}else{
+			line = $("#line").val();
+			id_rec = $("#id_rec").val();
+
+			$("#btn_submit").attr("disabled", true);
+			$("#btn_submit").html("<i class='fa fa-sun-o fa-spin'></i> Update");
+
+			$.ajax({
+                url: line+'Member/do_upload_dik_jenjang',
                 type: "POST",
                 data: new FormData(this),
                 processData: false,
@@ -65,10 +87,9 @@ $(document).ready(function() {
                 cache: false,
                 async: false,
                 success: function(data) {
-					$.notific8('silahkan menunggu informasi dari tim Kepegawaian',{ life:5000,horizontalEdge:"top", theme:"success" ,heading:" Simpan Berhasil !! "});
-
-					setTimeout(function(){ 
-						window.location.href = "biodata2";
+					$.notific8('Data telah diperbarui.',{ life:5000,horizontalEdge:"top", theme:"success" ,heading:" Update Sukses !! "});
+		            setTimeout(function(){ 
+						window.history.back();
 					}, 2000);
                 }
             });
@@ -79,19 +100,6 @@ $(document).ready(function() {
 
 
 });//end script
-
-function opt_edu(){
-	$.ajax({
-        url      : "opt_edu",
-        type     : 'POST',
-        dataType : 'json',
-        success  : function(data){
-            console.log(data);
-            var opt = data.opt;
-            $("#edu").html(opt);
-        }
-    })
-}
 
 function filePreview(input){
     if(input.files && input.files[0]){
