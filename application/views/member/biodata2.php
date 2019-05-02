@@ -403,13 +403,9 @@
                                                     <thead>
                                                         <tr style="text-align: center;" class="bg-theme-inverse">
                                                             <td>Nama Jabatan</td>
-                                                            <td>TMT Jabatan</td>
-                                                            <td>Tahun Mulai</td>
-                                                            <td>Tahun Selesai</td>
-                                                            <td>Nomor SK</td>
-                                                            <td>Tanggal SK</td>
-                                                            <td>NIP Baru</td>
-                                                            <td>NIP Lama</td>
+                                                            <td>Tahun</td>
+                                                            <td>SK</td>
+                                                            <td>NIP</td>
                                                             <td>Pejabat</td>
                                                             <td>Status</td>
                                                             <td>Berkas</td>

@@ -87,6 +87,7 @@
 		else if(tb == '3'){var tbl = "data_dikteknis";}
 		else if(tb == '4'){var tbl = "data_dikjenjang";}
 		else if(tb == '5'){var tbl = "data_pangkat";}
+		else if(tb == '8'){var tbl = "data_pekerjaan";}
 
 		$("#md-hapus").modal("show");
 		$("#hapus").attr("onclick","hapus_"+tbl+"("+id+");");
@@ -114,6 +115,23 @@
 		line = $("#line").val();
 		$.ajax({
 	        url      : line+"Member/hapus_data_pendidikan",
+	        type     : 'POST',
+	        dataType : 'json',
+	        data 	 : {'id':id},
+	        success  : function(data){
+	            console.log(data);
+	            var info = data.info;
+				location.reload(true);
+				$.notific8('Data terpilih berhasil di hapus',{ life:5000,horizontalEdge:"top", theme:"success" ,heading:" Hapus Sukses !! "});
+
+	        }
+	    })
+	}
+
+	function hapus_data_pekerjaan(id){
+		line = $("#line").val();
+		$.ajax({
+	        url      : line+"Member/hapus_data_pekerjaan",
 	        type     : 'POST',
 	        dataType : 'json',
 	        data 	 : {'id':id},

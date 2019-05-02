@@ -2147,24 +2147,24 @@ class Member extends CI_Controller{
 					$info_ajuan = "<span class='label label-info col-md-12'>$deskripsi</span>";
 
 					$btn_aksi = "
-								<button class='btn btn-success' onclick='buka_berkas($no,4);'><i class='fa fa-picture-o'></i></button>
+								<button class='btn btn-success' onclick='buka_berkas($no,8);'><i class='fa fa-picture-o'></i></button>
 								<a class='btn btn-warning' href='riw_pekerjaan_edit/$nox'><i class='fa fa-pencil'></i></a>
-								<button class='btn btn-danger' onclick='confirm_hapus($no,4);'><i class='fa fa-trash-o'></i></button>
+								<button class='btn btn-danger' onclick='confirm_hapus($no,8);'><i class='fa fa-trash-o'></i></button>
 								";
 				}else if($id_ajuan == "2"){
 					$info_ajuan = "<span class='label label-primary col-md-12'>$deskripsi</span>";
 
-					$btn_aksi = "<button class='btn btn-success' onclick='buka_berkas($no,4);'><i class='fa fa-picture-o'></i></button>";
+					$btn_aksi = "<button class='btn btn-success' onclick='buka_berkas($no,8);'><i class='fa fa-picture-o'></i></button>";
 				}else if($id_ajuan == "3"){
 					$info_ajuan = "<span class='label label-success col-md-12'>$deskripsi</span>";
 
-					$btn_aksi = "<button class='btn btn-success' onclick='buka_berkas($no,4);'><i class='fa fa-picture-o'></i></button>";
+					$btn_aksi = "<button class='btn btn-success' onclick='buka_berkas($no,8);'><i class='fa fa-picture-o'></i></button>";
 				}else if($id_ajuan == "4"){
 					$info_ajuan = "<span class='label label-warning col-md-12'>$deskripsi</span>";
 					$btn_aksi = "
 								<button class='btn btn-success'><i class='fa fa-comment'></i></button>
 								<a class='btn btn-warning' href='riw_pekerjaan_edit/$nox'><i class='fa fa-pencil'></i></a>
-								<button class='btn btn-danger' onclick='confirm_hapus($no,4);'><i class='fa fa-trash-o'></i></button>
+								<button class='btn btn-danger' onclick='confirm_hapus($no,8);'><i class='fa fa-trash-o'></i></button>
 								";
 				}else if($id_ajuan == "5"){
 					$info_ajuan = "<span class='label label-danger col-md-12'>$deskripsi</span>";
@@ -2172,14 +2172,14 @@ class Member extends CI_Controller{
 					$btn_aksi = "
 								<button class='btn btn-success'><i class='fa fa-comment'></i></button>
 								<a class='btn btn-warning' href='riw_pekerjaan_edit/$nox'><i class='fa fa-pencil'></i></a>
-								<button class='btn btn-danger' onclick='confirm_hapus($no,4);'><i class='fa fa-trash-o'></i></button>
+								<button class='btn btn-danger' onclick='confirm_hapus($no,8);'><i class='fa fa-trash-o'></i></button>
 								";
 				}else if($id_ajuan == "6"){
 					$info_ajuan = "<span class='label label-info col-md-12'>$deskripsi</span>";
-					$btn_aksi = "<button class='btn btn-success' onclick='buka_berkas($no,4);'><i class='fa fa-picture-o'></i></button>";
+					$btn_aksi = "<button class='btn btn-success' onclick='buka_berkas($no,8);'><i class='fa fa-picture-o'></i></button>";
 				}else if($id_ajuan == "7"){
 					$info_ajuan = "<span class='label label-success col-md-12'>$deskripsi</span>";
-					$btn_aksi = "<button class='btn btn-success' onclick='buka_berkas($no,4);'><i class='fa fa-picture-o'></i></button>";
+					$btn_aksi = "<button class='btn btn-success' onclick='buka_berkas($no,8);'><i class='fa fa-picture-o'></i></button>";
 				}else{
 					$info_ajuan = "-";
 				}
@@ -2187,18 +2187,27 @@ class Member extends CI_Controller{
 				$tbl .= "
 						<tr>
 							<td>
-								$jns_diklat<br>
-								Angkatan: $angkatan
+								$nm_jabatan<br>
+								TMT: $tmt_jabatan
 							</td>
-							<td>$created</td>
-							<td>$lokasi</td>
 							<td>
-								Mulai: <span style='color:green;'>$tgl_mulai</span><br>
-								Selesai: <span style='color:red;'>$tgl_selesai</span>
+								Mulai: <span style='color:green;'>$thn_mulai</span><br>
+								Selesai: <span style='color:red;'>$thn_selesai</span>
 							</td>
-							<td style='text-align:center;'>$jml_jam</td>
-							<td style='text-align:center;'>$predikat</td>
-							<td style='text-align:center'>$info_ajuan</td>
+							<td>
+								No SK: <span>$no_sk</span><br>
+								Tgl SK: <span>$tgl_sk</span>
+							</td>
+							<td>
+								Baru: <span>$nip_pejbaru</span><br>
+								Lama: <span>$nip_pejlama</span>
+							</td>
+							<td>
+								$pejabat_sk
+							</td>
+							<td>
+								$info_ajuan
+							</td>
 							<td>
 								$btn_aksi
 							</td>
@@ -2213,6 +2222,111 @@ class Member extends CI_Controller{
 		$data = array('tbl' => $tbl, );
 		echo json_encode($data);
 
+	}
+
+	function riw_pekerjaan_edit(){
+		$data['head_page'] 	= $this->load->view('template/head','',true);
+		$data['top_menu'] 	= $this->load->view('template/top_menu','',true);
+
+		$idx 	= $this->uri->segment(3);
+		$idx 	= str_replace(array('-', '_', '~'), array('+', '/', '='), $idx);
+		$id		= $this->encrypt->decode($idx);
+		
+		$tbl  	= "data_pekerjaan";
+		$info['tbl'] = $tbl;
+		$info['id_rec'] = $idx;
+
+		$q 		= $this->Mmember->riwayat_ajuan_detail($tbl,$id,'8')->row();
+		if(isset($q)){
+			$info['nm_jabatan'] = $q->nm_jabatan;
+			$info['tmt_jabatan'] = $q->tmt_jabatan;
+			$info['thn_mulai'] = $q->thn_mulai;
+			$info['thn_selesai'] = $q->thn_selesai;
+			$info['no_sk'] = $q->no_sk;
+			$info['tgl_sk'] = $q->tgl_sk;
+			$info['nip_pejbaru'] = $q->nip_pejbaru;
+			$info['nip_pejlama'] = $q->nip_pejlama;
+			$info['pejabat_sk'] = $q->pejabat_sk;
+			$info['nama_berkas'] = $q->nama_berkas;
+
+		}
+
+
+		$data['main_page'] 	= $this->load->view('member/riw_pekerjaan_edit',$info,true);
+
+		$data['modal'] 		= $this->load->view('template/modal','',true);
+		$data['left_menu'] 	= $this->load->view('template/left_menu','',true);
+		$data['foot'] 		= $this->load->view('template/foot','',true);
+		$data['custom_js'] 	= $this->load->view('member/riw_pekerjaan_edit_js','',true);
+
+		$this->load->view('template/body',$data);
+	}
+
+	function update_pekerjaan(){
+		$id		= $this->session->userdata('id_user');
+		$folder = "data_pekerjaan";
+
+		$jabatan = $_POST["jabatan"];
+		$tmt_jabatan = $_POST["tmt_jabatan"];
+		$thn_mulai = $_POST["thn_mulai"];
+		$thn_selesai = $_POST["thn_selesai"];
+		$no_sk = $_POST["no_sk"];
+		$tgl_sk = $_POST["tgl_sk"];
+		$nip_pejab_baru = $_POST["nip_pejab_baru"];
+		$nip_pejab_lama = $_POST["nip_pejab_lama"];
+		$nm_pejab = $_POST["nm_pejab"];
+
+		$tanggal_tmt = date("Y-m-d", strtotime($tmt_jabatan));
+		$tanggal_sk = date("Y-m-d", strtotime($tgl_sk));
+
+		$idx = $this->input->post('id_rec',true);
+		$idx 	= str_replace(array('-', '_', '~'), array('+', '/', '='), $idx);
+		$id_rec	= $this->encrypt->decode($idx);
+
+		$arr = array(
+			'idcard' => $id,
+			'nip' => $id,
+			"nm_jabatan" => $jabatan,
+			"tmt_jabatan" => $tanggal_tmt,
+			"thn_mulai" => $thn_mulai,
+			"thn_selesai" => $thn_selesai,
+			"no_sk" => $no_sk,
+			"tgl_sk" => $tanggal_sk,
+			"nip_pejbaru" => $nip_pejab_baru,
+			"nip_pejlama" => $nip_pejab_lama,
+			"pejabat_sk" => $nm_pejab,
+		);
+
+		$this->Mmember->update($folder,$arr,'no',$id_rec);
+		
+		$tgl = date("Y-m-d h:i:s");
+
+		$arr1 = array(
+			'tgl_ajuan' => $tgl, 
+			'id_ajuanstatus' => '1', // pengajuan pegawai
+			'idcard' => $id,
+		);
+		$arrx = array('no_jenis_ajuan' => $id_rec,'jenis_ajuan' => '8', );
+		$this->Mmember->update2('ajuan',$arr1,$arrx);
+		// $this->Mmember->update('ajuan',$arr1,'no_jenis_ajuan',$id_rec);
+
+		$data = array('info' => 'sukses', );
+		echo json_encode($data);
+	}
+
+	function hapus_data_pekerjaan(){
+		$id = $this->input->post("id",true);
+
+		$tbl = "data_pendidikan";
+		$arr = array('no' => $id,);
+		$this->Mmember->delete($tbl,$arr);
+
+		$tbl = "ajuan";
+		$arr = array('no_jenis_ajuan' => $id,);
+		$this->Mmember->delete($tbl,$arr);
+
+		$data = array('info' => 'sukses', );
+		echo json_encode($data);
 	}
 
 	// pekerjaan-----------------------------------------------
